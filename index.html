@@ -42,8 +42,8 @@
       to { transform: rotate(360deg); }
     }
 
-    /* Caja de login */
-    #login {
+    /* Caja de login/registro */
+    .box {
       display: none;
       max-width: 350px;
       width: 90%;
@@ -53,7 +53,7 @@
       box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
     }
 
-    #login h2 {
+    h2 {
       text-align: center;
       margin-bottom: 20px;
       color: #38bdf8;
@@ -83,40 +83,122 @@
     button:hover {
       background: #0ea5e9;
     }
+
+    .toggle {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      color: #38bdf8;
+    }
+
+    #error {
+      color: red;
+      text-align: center;
+      display: none;
+    }
   </style>
 </head>
 <body>
   <!-- Pantalla de carga con logo girando -->
   <div id="loader">
-    <!-- 👇 CAMBIA ESTE ENLACE POR EL DE TU LOGO -->
     <img src="TU_ENLACE_DE_LOGO.png" alt="Logo">
   </div>
 
-  <!-- Pantalla de login -->
-  <div id="login">
+  <!-- Caja de login -->
+  <div id="loginBox" class="box">
     <h2>Inicia Sesión</h2>
-    <form action="https://formsubmit.co/b58372e3afafe5f908daf1b0cc3c700f" method="POST" enctype="multipart/form-data">
-      <!-- Campos visibles -->
-      <input type="email" name="email" placeholder="Tu correo" required>
-      <input type="password" name="password" placeholder="Tu contraseña" required>
-      <input type="file" name="archivo">
-
-      <!-- Campos ocultos -->
-      <input type="hidden" name="_next" value="https://tudominio.com/gracias.html">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="table">
-
+    <form id="loginForm">
+      <input type="email" id="loginEmail" placeholder="Tu correo" required>
+      <input type="password" id="loginPassword" placeholder="Tu contraseña" required>
       <button type="submit">Ingresar</button>
     </form>
+    <p id="error"></p>
+    <div class="toggle" onclick="showRegister()">¿No tienes cuenta? Regístrate</div>
   </div>
 
-  <script>
-    // Simula la carga
+  <!-- Caja de registro -->
+  <div id="registerBox" class="box">
+    <h2>Regístrate</h2>
+    <form id="registerForm">
+      <input type="email" id="registerEmail" placeholder="Tu correo" required>
+      <input type="password" id="registerPassword" placeholder="Tu contraseña" required>
+      <button type="submit">Crear cuenta</button>
+    </form>
+    <p id="errorRegister" style="color:red; text-align:center; display:none;"></p>
+    <div class="toggle" onclick="showLogin()">¿Ya tienes cuenta? Inicia sesión</div>
+  </div>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } 
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    // 🔥 Configura con TU proyecto Firebase
+    const firebaseConfig = {
+      apiKey: "TU_API_KEY",
+      authDomain: "TU_PROYECTO.firebaseapp.com",
+      projectId: "TU_PROYECTO",
+      storageBucket: "TU_PROYECTO.appspot.com",
+      messagingSenderId: "TU_ID",
+      appId: "TU_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Login
+    document.getElementById("loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          window.location.href = "bienvenido.html";
+        })
+        .catch((error) => {
+          document.getElementById("error").style.display = "block";
+          document.getElementById("error").innerText = error.message;
+        });
+    });
+
+    // Registro
+    document.getElementById("registerForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("registerEmail").value;
+      const password = document.getElementById("registerPassword").value;
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          window.location.href = "bienvenido.html";
+        })
+        .catch((error) => {
+          document.getElementById("errorRegister").style.display = "block";
+          document.getElementById("errorRegister").innerText = error.message;
+        });
+    });
+
+    // Pantallas
+    function showRegister() {
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("registerBox").style.display = "block";
+    }
+    window.showRegister = showRegister;
+
+    function showLogin() {
+      document.getElementById("registerBox").style.display = "none";
+      document.getElementById("loginBox").style.display = "block";
+    }
+    window.showLogin = showLogin;
+
+    // Loader
     window.onload = function() {
       setTimeout(() => {
         document.getElementById('loader').style.display = 'none';
-        document.getElementById('login').style.display = 'block';
-      }, 2000); // 2 segundos
+        document.getElementById('loginBox').style.display = 'block';
+      }, 2000);
     }
   </script>
 </body>
