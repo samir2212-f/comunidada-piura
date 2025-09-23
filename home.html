@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Comunidad</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #3b006e;
+      color: white;
+    }
+    header {
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+    }
+    header img {
+      height: 50px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #ffdd00;
+    }
+    .hero {
+      text-align: center;
+      padding: 100px 20px;
+      background: url("TU_IMAGEN_DE_FONDO.jpg") no-repeat center/cover;
+    }
+    .hero h1 {
+      font-size: 60px;
+      margin-bottom: 10px;
+    }
+    .hero p {
+      font-size: 22px;
+    }
+    .btn {
+      background: linear-gradient(45deg, #00ffcc, #cc00ff);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 30px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="tu_logo.png" alt="Logo">
+    <nav>
+      <a href="#">Inicio</a>
+      <a href="#">Premios</a>
+      <a href="#">Ganadores</a>
+      <a href="#">Beneficios</a>
+      <a href="#">¿Cómo funciona?</a>
+      <a href="#">Suscripción</a>
+    </nav>
+    <button class="btn" onclick="logout()">Cerrar sesión</button>
+  </header>
+
+  <section class="hero">
+    <h1>ÚNETE</h1>
+    <p>A la comunidad accede a beneficios exclusivos y participa por premios increíbles</p>
+    <button class="btn">Suscribirme</button>
+  </section>
+
+  <script type="module">
+    // Importar Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+    import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "TU_API_KEY",
+      authDomain: "TU_PROYECTO.firebaseapp.com",
+      projectId: "TU_PROYECTO",
+      storageBucket: "TU_PROYECTO.appspot.com",
+      messagingSenderId: "xxxxxxx",
+      appId: "TU_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Redirigir si no está logueado
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "login.html"; 
+      }
+    });
+
+    // Función para cerrar sesión
+    function logout() {
+      signOut(auth).then(() => {
+        window.location.href = "login.html";
+      });
+    }
+    window.logout = logout;
+  </script>
+</body>
+</html>
