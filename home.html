@@ -1,282 +1,158 @@
-<!DOCTYPE html> 
-<html lang="es"> 
-<head> 
-  <meta charset="UTF-8"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <title>Login - Comunidad</title> 
-  <style> 
-    body { 
-      margin: 0; 
-      font-family: Arial, sans-serif; 
-      background: #000000; 
-      color: #fff; 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      height: 100vh; 
-      overflow: hidden; 
-    } 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comunidad - Inicio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-    /* Pantalla de carga */
-    #loader { 
-      position: fixed; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%; 
-      background: #000000; 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      flex-direction: column; 
-      z-index: 9999; 
-      opacity: 1; 
-      transition: opacity 1s ease; 
-    } 
+    header {
+      background: #1e293b;
+      padding: 15px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #38bdf8;
+      box-shadow: 0px 2px 10px rgba(0,0,0,0.5);
+    }
 
-    #loader img { 
-      width: 150px; 
-      height: 150px; 
-      border-radius: 50%; 
-      object-fit: cover; 
-      animation: spin 3s linear infinite; 
-    } 
+    main {
+      flex: 1;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
 
-    @keyframes spin { 
-      from { transform: rotate(0deg); } 
-      to { transform: rotate(360deg); } 
-    } 
+    .card {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.4);
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
 
-    /* Caja de login/registro */ 
-    .box { 
-      display: none; 
-      max-width: 350px; 
-      width: 90%; 
-      background: #000000; 
-      padding: 20px; 
-      border-radius: 12px; 
-      box-shadow: 0px 0px 20px rgba(0,0,0,0.5); 
-      color: #000000; 
-    } 
+    .card:hover {
+      transform: scale(1.05);
+    }
 
-    h2 { 
-      text-align: center; 
-      margin-bottom: 20px; 
-      color: #38bdf8; 
-    } 
+    .card h3 {
+      margin-bottom: 15px;
+      color: #38bdf8;
+    }
 
-    input { 
-      width: 100%; 
-      padding: 10px; 
-      margin: 8px 0; 
-      border: none; 
-      border-radius: 8px; 
-      font-size: 14px; 
-    } 
+    button {
+      padding: 10px 20px;
+      background: #38bdf8;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #0f172a;
+      transition: background 0.2s ease;
+    }
 
-    button { 
-      width: 100%; 
-      padding: 12px; 
-      background: #38bdf8; 
-      color: #0f172a; 
-      border: none; 
-      border-radius: 8px; 
-      font-size: 16px; 
-      cursor: pointer; 
-      margin-top: 10px; 
-    } 
+    button:hover {
+      background: #0ea5e9;
+    }
 
-    button:hover { 
-      background: #0ea5e9; 
-    } 
+    footer {
+      background: #1e293b;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      color: #94a3b8;
+    }
 
-    .toggle { 
-      text-align: center; 
-      margin-top: 10px; 
-      font-size: 14px; 
-      cursor: pointer; 
-      color: #38bdf8; 
-    } 
+    .logout {
+      margin-top: 20px;
+      background: #ef4444;
+      color: #fff;
+    }
+    .logout:hover {
+      background: #dc2626;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    🎉 Comunidad - Panel de Sorteos
+  </header>
 
-    #error { 
-      color: red; 
-      text-align: center; 
-      display: none; 
-    } 
+  <main>
+    <div class="card">
+      <h3>🎲 Sorteo Rápido</h3>
+      <p>Genera un ganador al instante entre los participantes.</p>
+      <button onclick="alert('Aquí irá el sorteo rápido')">Iniciar Sorteo</button>
+    </div>
 
-    /* Animación de transición */
-    .fade { 
-      animation: fadeIn 0.5s ease; 
-    } 
-    @keyframes fadeIn { 
-      from { opacity: 0; transform: scale(0.95); } 
-      to { opacity: 1; transform: scale(1); } 
-    } 
-  </style> 
-</head> 
-<body> 
+    <div class="card">
+      <h3>🏆 Sorteo de Premios</h3>
+      <p>Ideal para rifas con varios premios y categorías.</p>
+      <button onclick="alert('Aquí irá el sorteo de premios')">Ver Premios</button>
+    </div>
 
-  <!-- Pantalla de carga con logo girando --> 
-  <div id="loader"> 
-    <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcReMJly0vwqQtfircDFDpZwXu18Sd3bSMIOsRRLQyJ0irbFg3KC" alt="Logo"> 
-  </div> 
+    <div class="card">
+      <h3>🎯 Ruleta</h3>
+      <p>Haz girar la ruleta y descubre al ganador de forma divertida.</p>
+      <button onclick="alert('Aquí irá la ruleta')">Girar Ruleta</button>
+    </div>
 
-  <!-- Caja de login --> 
-  <div id="loginBox" class="box"> 
-    <h2>Inicia Sesión</h2> 
-    <form id="loginForm"> 
-      <input type="email" id="loginEmail" placeholder="Tu correo" required> 
-      <!-- Mostrar/ocultar contraseña --> 
-      <div style="position: relative;"> 
-        <input type="password" id="loginPassword" placeholder="Tu contraseña" required> 
-        <span onclick="togglePassword('loginPassword')" 
-              style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; color:#38bdf8;">👁️</span> 
-      </div> 
-      <!-- Recordar sesión --> 
-      <label style="font-size:13px; color:#38bdf8;"> 
-        <input type="checkbox" id="rememberMe"> Mantenerme conectado 
-      </label> 
-      <button type="submit">Ingresar</button> 
-    </form> 
-    <p id="error"></p> 
-    <div class="toggle" onclick="showRegister()">¿No tienes cuenta? Regístrate</div> 
-    <div class="toggle" onclick="resetPassword()">¿Olvidaste tu contraseña?</div> 
-  </div> 
+    <div class="card">
+      <h3>📋 Lista de Participantes</h3>
+      <p>Gestiona los nombres o correos de los participantes.</p>
+      <button onclick="alert('Aquí irá la lista de participantes')">Ver Lista</button>
+    </div>
 
-  <!-- Caja de registro --> 
-  <div id="registerBox" class="box"> 
-    <h2>Regístrate</h2> 
-    <form id="registerForm"> 
-      <input type="email" id="registerEmail" placeholder="Tu correo" required> 
-      <input type="password" id="registerPassword" placeholder="Tu contraseña" required oninput="checkStrength(this.value)"> 
-      <!-- Indicador de seguridad --> 
-      <div id="strengthBar" style="height:6px; border-radius:3px; margin-top:5px; background:#222;"></div> 
-      <button type="submit">Crear cuenta</button> 
-    </form> 
-    <p id="errorRegister" style="color:red; text-align:center; display:none;"></p> 
-    <div class="toggle" onclick="showLogin()">¿Ya tienes cuenta? Inicia sesión</div> 
-  </div> 
+    <div class="card">
+      <h3>⚙️ Configuración</h3>
+      <p>Administra tu perfil y preferencias de la comunidad.</p>
+      <button onclick="alert('Aquí irá la configuración')">Abrir Configuración</button>
+    </div>
 
-  <!-- Firebase --> 
-  <script type="module"> 
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"; 
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"; 
+    <div class="card">
+      <h3>🚪 Sesión</h3>
+      <p>Salir de la comunidad de forma segura.</p>
+      <button class="logout" onclick="logout()">Cerrar Sesión</button>
+    </div>
+  </main>
 
-    // 🔥 Configura con TU proyecto Firebase 
-    const firebaseConfig = { 
-      apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg", 
-      authDomain: "comunidadpiura-fed53.firebaseapp.com", 
-      projectId: "comunidadpiura-fed53", 
-      storageBucket: "comunidadpiura-fed53.firebasestorage.app", 
-      messagingSenderId: "113288016871", 
-      appId: "1:113288016871:web:f94f6c6490bcdbca0bc342", 
-      measurementId: "G-68EYEMSET9" 
-    }; 
+  <footer>
+    © 2025 Comunidad - Todos los derechos reservados
+  </footer>
 
-    const app = initializeApp(firebaseConfig); 
-    const auth = getAuth(app); 
+  <script type="module">
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-    // Login 
-    document.getElementById("loginForm").addEventListener("submit", (e) => { 
-      e.preventDefault(); 
-      const email = document.getElementById("loginEmail").value; 
-      const password = document.getElementById("loginPassword").value; 
-      const remember = document.getElementById("rememberMe").checked; 
+    const firebaseConfig = {
+      apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
+      authDomain: "comunidadpiura-fed53.firebaseapp.com",
+      projectId: "comunidadpiura-fed53",
+      storageBucket: "comunidadpiura-fed53.firebasestorage.app",
+      messagingSenderId: "113288016871",
+      appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
+      measurementId: "G-68EYEMSET9"
+    };
 
-      if (remember) { 
-        setPersistence(auth, browserLocalPersistence).then(() => { 
-          return signInWithEmailAndPassword(auth, email, password); 
-        }).then(() => { 
-          window.location.href = "home.html"; 
-        }).catch(err => { 
-          document.getElementById("error").style.display = "block"; 
-          document.getElementById("error").innerText = err.message; 
-        }); 
-      } else { 
-        signInWithEmailAndPassword(auth, email, password) 
-          .then(() => window.location.href = "home.html") 
-          .catch(err => { 
-            document.getElementById("error").style.display = "block"; 
-            document.getElementById("error").innerText = err.message; 
-          }); 
-      } 
-    }); 
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-    // Registro 
-    document.getElementById("registerForm").addEventListener("submit", (e) => { 
-      e.preventDefault(); 
-      const email = document.getElementById("registerEmail").value; 
-      const password = document.getElementById("registerPassword").value; 
-      createUserWithEmailAndPassword(auth, email, password) 
-        .then(() => { 
-          window.location.href = "home.html"; 
-        }) 
-        .catch((error) => { 
-          document.getElementById("errorRegister").style.display = "block"; 
-          document.getElementById("errorRegister").innerText = error.message; 
-        }); 
-    }); 
-
-    // Pantallas con animación
-    function showRegister() { 
-      document.getElementById("loginBox").style.display = "none"; 
-      const box = document.getElementById("registerBox"); 
-      box.style.display = "block"; 
-      box.classList.add("fade"); 
-    } 
-    window.showRegister = showRegister; 
-
-    function showLogin() { 
-      document.getElementById("registerBox").style.display = "none"; 
-      const box = document.getElementById("loginBox"); 
-      box.style.display = "block"; 
-      box.classList.add("fade"); 
-    } 
-    window.showLogin = showLogin; 
-
-    // Loader con fade out
-    window.onload = function() { 
-      setTimeout(() => { 
-        const loader = document.getElementById('loader'); 
-        loader.style.opacity = "0"; 
-        setTimeout(() => { 
-          loader.style.display = 'none'; 
-          const box = document.getElementById('loginBox'); 
-          box.style.display = 'block'; 
-          box.classList.add("fade"); 
-        }, 1000); 
-      }, 2000); 
-    } 
-
-    // Mostrar / ocultar contraseña 
-    window.togglePassword = function(id) { 
-      const input = document.getElementById(id); 
-      input.type = input.type === "password" ? "text" : "password"; 
-    } 
-
-    // Indicador de fuerza de contraseña 
-    window.checkStrength = function(password) { 
-      const bar = document.getElementById("strengthBar"); 
-      let strength = 0; 
-      if (password.length > 5) strength++; 
-      if (/[A-Z]/.test(password)) strength++; 
-      if (/[0-9]/.test(password)) strength++; 
-      if (/[^A-Za-z0-9]/.test(password)) strength++; 
-
-      const colors = ["#ef4444","#f97316","#facc15","#22c55e"]; 
-      bar.style.background = colors[strength-1] || "#222"; 
-      bar.style.width = (strength*25) + "%"; 
-    } 
-
-    // Recuperar contraseña 
-    window.resetPassword = function() { 
-      const email = prompt("Ingresa tu correo para recuperar tu contraseña:"); 
-      if (email) { 
-        sendPasswordResetEmail(auth, email) 
-          .then(() => alert("Se ha enviado un enlace de recuperación a tu correo.")) 
-          .catch(err => alert(err.message)); 
-      } 
-    } 
-  </script> 
-</body> 
+    window.logout = function() {
+      signOut(auth).then(() => {
+        window.location.href = "index.html"; // vuelve al login
+      });
+    }
+  </script>
+</body>
 </html>
