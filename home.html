@@ -1,1 +1,214 @@
-:<!DOCTYPE html> <html lang="es"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Login - Comunidad</title> <style> body { margin: 0; font-family: Arial, sans-serif; background: #000000; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; } /* Pantalla de carga */ #loader { background: #000000; color: #000000; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000; display: flex; justify-content: center; align-items: center; flex-direction: column; z-index: 9999; } #loader img { width: 150px; height: 150px; /* 👈 mismo ancho y alto para mantener la forma circular */ border-radius: 50%; /* 👈 lo hace redondo */ object-fit: cover; /* 👈 evita deformación */ animation: spin 3s linear infinite; } @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } } /* Caja de login/registro */ .box { display: none; max-width: 350px; width: 90%; background: #000000; padding: 20px; border-radius: 12px; box-shadow: 0px 0px 20px rgba(0,0,0,0.5); background: #000000; color: #000000; } h2 { text-align: center; margin-bottom: 20px; color: #38bdf8; } input { width: 100%; padding: 10px; margin: 8px 0; border: none; border-radius: 8px; font-size: 14px; } button { width: 100%; padding: 12px; background: #38bdf8; color: #0f172a; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 10px; } button:hover { background: #0ea5e9; } .toggle { text-align: center; margin-top: 10px; font-size: 14px; cursor: pointer; color: #38bdf8; } #error { color: red; text-align: center; display: none; } </style> </head> <body> <!-- Pantalla de carga con logo girando --> <div id="loader"> <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcReMJly0vwqQtfircDFDpZwXu18Sd3bSMIOsRRLQyJ0irbFg3KC" alt="Logo"> </div> <!-- Caja de login --> <div id="loginBox" class="box"> <h2>Inicia Sesión</h2> <form id="loginForm"> <input type="email" id="loginEmail" placeholder="Tu correo" required> <input type="password" id="loginPassword" placeholder="Tu contraseña" required> <button type="submit">Ingresar</button> </form> <p id="error"></p> <div class="toggle" onclick="showRegister()">¿No tienes cuenta? Regístrate</div> </div> <!-- Caja de registro --> <div id="registerBox" class="box"> <h2>Regístrate</h2> <form id="registerForm"> <input type="email" id="registerEmail" placeholder="Tu correo" required> <input type="password" id="registerPassword" placeholder="Tu contraseña" required> <button type="submit">Crear cuenta</button> </form> <p id="errorRegister" style="color:red; text-align:center; display:none;"></p> <div class="toggle" onclick="showLogin()">¿Ya tienes cuenta? Inicia sesión</div> </div> <!-- Firebase --> <script type="module"> import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"; import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"; // 🔥 Configura con TU proyecto Firebase const firebaseConfig = { apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg", authDomain: "comunidadpiura-fed53.firebaseapp.com", projectId: "comunidadpiura-fed53", storageBucket: "comunidadpiura-fed53.firebasestorage.app", messagingSenderId: "113288016871", appId: "1:113288016871:web:f94f6c6490bcdbca0bc342", measurementId: "G-68EYEMSET9" }; const app = initializeApp(firebaseConfig); const auth = getAuth(app); // Login document.getElementById("loginForm").addEventListener("submit", (e) => { e.preventDefault(); const email = document.getElementById("loginEmail").value; const password = document.getElementById("loginPassword").value; signInWithEmailAndPassword(auth, email, password) .then(() => { window.location.href = "home.html"; }) .catch((error) => { document.getElementById("error").style.display = "block"; document.getElementById("error").innerText = error.message; }); }); // Registro document.getElementById("registerForm").addEventListener("submit", (e) => { e.preventDefault(); const email = document.getElementById("registerEmail").value; const password = document.getElementById("registerPassword").value; createUserWithEmailAndPassword(auth, email, password) .then(() => { window.location.href = "home.html"; }) .catch((error) => { document.getElementById("errorRegister").style.display = "block"; document.getElementById("errorRegister").innerText = error.message; }); }); // Pantallas function showRegister() { document.getElementById("loginBox").style.display = "none"; document.getElementById("registerBox").style.display = "block"; } window.showRegister = showRegister; function showLogin() { document.getElementById("registerBox").style.display = "none"; document.getElementById("loginBox").style.display = "block"; } window.showLogin = showLogin; // Loader window.onload = function() { setTimeout(() => { document.getElementById('loader').style.display = 'none'; document.getElementById('loginBox').style.display = 'block'; }, 2000); } </script> </body> </html>
+<!DOCTYPE html> 
+<html lang="es"> 
+<head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Login - Comunidad</title> 
+  <style> 
+    body { 
+      margin: 0; 
+      font-family: Arial, sans-serif; 
+      background: #000000; 
+      color: #fff; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      height: 100vh; 
+      overflow: hidden; 
+    } 
+
+    /* Pantalla de carga */
+    #loader { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: #000000; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      flex-direction: column; 
+      z-index: 9999; 
+      opacity: 1; 
+      transition: opacity 1s ease; /* 👈 transición de desvanecimiento */
+    } 
+
+    #loader img { 
+      width: 150px; 
+      height: 150px; 
+      border-radius: 50%; /* 👈 redondo */ 
+      object-fit: cover; /* 👈 evita deformación */ 
+      animation: spin 3s linear infinite; 
+    } 
+
+    @keyframes spin { 
+      from { transform: rotate(0deg); } 
+      to { transform: rotate(360deg); } 
+    } 
+
+    /* Caja de login/registro */ 
+    .box { 
+      display: none; 
+      max-width: 350px; 
+      width: 90%; 
+      background: #000000; 
+      padding: 20px; 
+      border-radius: 12px; 
+      box-shadow: 0px 0px 20px rgba(0,0,0,0.5); 
+      color: #000000; 
+    } 
+
+    h2 { 
+      text-align: center; 
+      margin-bottom: 20px; 
+      color: #38bdf8; 
+    } 
+
+    input { 
+      width: 100%; 
+      padding: 10px; 
+      margin: 8px 0; 
+      border: none; 
+      border-radius: 8px; 
+      font-size: 14px; 
+    } 
+
+    button { 
+      width: 100%; 
+      padding: 12px; 
+      background: #38bdf8; 
+      color: #0f172a; 
+      border: none; 
+      border-radius: 8px; 
+      font-size: 16px; 
+      cursor: pointer; 
+      margin-top: 10px; 
+    } 
+
+    button:hover { 
+      background: #0ea5e9; 
+    } 
+
+    .toggle { 
+      text-align: center; 
+      margin-top: 10px; 
+      font-size: 14px; 
+      cursor: pointer; 
+      color: #38bdf8; 
+    } 
+
+    #error { 
+      color: red; 
+      text-align: center; 
+      display: none; 
+    } 
+  </style> 
+</head> 
+<body> 
+
+  <!-- Pantalla de carga con logo girando --> 
+  <div id="loader"> 
+    <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcReMJly0vwqQtfircDFDpZwXu18Sd3bSMIOsRRLQyJ0irbFg3KC" alt="Logo"> 
+  </div> 
+
+  <!-- Caja de login --> 
+  <div id="loginBox" class="box"> 
+    <h2>Inicia Sesión</h2> 
+    <form id="loginForm"> 
+      <input type="email" id="loginEmail" placeholder="Tu correo" required> 
+      <input type="password" id="loginPassword" placeholder="Tu contraseña" required> 
+      <button type="submit">Ingresar</button> 
+    </form> 
+    <p id="error"></p> 
+    <div class="toggle" onclick="showRegister()">¿No tienes cuenta? Regístrate</div> 
+  </div> 
+
+  <!-- Caja de registro --> 
+  <div id="registerBox" class="box"> 
+    <h2>Regístrate</h2> 
+    <form id="registerForm"> 
+      <input type="email" id="registerEmail" placeholder="Tu correo" required> 
+      <input type="password" id="registerPassword" placeholder="Tu contraseña" required> 
+      <button type="submit">Crear cuenta</button> 
+    </form> 
+    <p id="errorRegister" style="color:red; text-align:center; display:none;"></p> 
+    <div class="toggle" onclick="showLogin()">¿Ya tienes cuenta? Inicia sesión</div> 
+  </div> 
+
+  <!-- Firebase --> 
+  <script type="module"> 
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"; 
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"; 
+
+    // 🔥 Configura con TU proyecto Firebase 
+    const firebaseConfig = { 
+      apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg", 
+      authDomain: "comunidadpiura-fed53.firebaseapp.com", 
+      projectId: "comunidadpiura-fed53", 
+      storageBucket: "comunidadpiura-fed53.firebasestorage.app", 
+      messagingSenderId: "113288016871", 
+      appId: "1:113288016871:web:f94f6c6490bcdbca0bc342", 
+      measurementId: "G-68EYEMSET9" 
+    }; 
+
+    const app = initializeApp(firebaseConfig); 
+    const auth = getAuth(app); 
+
+    // Login 
+    document.getElementById("loginForm").addEventListener("submit", (e) => { 
+      e.preventDefault(); 
+      const email = document.getElementById("loginEmail").value; 
+      const password = document.getElementById("loginPassword").value; 
+      signInWithEmailAndPassword(auth, email, password) 
+        .then(() => { 
+          window.location.href = "home.html"; 
+        }) 
+        .catch((error) => { 
+          document.getElementById("error").style.display = "block"; 
+          document.getElementById("error").innerText = error.message; 
+        }); 
+    }); 
+
+    // Registro 
+    document.getElementById("registerForm").addEventListener("submit", (e) => { 
+      e.preventDefault(); 
+      const email = document.getElementById("registerEmail").value; 
+      const password = document.getElementById("registerPassword").value; 
+      createUserWithEmailAndPassword(auth, email, password) 
+        .then(() => { 
+          window.location.href = "home.html"; 
+        }) 
+        .catch((error) => { 
+          document.getElementById("errorRegister").style.display = "block"; 
+          document.getElementById("errorRegister").innerText = error.message; 
+        }); 
+    }); 
+
+    // Pantallas 
+    function showRegister() { 
+      document.getElementById("loginBox").style.display = "none"; 
+      document.getElementById("registerBox").style.display = "block"; 
+    } 
+    window.showRegister = showRegister; 
+
+    function showLogin() { 
+      document.getElementById("registerBox").style.display = "none"; 
+      document.getElementById("loginBox").style.display = "block"; 
+    } 
+    window.showLogin = showLogin; 
+
+    // Loader con fade out
+    window.onload = function() { 
+      setTimeout(() => { 
+        const loader = document.getElementById('loader'); 
+        loader.style.opacity = "0"; 
+        setTimeout(() => { 
+          loader.style.display = 'none'; 
+          document.getElementById('loginBox').style.display = 'block'; 
+        }, 1000); // espera al fade out
+      }, 2000); 
+    } 
+  </script> 
+</body> 
+</html>
