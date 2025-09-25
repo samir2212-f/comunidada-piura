@@ -3,136 +3,168 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Comunidad - Inicio</title>
+  <title>Comunidad - Home</title>
   <style>
+    /* Fondo general degradado */
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #9333ea, #581c87);
       color: #fff;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
     }
 
     header {
-      background: #1e293b;
-      padding: 15px;
-      text-align: center;
-      font-size: 20px;
-      font-weight: bold;
-      color: #38bdf8;
-      box-shadow: 0px 2px 10px rgba(0,0,0,0.5);
       position: relative;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    /* Botón de cerrar sesión arriba a la derecha */
-    .logout {
-      position: absolute;
-      top: 50%;
-      right: 20px;
-      transform: translateY(-50%);
-      padding: 8px 16px;
-      background: #ef4444;
+    header h1 {
+      font-size: 28px;
+      font-weight: bold;
       color: #fff;
+    }
+
+    /* Botón cerrar sesión arriba derecha */
+    .logout-btn {
+      background: #ef4444;
       border: none;
-      border-radius: 8px;
+      padding: 10px 18px;
+      border-radius: 20px;
       cursor: pointer;
       font-size: 14px;
-      transition: background 0.2s ease;
+      font-weight: bold;
+      color: #fff;
+      transition: background 0.3s;
     }
-    .logout:hover {
+    .logout-btn:hover {
       background: #dc2626;
     }
 
-    main {
-      flex: 1;
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: #1e293b;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0px 4px 15px rgba(0,0,0,0.4);
+    /* Hero principal */
+    .hero {
       text-align: center;
-      transition: transform 0.2s ease;
+      padding: 80px 20px;
     }
-
-    .card:hover {
+    .hero h2 {
+      font-size: 40px;
+      margin-bottom: 15px;
+    }
+    .hero p {
+      font-size: 18px;
+      color: #ddd;
+      margin-bottom: 25px;
+    }
+    .hero button {
+      background: linear-gradient(90deg, #38bdf8, #10b981);
+      border: none;
+      padding: 14px 28px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      color: #0f172a;
+      transition: transform 0.2s;
+    }
+    .hero button:hover {
       transform: scale(1.05);
     }
 
-    .card h3 {
-      margin-bottom: 15px;
-      color: #38bdf8;
+    /* Tarjetas de sorteos */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+      padding: 40px;
     }
-
-    button {
-      padding: 10px 20px;
+    .card {
+      background: #1e1b4b;
+      padding: 25px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0px 6px 20px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+    }
+    .card h3 {
+      color: #38bdf8;
+      margin-bottom: 15px;
+    }
+    .card p {
+      font-size: 14px;
+      color: #bbb;
+      margin-bottom: 20px;
+    }
+    .card button {
       background: #38bdf8;
       border: none;
-      border-radius: 8px;
+      padding: 10px 20px;
+      border-radius: 10px;
       cursor: pointer;
-      font-size: 14px;
+      font-weight: bold;
       color: #0f172a;
-      transition: background 0.2s ease;
     }
-
-    button:hover {
+    .card button:hover {
       background: #0ea5e9;
     }
 
+    /* Footer */
     footer {
-      background: #1e293b;
       text-align: center;
-      padding: 10px;
+      padding: 20px;
       font-size: 14px;
+      background: #111827;
       color: #94a3b8;
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
+  <!-- Header con título y logout -->
   <header>
-    🎉 Comunidad - Panel de Sorteos
-    <button class="logout" onclick="logout()">Cerrar Sesión</button>
+    <h1>🎉 Comunidad de Sorteos</h1>
+    <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
   </header>
 
-  <main>
+  <!-- Hero -->
+  <section class="hero">
+    <h2>Únete y participa en sorteos increíbles</h2>
+    <p>Beneficios exclusivos, premios cada semana y experiencias VIP</p>
+    <button>🔥 Ver Premios</button>
+  </section>
+
+  <!-- Tarjetas -->
+  <section class="cards">
     <div class="card">
       <h3>🎲 Sorteo Rápido</h3>
       <p>Genera un ganador al instante entre los participantes.</p>
-      <button onclick="alert('Aquí irá el sorteo rápido')">Iniciar Sorteo</button>
+      <button>Iniciar</button>
     </div>
 
     <div class="card">
       <h3>🏆 Sorteo de Premios</h3>
-      <p>Ideal para rifas con varios premios y categorías.</p>
-      <button onclick="alert('Aquí irá el sorteo de premios')">Ver Premios</button>
+      <p>Participa en rifas con múltiples categorías y premios.</p>
+      <button>Ver más</button>
     </div>
 
     <div class="card">
       <h3>🎯 Ruleta</h3>
       <p>Haz girar la ruleta y descubre al ganador de forma divertida.</p>
-      <button onclick="alert('Aquí irá la ruleta')">Girar Ruleta</button>
+      <button>Girar</button>
     </div>
 
     <div class="card">
-      <h3>📋 Lista de Participantes</h3>
-      <p>Gestiona los nombres o correos de los participantes.</p>
-      <button onclick="alert('Aquí irá la lista de participantes')">Ver Lista</button>
+      <h3>📋 Participantes</h3>
+      <p>Gestiona nombres o correos de los participantes.</p>
+      <button>Ver lista</button>
     </div>
+  </section>
 
-    <div class="card">
-      <h3>⚙️ Configuración</h3>
-      <p>Administra tu perfil y preferencias de la comunidad.</p>
-      <button onclick="alert('Aquí irá la configuración')">Abrir Configuración</button>
-    </div>
-  </main>
-
+  <!-- Footer -->
   <footer>
     © 2025 Comunidad - Todos los derechos reservados
   </footer>
