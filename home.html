@@ -31,14 +31,14 @@
       flex-direction: column; 
       z-index: 9999; 
       opacity: 1; 
-      transition: opacity 1s ease; /* 👈 transición de desvanecimiento */
+      transition: opacity 1s ease; 
     } 
 
     #loader img { 
       width: 150px; 
       height: 150px; 
-      border-radius: 50%; /* 👈 redondo */ 
-      object-fit: cover; /* 👈 evita deformación */ 
+      border-radius: 50%; 
+      object-fit: cover; 
       animation: spin 3s linear infinite; 
     } 
 
@@ -103,6 +103,15 @@
       text-align: center; 
       display: none; 
     } 
+
+    /* Animación de transición */
+    .fade { 
+      animation: fadeIn 0.5s ease; 
+    } 
+    @keyframes fadeIn { 
+      from { opacity: 0; transform: scale(0.95); } 
+      to { opacity: 1; transform: scale(1); } 
+    } 
   </style> 
 </head> 
 <body> 
@@ -117,11 +126,21 @@
     <h2>Inicia Sesión</h2> 
     <form id="loginForm"> 
       <input type="email" id="loginEmail" placeholder="Tu correo" required> 
-      <input type="password" id="loginPassword" placeholder="Tu contraseña" required> 
+      <!-- Mostrar/ocultar contraseña --> 
+      <div style="position: relative;"> 
+        <input type="password" id="loginPassword" placeholder="Tu contraseña" required> 
+        <span onclick="togglePassword('loginPassword')" 
+              style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; color:#38bdf8;">👁️</span> 
+      </div> 
+      <!-- Recordar sesión --> 
+      <label style="font-size:13px; color:#38bdf8;"> 
+        <input type="checkbox" id="rememberMe"> Mantenerme conectado 
+      </label> 
       <button type="submit">Ingresar</button> 
     </form> 
     <p id="error"></p> 
     <div class="toggle" onclick="showRegister()">¿No tienes cuenta? Regístrate</div> 
+    <div class="toggle" onclick="resetPassword()">¿Olvidaste tu contraseña?</div> 
   </div> 
 
   <!-- Caja de registro --> 
@@ -129,7 +148,9 @@
     <h2>Regístrate</h2> 
     <form id="registerForm"> 
       <input type="email" id="registerEmail" placeholder="Tu correo" required> 
-      <input type="password" id="registerPassword" placeholder="Tu contraseña" required> 
+      <input type="password" id="registerPassword" placeholder="Tu contraseña" required oninput="checkStrength(this.value)"> 
+      <!-- Indicador de seguridad --> 
+      <div id="strengthBar" style="height:6px; border-radius:3px; margin-top:5px; background:#222;"></div> 
       <button type="submit">Crear cuenta</button> 
     </form> 
     <p id="errorRegister" style="color:red; text-align:center; display:none;"></p> 
@@ -139,7 +160,7 @@
   <!-- Firebase --> 
   <script type="module"> 
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"; 
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"; 
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"; 
 
     // 🔥 Configura con TU proyecto Firebase 
     const firebaseConfig = { 
@@ -160,14 +181,25 @@
       e.preventDefault(); 
       const email = document.getElementById("loginEmail").value; 
       const password = document.getElementById("loginPassword").value; 
-      signInWithEmailAndPassword(auth, email, password) 
-        .then(() => { 
+      const remember = document.getElementById("rememberMe").checked; 
+
+      if (remember) { 
+        setPersistence(auth, browserLocalPersistence).then(() => { 
+          return signInWithEmailAndPassword(auth, email, password); 
+        }).then(() => { 
           window.location.href = "home.html"; 
-        }) 
-        .catch((error) => { 
+        }).catch(err => { 
           document.getElementById("error").style.display = "block"; 
-          document.getElementById("error").innerText = error.message; 
+          document.getElementById("error").innerText = err.message; 
         }); 
+      } else { 
+        signInWithEmailAndPassword(auth, email, password) 
+          .then(() => window.location.href = "home.html") 
+          .catch(err => { 
+            document.getElementById("error").style.display = "block"; 
+            document.getElementById("error").innerText = err.message; 
+          }); 
+      } 
     }); 
 
     // Registro 
@@ -185,16 +217,20 @@
         }); 
     }); 
 
-    // Pantallas 
+    // Pantallas con animación
     function showRegister() { 
       document.getElementById("loginBox").style.display = "none"; 
-      document.getElementById("registerBox").style.display = "block"; 
+      const box = document.getElementById("registerBox"); 
+      box.style.display = "block"; 
+      box.classList.add("fade"); 
     } 
     window.showRegister = showRegister; 
 
     function showLogin() { 
       document.getElementById("registerBox").style.display = "none"; 
-      document.getElementById("loginBox").style.display = "block"; 
+      const box = document.getElementById("loginBox"); 
+      box.style.display = "block"; 
+      box.classList.add("fade"); 
     } 
     window.showLogin = showLogin; 
 
@@ -205,9 +241,41 @@
         loader.style.opacity = "0"; 
         setTimeout(() => { 
           loader.style.display = 'none'; 
-          document.getElementById('loginBox').style.display = 'block'; 
-        }, 1000); // espera al fade out
+          const box = document.getElementById('loginBox'); 
+          box.style.display = 'block'; 
+          box.classList.add("fade"); 
+        }, 1000); 
       }, 2000); 
+    } 
+
+    // Mostrar / ocultar contraseña 
+    window.togglePassword = function(id) { 
+      const input = document.getElementById(id); 
+      input.type = input.type === "password" ? "text" : "password"; 
+    } 
+
+    // Indicador de fuerza de contraseña 
+    window.checkStrength = function(password) { 
+      const bar = document.getElementById("strengthBar"); 
+      let strength = 0; 
+      if (password.length > 5) strength++; 
+      if (/[A-Z]/.test(password)) strength++; 
+      if (/[0-9]/.test(password)) strength++; 
+      if (/[^A-Za-z0-9]/.test(password)) strength++; 
+
+      const colors = ["#ef4444","#f97316","#facc15","#22c55e"]; 
+      bar.style.background = colors[strength-1] || "#222"; 
+      bar.style.width = (strength*25) + "%"; 
+    } 
+
+    // Recuperar contraseña 
+    window.resetPassword = function() { 
+      const email = prompt("Ingresa tu correo para recuperar tu contraseña:"); 
+      if (email) { 
+        sendPasswordResetEmail(auth, email) 
+          .then(() => alert("Se ha enviado un enlace de recuperación a tu correo.")) 
+          .catch(err => alert(err.message)); 
+      } 
     } 
   </script> 
 </body> 
