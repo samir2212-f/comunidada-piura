@@ -19,8 +19,6 @@
 
     /* Pantalla de carga */
     #loader {
-      background: #000000;
-      color: #000000;
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
@@ -32,15 +30,13 @@
       z-index: 9999;
     }
 
-  
-  #loader img {
-    width: 150px;
-    height: 150px; /* 👈 mismo ancho y alto para mantener la forma circular */
-    border-radius: 50%; /* 👈 lo hace redondo */
-    object-fit: cover; /* 👈 evita deformación */
-    animation: spin 3s linear infinite;
-  }
-
+    #loader img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      animation: spin 3s linear infinite;
+    }
 
     @keyframes spin {
       from { transform: rotate(0deg); }
@@ -56,8 +52,6 @@
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
-      background: #000000;
-      color: #000000;
     }
 
     h2 {
@@ -107,10 +101,10 @@
   </style>
 </head>
 <body>
-  <!-- Pantalla de carga con logo girando -->
+  <!-- Pantalla de carga -->
   <div id="loader">
-  <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcReMJly0vwqQtfircDFDpZwXu18Sd3bSMIOsRRLQyJ0irbFg3KC" alt="Logo">
-</div>
+    <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcReMJly0vwqQtfircDFDpZwXu18Sd3bSMIOsRRLQyJ0irbFg3KC" alt="Logo">
+  </div>
 
   <!-- Caja de login -->
   <div id="loginBox" class="box">
@@ -142,16 +136,16 @@
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } 
       from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    // 🔥 Configura con TU proyecto Firebase
+    // Configuración Firebase
     const firebaseConfig = {
-  apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
-  authDomain: "comunidadpiura-fed53.firebaseapp.com",
-  projectId: "comunidadpiura-fed53",
-  storageBucket: "comunidadpiura-fed53.firebasestorage.app",
-  messagingSenderId: "113288016871",
-  appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
-  measurementId: "G-68EYEMSET9"
-};
+      apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
+      authDomain: "comunidadpiura-fed53.firebaseapp.com",
+      projectId: "comunidadpiura-fed53",
+      storageBucket: "comunidadpiura-fed53.firebasestorage.app",
+      messagingSenderId: "113288016871",
+      appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
+      measurementId: "G-68EYEMSET9"
+    };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
