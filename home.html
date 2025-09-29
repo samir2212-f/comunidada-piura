@@ -9,6 +9,77 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   
   <style>
+
+      footer {
+    background-color: #3a0f59; /* un morado oscuro */
+    color: white;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+  }
+  .footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: auto;
+  }
+  .footer-section {
+    flex: 1 1 300px;
+    margin: 10px 20px;
+  }
+  footer h4 {
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  .footer-section a {
+    color: white;
+    text-decoration: underline;
+  }
+  .footer-section a:hover {
+    color: #ff0000; /* rojo brillante */
+  }
+  ul {
+    padding-left: 20px;
+  }
+  ul li {
+    margin-bottom: 10px;
+  }
+  .certificados {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .certificados img {
+    height: 50px;
+  }
+  .footer-section.redes {
+    text-align: center;
+  }
+  .footer-section.redes .logo {
+    width: 120px;
+    margin-bottom: 10px;
+  }
+  .social-icons a {
+    color: white;
+    font-size: 22px;
+    margin: 0 8px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .social-icons a:hover {
+    color: #ff0000; /* rojo brillante */
+  }
+  @media (max-width: 768px) {
+    .footer-container {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .footer-section {
+      margin: 20px 0;
+    }
+  }
     /* Reset */
     * {
       box-sizing: border-box;
@@ -398,5 +469,46 @@
       return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
     }
   </script>
+
+  <footer>
+  <div class="footer-container">
+    <div class="footer-section contacto">
+      <h4>Contactanos</h4>
+      <p>✈️ Escribenos a <a href="https://t.me/nohaysinsuerte" target="_blank">@nohaysinsuerte</a></p>
+      <p>✉️ Escríbenos a: <a href="mailto:soporte@nohaysinsuerte.com">soporte@nohaysinsuerte.com</a></p>
+      <p>Horario: L-V de 9 a 6pm | Sáb. de 9am a 2pm</p>
+      <p>❓ ¿Dudas? Revisa <a href="#">Preguntas Frecuentes.</a></p>
+      <p><strong>LIBRO DE RECLAMACIONES AQUÍ</strong><br>
+      RUC: 20611347716<br>
+      DAME TU PLATA S.A.C</p>
+    </div>
+
+    <div class="footer-section legal">
+      <h4>Información legal</h4>
+      <ul>
+        <li><a href="#">Términos y condiciones</a></li>
+        <li><a href="#">Políticas de privacidad</a></li>
+        <li><a href="#">Política de sistema de gestión de calidad</a></li>
+        <li><a href="#">Política de cookies</a></li>
+        <li><a href="#">Reglamento</a></li>
+      </ul>
+      <div class="certificados">
+        <span>Certificados por:</span>
+        <img src="ruta/a/tu/imagen-aenor.png" alt="Certificado AENOR" />
+      </div>
+    </div>
+
+    <div class="footer-section redes">
+      <img class="logo" src="/mnt/data/c464a036-a7d5-40f9-9d39-4fd60a6985e3.png" alt="Logo No Hay Sin Suerte" />
+      <div class="social-icons">
+        <a href="#" aria-label="Whatsapp"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+      </div>
+      <p>© 2025 Todos los derechos reservados</p>
+    </div>
+  </div>
+</footer>
 </body>
 </html>
