@@ -25,7 +25,7 @@
       align-items: center;
       padding: 15px 40px;
       background-color: #111;
-      border-bottom: 2px solid red;
+      border-bottom: 2px solid #a64dff; /* Morado amigable */
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -44,19 +44,19 @@
       cursor: pointer;
     }
     nav a:hover {
-      color: red;
-      border-bottom: 2px solid red;
+      color: #a64dff;
+      border-bottom: 2px solid #a64dff;
     }
 
     /* Banner (Hero) */
     .banner {
-      background: linear-gradient(to right, #111, #330000);
+      background: linear-gradient(to right, #111, #3a0f59);
       text-align: center;
       padding: 80px 20px 60px;
     }
     .banner h1 {
       font-size: 42px;
-      color: red;
+      color: #a64dff;
       margin-bottom: 15px;
     }
     .banner p {
@@ -66,7 +66,7 @@
       line-height: 1.6;
     }
 
-    /* Carrusel */
+    /* Carrusel horizontal (botones) */
     .carousel-wrapper {
       width: 100vw;
       overflow-x: hidden;
@@ -88,8 +88,8 @@
       min-width: 250px;
       height: 150px;
       border-radius: 15px;
-      background: linear-gradient(135deg, #330000, #660000);
-      box-shadow: 0 4px 15px rgba(255, 0, 0, 0.5);
+      background: linear-gradient(135deg, #3a0f59, #6a0dad);
+      box-shadow: 0 4px 15px rgba(166, 77, 255, 0.5);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -101,8 +101,25 @@
       transition: background 0.3s ease;
     }
     .carousel-item:hover {
-      background: linear-gradient(135deg, #ff0000, #cc0000);
-      box-shadow: 0 6px 25px rgba(255, 0, 0, 0.9);
+      background: linear-gradient(135deg, #a64dff, #7a1fa2);
+      box-shadow: 0 6px 25px rgba(166, 77, 255, 0.9);
+    }
+
+    /* Carrusel de imágenes */
+    .image-carousel {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      margin: 50px 0;
+    }
+    .image-carousel img {
+      width: 100%;
+      display: none;
+      height: 400px;
+      object-fit: cover;
+    }
+    .image-carousel img.active {
+      display: block;
     }
 
     /* Contenido principal */
@@ -115,7 +132,7 @@
     .content h2 {
       font-size: 28px;
       margin-bottom: 15px;
-      color: red;
+      color: #a64dff;
     }
     .content p {
       font-size: 18px;
@@ -152,7 +169,7 @@
       cursor: pointer;
     }
     .footer-section a:hover {
-      color: #ff0000; /* rojo brillante */
+      color: #a64dff; /* morado amigable */
     }
     ul {
       padding-left: 20px;
@@ -188,7 +205,7 @@
       transition: color 0.3s ease;
     }
     .social-icons a:hover {
-      color: #ff0000;
+      color: #a64dff;
     }
 
     @media (max-width: 768px) {
@@ -222,7 +239,7 @@
     <p>Un espacio creado para unir, compartir y disfrutar entre todos los miembros que forman parte de esta gran familia.</p>
   </section>
 
-  <!-- Carrusel -->
+  <!-- Carrusel horizontal -->
   <div class="carousel-wrapper">
     <div id="carousel-track">
       <div class="carousel-item" onclick="alert('Sorteo Rápido')">🎲 Sorteo Rápido</div>
@@ -245,6 +262,13 @@
       miembros. Aquí encontrarás actividades, sorpresas y un espacio que pertenece a cada uno de ustedes.
     </p>
   </section>
+
+  <!-- Carrusel de imágenes -->
+  <div class="image-carousel" id="image-carousel">
+    <img src="https://picsum.photos/1920/400?random=1" class="active" alt="Imagen 1">
+    <img src="https://picsum.photos/1920/400?random=2" alt="Imagen 2">
+    <img src="https://picsum.photos/1920/400?random=3" alt="Imagen 3">
+  </div>
 
   <!-- Footer -->
   <footer>
@@ -279,26 +303,10 @@
       <div class="footer-section redes">
         <img class="logo" src="/mnt/data/c464a036-a7d5-40f9-9d39-4fd60a6985e3.png" alt="Logo No Hay Sin Suerte" />
         <div class="social-icons">
-          <a href="#" aria-label="Whatsapp" title="Whatsapp">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="white" height="22" viewBox="0 0 24 24" width="22">
-              <path d="M.057 24l1.687-6.163a11.947 11.947 0 0 1-1.62-6.002C.122 5.355 5.48 0 12.066 0 18.655 0 24 5.355 24 11.834c0 6.48-5.345 11.835-11.934 11.835a11.89 11.89 0 0 1-6.222-1.814L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.393 1.591 5.448 0 9.886-4.444 9.886-9.886 0-5.447-4.438-9.887-9.886-9.887-5.448 0-9.886 4.44-9.886 9.887 0 2.23.738 3.891 1.987 5.13l-.699 2.592 2.31-.664zm10.457-5.464c-.149-.247-.537-.398-1.124-.697-.587-.3-3.484-1.718-4.025-1.914-.54-.198-.93-.3-1.322.3-.393.6-1.5 1.913-1.837 2.303-.338.39-.677.438-1.263.15-.587-.3-2.484-.916-4.734-2.922-1.75-1.56-2.93-3.484-3.273-4.07-.343-.586-.037-.9.26-1.2.266-.267.587-.695.88-1.04.294-.345.39-.59.59-.983.2-.393.1-.737-.05-1.036-.15-.3-1.322-3.184-1.8-4.355-.473-1.144-.955-1.003-1.322-1.02-.338-.018-.73-.018-1.12-.018s-1.036.15-1.577.737c-.54.59-2.06 2.015-2.06 4.9 0 2.887 2.11 5.683 2.404 6.076.294.39 4.153 6.34 10.068 8.887.377.162.67.258.9.33.378.12.72.103.99.063.3-.043.93-.38 1.06-.75.13-.374.13-.695.093-.75z" />
-            </svg>
-          </a>
-          <a href="#" aria-label="Instagram" title="Instagram">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="white" height="22" viewBox="0 0 24 24" width="22">
-              <path d="M7.75 2h8.5C19.55 2 22 4.46 22 7.75v8.5c0 3.29-2.45 5.75-5.75 5.75h-8.5C4.46 22 2 19.54 2 16.25v-8.5C2 4.46 4.46 2 7.75 2zm0 2C5.68 4 4 5.68 4 7.75v8.5C4 18.32 5.68 20 7.75 20h8.5c2.07 0 3.75-1.68 3.75-3.75v-8.5c0-2.07-1.68-3.75-3.75-3.75h-8.5zm8.25 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm-4.25 1a4.25 4.25 0 1 1 0 8.5 4.25 4.25 0 0 1 0-8.5z" />
-            </svg>
-          </a>
-          <a href="#" aria-label="Facebook" title="Facebook">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="white" height="22" viewBox="0 0 24 24" width="22">
-              <path d="M22 12a10 10 0 1 0-11.54 9.87v-6.99h-3v-2.88h3v-2.2c0-3 1.79-4.66 4.53-4.66 1.31 0 2.69.24 2.69.24v3h-1.51c-1.49 0-1.96.92-1.96 1.87v2.25h3.33l-.53 2.88h-2.8v6.99A10 10 0 0 0 22 12z" />
-            </svg>
-          </a>
-          <a href="#" aria-label="TikTok" title="TikTok">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="white" height="22" viewBox="0 0 24 24" width="22">
-              <path d="M9 3v12.55a3.45 3.45 0 0 0 3.95 3.4 3.35 3.35 0 0 0 1.6-.46v-4.07a6.39 6.39 0 0 1-2.6.49V8.47h4.52V3H9z" />
-            </svg>
-          </a>
+          <a href="#" aria-label="Whatsapp" title="Whatsapp">📱</a>
+          <a href="#" aria-label="Instagram" title="Instagram">📸</a>
+          <a href="#" aria-label="Facebook" title="Facebook">📘</a>
+          <a href="#" aria-label="TikTok" title="TikTok">🎵</a>
         </div>
         <p>© 2025 Todos los derechos reservados</p>
       </div>
@@ -309,7 +317,6 @@
     // Logout dummy function
     function logout() {
       alert('Cerrando sesión...');
-      // Aquí pondrías la lógica real para cerrar sesión
     }
 
     // Carousel drag & swipe
@@ -320,27 +327,20 @@
 
     carousel.addEventListener('mousedown', (e) => {
       isDown = true;
-      carousel.classList.add('active');
       startX = e.pageX - carousel.offsetLeft;
       scrollLeft = carousel.scrollLeft;
     });
-    carousel.addEventListener('mouseleave', () => {
-      isDown = false;
-      carousel.classList.remove('active');
-    });
-    carousel.addEventListener('mouseup', () => {
-      isDown = false;
-      carousel.classList.remove('active');
-    });
+    carousel.addEventListener('mouseleave', () => isDown = false);
+    carousel.addEventListener('mouseup', () => isDown = false);
     carousel.addEventListener('mousemove', (e) => {
       if (!isDown) return;
       e.preventDefault();
       const x = e.pageX - carousel.offsetLeft;
-      const walk = (x - startX) * 2; // scroll-fast
+      const walk = (x - startX) * 2;
       carousel.scrollLeft = scrollLeft - walk;
     });
 
-    // Touch support for mobile
+    // Touch support
     carousel.addEventListener('touchstart', (e) => {
       startX = e.touches[0].pageX - carousel.offsetLeft;
       scrollLeft = carousel.scrollLeft;
@@ -350,6 +350,15 @@
       const walk = (x - startX) * 2;
       carousel.scrollLeft = scrollLeft - walk;
     });
+
+    // Carrusel automático de imágenes
+    const imgs = document.querySelectorAll("#image-carousel img");
+    let index = 0;
+    setInterval(() => {
+      imgs[index].classList.remove("active");
+      index = (index + 1) % imgs.length;
+      imgs[index].classList.add("active");
+    }, 4000);
   </script>
 </body>
 </html>
