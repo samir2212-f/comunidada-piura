@@ -18,30 +18,18 @@ body {
   overflow-x: hidden;
 }
 
-/* Scrollbar personalizada */
-::-webkit-scrollbar {
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #111;
-}
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #a64dff, #ff4db8);
-  border-radius: 5px;
-}
-
 /* Header */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
-  background: rgba(15, 15, 15, 0.95);
+  background: rgba(15, 15, 15, 0.7);
   border-bottom: 2px solid #a64dff;
-  box-shadow: 0 0 15px rgba(166, 77, 255, 0.4);
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 1000;
+  width: 100%;
+  z-index: 2000;
   backdrop-filter: blur(6px);
 }
 header img {
@@ -74,29 +62,42 @@ nav a:hover::after {
   width: 100%;
 }
 
-/* Banner (Hero) */
+/* Banner con carrusel */
 .banner {
-  background: linear-gradient(120deg, #111, #3a0f59, #a64dff);
-  text-align: center;
-  padding: 90px 20px 70px;
   position: relative;
+  height: 100vh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
-.banner::before {
+.banner-carousel img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+.banner-carousel img.active {
+  display: block;
+  animation: fadeIn 1.5s ease;
+}
+.banner::after {
   content: "";
   position: absolute;
-  width: 200%;
-  height: 200%;
-  top: -50%;
-  left: -50%;
-  background: conic-gradient(from 180deg, transparent, rgba(166,77,255,0.2), transparent);
-  animation: rotate 8s linear infinite;
+  inset: 0;
+  background: rgba(0,0,0,0.6); /* Oscurece imágenes */
 }
-@keyframes rotate {
-  100% { transform: rotate(360deg); }
+.banner h1, .banner p {
+  position: relative;
+  z-index: 5;
 }
 .banner h1 {
-  font-size: 48px;
+  font-size: 52px;
   color: #fff;
   text-shadow: 0 0 15px #a64dff;
   margin-bottom: 20px;
@@ -109,58 +110,6 @@ nav a:hover::after {
   color: #ddd;
 }
 
-/* Carrusel horizontal (botones) */
-.carousel-wrapper {
-  width: 100%;
-  margin: 50px 0;
-  overflow-x: hidden;
-}
-#carousel-track {
-  display: flex;
-  gap: 20px;
-  padding: 0 20px;
-  transition: transform 0.3s ease;
-  cursor: grab;
-}
-.carousel-item {
-  min-width: 260px;
-  height: 160px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #3a0f59, #6a0dad);
-  box-shadow: 0 0 20px rgba(166, 77, 255, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  color: #fff;
-  font-weight: 700;
-  transition: all 0.4s ease;
-}
-.carousel-item:hover {
-  transform: scale(1.05);
-  background: linear-gradient(135deg, #a64dff, #ff4db8);
-  box-shadow: 0 0 25px rgba(255, 77, 184, 0.8);
-}
-
-/* Carrusel de imágenes */
-.image-carousel {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  margin: 60px 0;
-  border-radius: 15px;
-  box-shadow: 0 0 25px rgba(166, 77, 255, 0.5);
-}
-.image-carousel img {
-  width: 100%;
-  display: none;
-  height: 420px;
-  object-fit: cover;
-}
-.image-carousel img.active {
-  display: block;
-  animation: fadeIn 1s ease;
-}
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -169,7 +118,7 @@ nav a:hover::after {
 /* Contenido principal */
 .content {
   max-width: 1000px;
-  margin: 0 auto 70px;
+  margin: 80px auto;
   padding: 0 20px;
   text-align: center;
 }
@@ -192,7 +141,6 @@ footer {
   color: white;
   padding: 50px 20px;
   border-top: 2px solid #a64dff;
-  box-shadow: 0 -4px 20px rgba(166, 77, 255, 0.4);
 }
 .footer-container {
   display: flex;
@@ -219,15 +167,6 @@ footer h4 {
 .footer-section a:hover {
   color: #a64dff;
 }
-.certificados {
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.certificados img {
-  height: 50px;
-}
 .footer-section.redes {
   text-align: center;
 }
@@ -236,31 +175,15 @@ footer h4 {
   margin-bottom: 15px;
   filter: drop-shadow(0 0 10px #a64dff);
 }
-.social-icons {
-  margin-bottom: 15px;
-}
 .social-icons a {
   font-size: 24px;
   margin: 0 10px;
-  text-decoration: none;
   transition: transform 0.3s, color 0.3s;
 }
 .social-icons a:hover {
   transform: scale(1.2);
   color: #ff4db8;
 }
-
-@media (max-width: 768px) {
-  .footer-container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .footer-section {
-    margin: 20px 0;
-  }
-}
-
   </style>
 </head>
 <body>
@@ -276,14 +199,16 @@ footer h4 {
     </nav>
   </header>
 
-  <!-- Banner -->
+  <!-- Banner con carrusel de fondo -->
   <section class="banner">
+    <div class="banner-carousel" id="banner-carousel">
+      <img src="https://picsum.photos/1920/1080?random=1" class="active" alt="Imagen 1">
+      <img src="https://picsum.photos/1920/1080?random=2" alt="Imagen 2">
+      <img src="https://picsum.photos/1920/1080?random=3" alt="Imagen 3">
+    </div>
     <h1>Bienvenido a Comunidad Piura</h1>
     <p>Un espacio creado para unir, compartir y disfrutar entre todos los miembros que forman parte de esta gran familia.</p>
   </section>
-
-  <!-- Carrusel de imaguenes con movimiento en celular tactil horizontal -->
-  
 
   <!-- Contenido principal -->
   <section class="content">
@@ -299,26 +224,14 @@ footer h4 {
     </p>
   </section>
 
-  <!-- Carrusel de imágenes -->
-  <div class="image-carousel" id="image-carousel">
-    <img src="https://picsum.photos/1920/400?random=1" class="active" alt="Imagen 1">
-    <img src="https://picsum.photos/1920/400?random=2" alt="Imagen 2">
-    <img src="https://picsum.photos/1920/400?random=3" alt="Imagen 3">
-  </div>
-
   <!-- Footer -->
   <footer>
     <div class="footer-container">
       <div class="footer-section contacto">
         <h4>Contactanos</h4>
-        <p>✈️ Escribenos a <a href="https://t.me/nohaysinsuerte" target="_blank" rel="noopener noreferrer">@nohaysinsuerte</a></p>
+        <p>✈️ Escribenos a <a href="https://t.me/nohaysinsuerte" target="_blank">@nohaysinsuerte</a></p>
         <p>✉️ Escríbenos a: <a href="mailto:soporte@nohaysinsuerte.com">soporte@nohaysinsuerte.com</a></p>
         <p>Horario: L-V de 9 a 6pm | Sáb. de 9am a 2pm</p>
-        <p>❓ ¿Dudas? Revisa <a href="#">Preguntas Frecuentes.</a></p>
-        <p><strong>LIBRO DE RECLAMACIONES AQUÍ</strong><br />
-          RUC: 20611347716<br />
-          DAME TU PLATA S.A.C
-        </p>
       </div>
 
       <div class="footer-section legal">
@@ -326,23 +239,17 @@ footer h4 {
         <ul>
           <li><a href="#">Términos y condiciones</a></li>
           <li><a href="#">Políticas de privacidad</a></li>
-          <li><a href="#">Política de sistema de gestión de calidad</a></li>
           <li><a href="#">Política de cookies</a></li>
-          <li><a href="#">Reglamento</a></li>
         </ul>
-        <div class="certificados">
-          <span>Certificados por:</span>
-          <img src="ruta/a/tu/imagen-aenor.png" alt="Certificado AENOR" />
-        </div>
       </div>
 
       <div class="footer-section redes">
         <img class="logo" src="/mnt/data/c464a036-a7d5-40f9-9d39-4fd60a6985e3.png" alt="Logo No Hay Sin Suerte" />
         <div class="social-icons">
-          <a href="#" aria-label="Whatsapp" title="Whatsapp">📱</a>
-          <a href="#" aria-label="Instagram" title="Instagram">📸</a>
-          <a href="#" aria-label="Facebook" title="Facebook">📘</a>
-          <a href="#" aria-label="TikTok" title="TikTok">🎵</a>
+          <a href="#">📱</a>
+          <a href="#">📸</a>
+          <a href="#">📘</a>
+          <a href="#">🎵</a>
         </div>
         <p>© 2025 Todos los derechos reservados</p>
       </div>
@@ -350,51 +257,19 @@ footer h4 {
   </footer>
 
   <script>
-    // Logout dummy function
+    // Logout
     function logout() {
       alert('Cerrando sesión...');
     }
 
-    // Carousel drag & swipe
-    const carousel = document.getElementById('carousel-track');
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    carousel.addEventListener('mousedown', (e) => {
-      isDown = true;
-      startX = e.pageX - carousel.offsetLeft;
-      scrollLeft = carousel.scrollLeft;
-    });
-    carousel.addEventListener('mouseleave', () => isDown = false);
-    carousel.addEventListener('mouseup', () => isDown = false);
-    carousel.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - carousel.offsetLeft;
-      const walk = (x - startX) * 2;
-      carousel.scrollLeft = scrollLeft - walk;
-    });
-
-    // Touch support
-    carousel.addEventListener('touchstart', (e) => {
-      startX = e.touches[0].pageX - carousel.offsetLeft;
-      scrollLeft = carousel.scrollLeft;
-    });
-    carousel.addEventListener('touchmove', (e) => {
-      const x = e.touches[0].pageX - carousel.offsetLeft;
-      const walk = (x - startX) * 2;
-      carousel.scrollLeft = scrollLeft - walk;
-    });
-
-    // Carrusel automático de imágenes
-    const imgs = document.querySelectorAll("#image-carousel img");
-    let index = 0;
+    // Carrusel de banner
+    const bannerImgs = document.querySelectorAll("#banner-carousel img");
+    let bannerIndex = 0;
     setInterval(() => {
-      imgs[index].classList.remove("active");
-      index = (index + 1) % imgs.length;
-      imgs[index].classList.add("active");
-    }, 4000);
+      bannerImgs[bannerIndex].classList.remove("active");
+      bannerIndex = (bannerIndex + 1) % bannerImgs.length;
+      bannerImgs[bannerIndex].classList.add("active");
+    }, 5000);
   </script>
 </body>
 </html>
