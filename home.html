@@ -70,26 +70,26 @@
     text-align: center;
   }
 /* Carrusel giratorio */
+/* Carrusel giratorio ancho completo */
 .carousel {
   width: 100%;
-  max-width: 1200px;
-  margin: 60px auto;
   overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(166, 77, 255, 0.4);
+  margin: 60px 0;
+  border-top: 2px solid #a64dff;
+  border-bottom: 2px solid #a64dff;
 }
 
 .carousel-track {
   display: flex;
   gap: 20px;
-  animation: scroll 20s linear infinite;
+  animation: scroll 25s linear infinite;
 }
 
 .carousel img {
-  width: 300px;
-  height: 200px;
+  width: 600px;   /* ancho de cada imagen */
+  height: 300px;  /* alto de cada imagen */
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 12px;
   flex-shrink: 0;
   box-shadow: 0 0 10px rgba(0,0,0,0.6);
 }
@@ -99,9 +99,10 @@
     transform: translateX(0);
   }
   to {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }
+
 
 
   .banner::after {
