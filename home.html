@@ -25,13 +25,16 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
-  border-bottom: 2px solid #3B82F6; /* azul eléctrico */
+  border-bottom: 2px solid #2563eb; /* azul profundo */
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 2000;
   backdrop-filter: blur(6px);
-  background: rgba(20, 20, 20, 0.9); /* fondo oscuro con transparencia */
+  background-image: url("imagen.png");
+  background-size: cover;
+  background-position: center;
+  height: 100px;
 }
 .header::before {
   content: "";
@@ -53,7 +56,7 @@ header {
 nav a {
   margin-left: 30px;
   text-decoration: none;
-  color: #3B82F6;
+  color: #38bdf8; /* celeste amigable */
   font-weight: 600;
   font-size: 16px;
   transition: all 0.3s ease;
@@ -64,13 +67,13 @@ nav a::after {
   position: absolute;
   width: 0%;
   height: 2px;
-  background: #3B82F6;
+  background: #38bdf8;
   left: 0;
   bottom: -5px;
   transition: width 0.3s;
 }
 nav a:hover {
-  color: #ff4db8; /* acento rosado al pasar */
+  color: #facc15; /* amarillo cálido al pasar */
 }
 nav a:hover::after {
   width: 100%;
@@ -101,209 +104,112 @@ nav a:hover::after {
 .banner h1 {
   font-size: 52px;
   color: #fff;
-  text-shadow: 0 0 15px #a64dff;
+  text-shadow: 0 0 15px #38bdf8; /* resplandor celeste */
   margin-bottom: 20px;
 }
-    * {  
-      box-sizing: border-box;  
-      margin: 0;  
-      padding: 0;  
-    }  
-    body {  
-      font-family: "Segoe UI", Arial, sans-serif;  
-      background: #0d0d0d;  
-      color: #f1f1f1;  
-      overflow-x: hidden;  
-    }  
-  
-    /* Header */  
-    header {  
-      display: flex;  
-      justify-content: space-between;  
-      align-items: center;  
-      padding: 15px 40px;  
-      border-bottom: 2px solid #3B82F6;  
-      position: fixed;  
-      top: 0;  
-      width: 100%;  
-      z-index: 2000;  
-      backdrop-filter: blur(6px);  
-      background-image: url("imagen.png");  
-      background-size: cover;  
-      background-position: center;  
-      height: 100px;  
-    }  
-    .header::before {  
-      content: "";  
-      position: absolute;  
-      inset: 0;  
-      background: rgba(0,0,0,0.3);  
-      z-index: 1;  
-    }  
-    .header .logo {  
-      position: relative;  
-      z-index: 2;  
-      width: 120px;  
-      margin: 20px;  
-    }  
-    .header nav {  
-      position: relative;  
-      z-index: 2;  
-    }  
-    nav a {  
-      margin-left: 30px;  
-      text-decoration: none;  
-      color: #3B82F6;  
-      font-weight: 600;  
-      font-size: 16px;  
-      transition: all 0.3s ease;  
-      position: relative;  
-    }  
-    nav a::after {  
-      content: "";  
-      position: absolute;  
-      width: 0%;  
-      height: 2px;  
-      background: #3B82F6;  
-      left: 0;  
-      bottom: -5px;  
-      transition: width 0.3s;  
-    }  
-    nav a:hover::after {  
-      width: 100%;  
-    }  
-  
-    /* Banner */  
-    .banner {  
-      position: relative;  
-      height: 100vh;  
-      overflow: hidden;  
-      display: flex;  
-      flex-direction: column;  
-      justify-content: center;  
-      align-items: center;  
-      text-align: center;  
-    }  
-    .banner::after {  
-      content: "";  
-      position: absolute;  
-      inset: 0;  
-      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7));  
-      z-index: 1;  
-    }  
-    .banner h1, .banner p {  
-      position: relative;  
-      z-index: 2;  
-    }  
-    .banner h1 {  
-      font-size: 52px;  
-      color: #fff;  
-      text-shadow: 0 0 15px #a64dff;  
-      margin-bottom: 20px;  
-    }  
-    .banner p {  
-      font-size: 20px;  
-      max-width: 800px;  
-      margin: auto;  
-      line-height: 1.6;  
-      color: #ddd;  
-    }  
-  
-    /* Carrusel */  
-    .carousel {  
-      width: 100%;  
-      overflow: hidden;  
-      margin: 60px 0;  
-      border-top: 2px solid #a64dff;  
-      border-bottom: 2px solid #a64dff;  
-    }  
-    .carousel-track {  
-      display: flex;  
-      gap: 20px;  
-      animation: scroll 25s linear infinite;  
-    }  
-    .carousel img {  
-      width: 200px;  
-      height: 200px;  
-      object-fit: cover;  
-      border-radius: 12px;  
-      flex-shrink: 0;  
-      box-shadow: 0 0 10px rgba(0,0,0,0.6);  
-    }  
-    @keyframes scroll {  
-      from { transform: translateX(0); }  
-      to { transform: translateX(-50%); }  
-    }  
-  
-    /* Contenido principal */  
-    .content {  
-      max-width: 1000px;  
-      margin: 80px auto;  
-      padding: 0 20px;  
-      text-align: center;  
-    }  
-    .content h2 {  
-      font-size: 32px;  
-      margin-bottom: 20px;  
-      color: #3B82F6;  
-      text-shadow: 0 0 8px #a64dff;  
-    }  
-    .content p {  
-      font-size: 18px;  
-      line-height: 1.9;  
-      color: #3B82F6;  
-      text-align: justify;  
-    }  
-  
-    /* Footer */  
-    footer {  
-      background: linear-gradient(to right, #3a0f59, #1a001f);  
-      color: white;  
-      padding: 50px 20px;  
-      border-top: 2px solid #a64dff;  
-    }  
-    .footer-container {  
-      display: flex;  
-      flex-wrap: wrap;  
-      justify-content: space-between;  
-      max-width: 1200px;  
-      margin: auto;  
-    }  
-    .footer-section {  
-      flex: 1 1 300px;  
-      margin: 15px 20px;  
-    }  
-    footer h4 {  
-      font-weight: bold;  
-      margin-bottom: 15px;  
-      color: #ff4db8;  
-      text-shadow: 0 0 6px #a64dff;  
-    }  
-    .footer-section a {  
-      color: #f1f1f1;  
-      text-decoration: none;  
-      transition: color 0.3s;  
-    }  
-    .footer-section a:hover {  
-      color: #a64dff;  
-    }  
-    .footer-section.redes {  
-      text-align: center;  
-    }  
-    .footer-section.redes .logo {  
-      width: 120px;  
-      margin-bottom: 15px;  
-      filter: drop-shadow(0 0 10px #a64dff);  
-    }  
-    .social-icons a {  
-      font-size: 24px;  
-      margin: 0 10px;  
-      transition: transform 0.3s, color 0.3s;  
-    }  
-    .social-icons a:hover {  
-      transform: scale(1.2);  
-      color: #ff4db8;  
-    }  
+.banner p {
+  font-size: 20px;
+  max-width: 800px;
+  margin: auto;
+  line-height: 1.6;
+  color: #ccc; /* gris claro seguro */
+}
+
+/* Carrusel */
+.carousel {
+  width: 100%;
+  overflow: hidden;
+  margin: 60px 0;
+  border-top: 2px solid #2563eb;
+  border-bottom: 2px solid #2563eb;
+}
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  animation: scroll 25s linear infinite;
+}
+.carousel img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Contenido principal */
+.content {
+  max-width: 1000px;
+  margin: 80px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+.content h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #38bdf8; /* celeste amigable */
+  text-shadow: 0 0 8px #2563eb;
+}
+.content p {
+  font-size: 18px;
+  line-height: 1.9;
+  color: #ddd; /* gris suave */
+  text-align: justify;
+}
+
+/* Footer */
+footer {
+  background: linear-gradient(to right, #0f172a, #111827); /* azul grisáceo oscuro */
+  color: white;
+  padding: 50px 20px;
+  border-top: 2px solid #2563eb;
+}
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+}
+.footer-section {
+  flex: 1 1 300px;
+  margin: 15px 20px;
+}
+footer h4 {
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #facc15; /* amarillo cálido */
+  text-shadow: 0 0 6px #2563eb;
+}
+.footer-section a {
+  color: #f1f1f1;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-section a:hover {
+  color: #38bdf8;
+}
+.footer-section.redes {
+  text-align: center;
+}
+.footer-section.redes .logo {
+  width: 120px;
+  margin-bottom: 15px;
+  filter: drop-shadow(0 0 10px #2563eb);
+}
+.social-icons a {
+  font-size: 24px;
+  margin: 0 10px;
+  transition: transform 0.3s, color 0.3s;
+}
+.social-icons a:hover {
+  transform: scale(1.2);
+  color: #facc15; /* amarillo amigable */
+  }
 
   </style>
 </head>
