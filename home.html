@@ -31,10 +31,7 @@
     z-index: 2000;
     backdrop-filter: blur(6px);
   }
-  header img {
-    width: 120px;
-    filter: drop-shadow(0 0 8px #a64dff);
-  }
+  
   nav a {
     margin-left: 30px;
     text-decoration: none;
@@ -184,31 +181,61 @@
     transform: scale(1.2);
     color: #ff4db8;
   }
+  .header {
+    position: relative;
+    height: 300px; /* ajusta la altura que quieras */
+    background-image: url("https://picsum.photos/1920/1080?random=1");
+    background-size: cover;
+    background-position: center;
+  }
+
+  .header .logo {
+    position: relative; /* se mantiene encima del fondo */
+    z-index: 2;
+    width: 120px; /* tamaño del logo */
+    margin: 20px;
+  }
+
+  .header nav {
+    position: relative;
+    z-index: 2; /* enlaces encima de la imagen */
+  }
+
+  /* Si quieres oscurecer la imagen de fondo un poco */
+  .header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.3); /* sombra encima del fondo */
+    z-index: 1;
+  }
+
+  .header nav a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: bold;
+  }
   </style>
 </head>
 <body>
 
   <!-- Header -->
-  <header>
-    <img src="/mnt/data/c464a036-a7d5-40f9-9d39-4fd60a6985e3.png" alt="Logo Comunidad Piura" />
-    <nav>
-      <a href="sorteos.html">Sorteos</a>
-      <a href="cumple.html">Cumpleaños</a>
-      <a href="fotos.html">Fotos</a>
-      <a href="#" onclick="logout()">Cerrar sesión</a>
-    </nav>
-  </header>
+  <header class="header">
+  <img src="/mnt/data/c464a036-a7d5-40f9-9d39-4fd60a6985e3.png" alt="Logo Comunidad Piura" class="logo" />
+  <nav>
+    <a href="sorteos.html">Sorteos</a>
+    <a href="cumple.html">Cumpleaños</a>
+    <a href="fotos.html">Fotos</a>
+    <a href="#" onclick="logout()">Cerrar sesión</a>
+    <div class="banner-carousel" id="banner-carousel">
+      <!-- Ya no hace falta este <img>, la imagen irá como fondo -->
+    </div>
+  </nav>
+</header>
 
   <!-- Banner con carrusel de fondo -->
-  <section class="banner">
-    <div class="banner-carousel" id="banner-carousel">
-      <img src="https://picsum.photos/1920/1080?random=1" class="active" alt="Imagen 1">
-      <img src="https://picsum.photos/1920/1080?random=2" alt="Imagen 2">
-      <img src="https://picsum.photos/1920/1080?random=3" alt="Imagen 3">
-    </div>
-    <h1>Bienvenido a Comunidad Piura</h1>
-    <p>Un espacio creado para unir, compartir y disfrutar entre todos los miembros que forman parte de esta gran familia.</p>
-  </section>
+  
 
   <!-- Contenido principal -->
   <section class="content">
