@@ -69,19 +69,36 @@
     align-items: center;
     text-align: center;
   }
-  .banner-carousel img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: none;
-  }
-  .banner-carousel img.active {
-    display: block;
-    animation: fadeIn 1.5s ease;
-  }
+/* Carrusel */
+.carousel {
+  width: 100%;
+  max-width: 1200px;
+  margin: 60px auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(166, 77, 255, 0.4);
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+}
+
+.carousel-container img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.carousel-container img.active {
+  display: block;
+  animation: fadeIn 1.5s ease;
+}
+
   .banner::after {
     content: "";
     position: absolute;
@@ -250,7 +267,14 @@
       miembros. Aquí encontrarás actividades, sorpresas y un espacio que pertenece a cada uno de ustedes.
     </p>
   </section>
-
+<section class="carousel">
+    <div class="carousel-container" id="carousel">
+      <img src="https://picsum.photos/1200/500?random=1" class="active" alt="Imagen 1">
+      <img src="https://picsum.photos/1200/500?random=2" alt="Imagen 2">
+      <img src="https://picsum.photos/1200/500?random=3" alt="Imagen 3">
+      <img src="https://picsum.photos/1200/500?random=4" alt="Imagen 4">
+    </div>
+  </section>
   <!-- Footer -->
   <footer>
     <div class="footer-container">
@@ -297,6 +321,16 @@
       bannerIndex = (bannerIndex + 1) % bannerImgs.length;
       bannerImgs[bannerIndex].classList.add("active");
     }, 5000);
+    // Carrusel antes del footer
+const carouselImgs = document.querySelectorAll("#carousel img");
+let carouselIndex = 0;
+
+setInterval(() => {
+  carouselImgs[carouselIndex].classList.remove("active");
+  carouselIndex = (carouselIndex + 1) % carouselImgs.length;
+  carouselImgs[carouselIndex].classList.add("active");
+}, 4000);
+
   </script>
 </body>
 </html>
