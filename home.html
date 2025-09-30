@@ -69,35 +69,40 @@
     align-items: center;
     text-align: center;
   }
-/* Carrusel */
+/* Carrusel giratorio */
 .carousel {
   width: 100%;
   max-width: 1200px;
   margin: 60px auto;
-  border-radius: 12px;
   overflow: hidden;
+  border-radius: 12px;
   box-shadow: 0 0 20px rgba(166, 77, 255, 0.4);
 }
 
-.carousel-container {
-  position: relative;
-  width: 100%;
-  height: 500px;
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  animation: scroll 20s linear infinite;
 }
 
-.carousel-container img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+.carousel img {
+  width: 300px;
+  height: 200px;
   object-fit: cover;
-  display: none;
+  border-radius: 10px;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(0,0,0,0.6);
 }
 
-.carousel-container img.active {
-  display: block;
-  animation: fadeIn 1.5s ease;
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
 }
+
 
   .banner::after {
     content: "";
@@ -267,14 +272,17 @@
       miembros. Aquí encontrarás actividades, sorpresas y un espacio que pertenece a cada uno de ustedes.
     </p>
   </section>
+<!-- Carrusel antes del footer -->
 <section class="carousel">
-    <div class="carousel-container" id="carousel">
-      <img src="https://picsum.photos/1200/500?random=1" class="active" alt="Imagen 1">
-      <img src="https://picsum.photos/1200/500?random=2" alt="Imagen 2">
-      <img src="https://picsum.photos/1200/500?random=3" alt="Imagen 3">
-      <img src="https://picsum.photos/1200/500?random=4" alt="Imagen 4">
-    </div>
-  </section>
+  <div class="carousel-track" id="carousel-track">
+    <img src="https://picsum.photos/300/200?random=1" alt="Imagen 1">
+    <img src="https://picsum.photos/300/200?random=2" alt="Imagen 2">
+    <img src="https://picsum.photos/300/200?random=3" alt="Imagen 3">
+    <img src="https://picsum.photos/300/200?random=4" alt="Imagen 4">
+    <img src="https://picsum.photos/300/200?random=5" alt="Imagen 5">
+  </div>
+</section>
+
   <!-- Footer -->
   <footer>
     <div class="footer-container">
@@ -325,11 +333,10 @@
 const carouselImgs = document.querySelectorAll("#carousel img");
 let carouselIndex = 0;
 
-setInterval(() => {
-  carouselImgs[carouselIndex].classList.remove("active");
-  carouselIndex = (carouselIndex + 1) % carouselImgs.length;
-  carouselImgs[carouselIndex].classList.add("active");
-}, 4000);
+// Carrusel giratorio infinito
+const track = document.getElementById("carousel-track");
+track.innerHTML += track.innerHTML; // duplicamos imágenes para que no corte el bucle
+
 
   </script>
 </body>
