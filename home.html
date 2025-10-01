@@ -441,16 +441,9 @@ body.light-mode .footer-section a { color: #065f46; }
   <!-- Contenido principal -->
   <section class="content">
     <br>
-    <h2>Nuestra Historia</h2>
-    <p>
-      La <strong>Comunidad Piura</strong> nació como un punto de encuentro entre amigos, vecinos y personas con un mismo objetivo:
-      mantenerse unidos y apoyarse mutuamente. Con el tiempo, hemos crecido hasta convertirnos en una gran familia digital,
-      donde celebramos cumpleaños, realizamos sorteos, compartimos recuerdos y seguimos fortaleciendo los lazos que nos unen.
-    </p>
-    <p>
-      Esta página es el reflejo de ese espíritu: moderna, inclusiva y siempre enfocada en brindar lo mejor para todos nuestros
-      miembros. Aquí encontrarás actividades, sorpresas y un espacio que pertenece a cada uno de ustedes.
-    </p>
+    <h2>CUMPLEAÑOS DE LA COMUNIDAD</h2>
+   <div id="cumple-home" style="text-align:center; margin:20px; font-size:20px; color:yellow;">
+</div>
   </section>
 
   <!-- Carrusel -->
@@ -546,5 +539,53 @@ body.light-mode .footer-section a { color: #065f46; }
       });
     };
   </script>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
+    authDomain: "comunidadpiura-fed53.firebaseapp.com",
+    projectId: "comunidadpiura-fed53",
+    storageBucket: "comunidadpiura-fed53.appspot.com",
+    messagingSenderId: "113288016871",
+    appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
+    measurementId: "G-68EYEMSET9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // Login anónimo
+  signInAnonymously(auth).catch((error) => {
+    console.error("Error login anónimo:", error);
+  });
+
+  // Mostrar cumpleaños de HOY en Home
+  async function mostrarCumpleHome() {
+    const hoy = new Date().toISOString().slice(5, 10); // MM-DD
+    const querySnapshot = await getDocs(collection(db, "cumpleanios"));
+
+    let mensaje = "";
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const cumpleHoy = data.cumple.slice(5, 10);
+      if (hoy === cumpleHoy) {
+        mensaje += `🎉 ¡Feliz cumpleaños <b>${data.nombre}</b>! 🎂<br>`;
+      }
+    });
+
+    // Si no hubo cumpleaños
+    if (!mensaje) {
+      mensaje = "📅 No hay cumpleaños por hoy.";
+    }
+
+    document.getElementById("cumple-home").innerHTML = mensaje;
+  }
+
+  mostrarCumpleHome();
+</script>
 </body>
         </html>
