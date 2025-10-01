@@ -510,5 +510,41 @@ function toggleMenu() {
   nav.style.display = (nav.style.display === "flex") ? "none" : "flex";
 }
 </script>
+  <script type="module">
+  // Importar Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+  // Configuración de tu proyecto
+  const firebaseConfig = {
+    apiKey: "TU_API_KEY",
+    authDomain: "TU_PROYECTO.firebaseapp.com",
+    projectId: "TU_PROYECTO",
+    storageBucket: "TU_PROYECTO.appspot.com",
+    messagingSenderId: "123456789",
+    appId: "TU_APP_ID"
+  };
+
+  // Inicializar Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Chequear si hay sesión
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("Usuario logueado:", user.email);
+    } else {
+      // Si no hay usuario → mandar al login
+      window.location.href = "login.html";
+    }
+  });
+
+  // Cerrar sesión
+  function logout() {
+    signOut(auth).then(() => {
+      window.location.href = "login.html";
+    });
+  }
+  </script>
 </body>
 </html>
