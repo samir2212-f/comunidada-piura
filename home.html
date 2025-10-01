@@ -514,13 +514,13 @@ body.light-mode .footer-section a { color: #065f46; }
 <!-- Script de Firebase separado y bien cerrado -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
     authDomain: "comunidadpiura-fed53.firebaseapp.com",
     projectId: "comunidadpiura-fed53",
-    storageBucket: "comunidadpiura-fed53.firebasestorage.app",
+    storageBucket: "comunidadpiura-fed53.appspot.com",  // 👈 corrige el .app → .appspot.com
     messagingSenderId: "113288016871",
     appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
     measurementId: "G-68EYEMSET9"
@@ -529,27 +529,24 @@ body.light-mode .footer-section a { color: #065f46; }
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  // 🚨 Cada vez que alguien abra el home, cerrar sesión y mandar al login
-  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-const auth = getAuth(app);
-
-// 🚀 Comprobar si el usuario está autenticado
-onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    // Si no hay sesión activa, mandamos al login
-    window.location.href = "index.html";
-  } else {
-    console.log("Usuario activo:", user.email);
-  }
-});
-
-// ✅ Para el botón "Cerrar sesión" del menú
-window.logout = function() {
-  signOut(auth).then(() => {
-    window.location.href = "index.html";
+  // ✅ Comprobar si hay usuario logueado
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      // Si no hay sesión, mandar al login
+      window.location.href = "index.html";
+    } else {
+      console.log("Usuario activo:", user.email);
+    }
   });
-};
+
+  // ✅ Función de cerrar sesión
+  window.logout = function() {
+    signOut(auth).then(() => {
+      window.location.href = "index.html";
+    }).catch((error) => {
+      console.error("Error al cerrar sesión:", error);
+    });
+  };
 </script>
 </body>
 </html>
