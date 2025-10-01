@@ -6,96 +6,150 @@
   <title>Sorteos</title>
   <style>
     body {
-  margin: 0;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: linear-gradient(270deg, #0a192f, #0f3057, #005f73, #028090);
-  background-size: 800% 800%;
-  animation: moverFondo 15s ease infinite;
-  color: white;
-}
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(270deg, #0a192f, #0f3057, #005f73, #028090);
+      background-size: 800% 800%;
+      animation: moverFondo 15s ease infinite;
+      color: white;
+      overflow-x: hidden;
+    }
 
-header {
-  background: linear-gradient(270deg, #0a192f, #0f3057, #005f73, #028090);
-  background-size: 800% 800%;
-  animation: moverFondo 15s ease infinite;
-  color: white;
-  padding: 1rem;
-  font-size: 1.5rem;
-  text-align: center;
-  border-bottom: 2px solid rgba(255,255,255,0.2);
-}
+    header {
+      background: rgba(0,0,0,0.5);
+      color: #ffdd57;
+      padding: 1rem;
+      font-size: 2rem;
+      text-align: center;
+      text-shadow: 0 0 12px #ffdd57, 0 0 24px #ff6f91;
+      border-bottom: 2px solid rgba(255,255,255,0.2);
+      animation: brillo 3s infinite alternate;
+    }
 
-/* Animación */
-@keyframes moverFondo {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+    @keyframes moverFondo {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
+    @keyframes brillo {
+      from { text-shadow: 0 0 8px #ff4081; }
+      to { text-shadow: 0 0 20px #ffdd57, 0 0 40px #ff6f91; }
+    }
 
     section {
       padding: 20px;
-      margin: 15px auto;
+      margin: 20px auto;
       max-width: 800px;
-       background: linear-gradient(270deg, #0a192f, #0f3057, #005f73, #028090);
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      transition: transform 0.3s;
     }
+
+    section:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 25px rgba(255, 221, 87, 0.7);
+    }
+
     h2 {
-      color: #333;
+      color: #ff6f91;
+      text-shadow: 0 0 10px #ff6f91, 0 0 20px #ffdd57;
+      font-size: 1.8rem;
+      margin-bottom: 15px;
     }
+
+    /* Animaciones de íconos */
+    .icon-bounce {
+      display: inline-block;
+      animation: bounce 1.5s infinite;
+    }
+
+    .icon-blink {
+      display: inline-block;
+      animation: blink 1s infinite alternate;
+    }
+
+    .icon-pulse {
+      display: inline-block;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    @keyframes blink {
+      0% { opacity: 1; }
+      100% { opacity: 0.3; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
     .btn {
       display: inline-block;
-      padding: 10px 20px;
-      background: #4CAF50;
-      color: white;
-      border-radius: 8px;
+      padding: 12px 24px;
+      background: linear-gradient(45deg, #ff4081, #ffdd57);
+      color: black;
+      border-radius: 10px;
       text-decoration: none;
-      transition: background 0.3s;
+      transition: transform 0.3s, box-shadow 0.3s;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 12px #ff4081, 0 0 24px #ffdd57;
     }
+
     .btn:hover {
-      background: #45a049;
+      transform: scale(1.15);
+      box-shadow: 0 0 20px #ffdd57, 0 0 40px #ff4081;
     }
+
+    #contador {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ffdd57;
+      text-shadow: 0 0 10px #ffdd57, 0 0 20px #ff4081;
+    }
+
     ul {
       list-style: none;
       padding: 0;
     }
     li {
       margin: 8px 0;
-      background: #f0f0f0;
+      background: rgba(255,255,255,0.08);
       padding: 10px;
-      border-radius: 6px;
+      border-radius: 8px;
+      transition: background 0.3s;
     }
-    #contador {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #e91e63;
-    }
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
+    li:hover {
+      background: rgba(255,255,255,0.2);
     }
   </style>
 </head>
 <body>
-  <header>𝓑𝓘𝓔𝓝𝓥𝓔𝓝𝓘𝓓𝓞 𝓐 𝓛𝓐 𝓒𝓞𝓜𝓤𝓝𝓘𝓓𝓐𝓓 𝓟𝓘𝓤𝓡𝓐</header>
+  <header>🎉 BIENVENIDO A LOS SORTEOS 🎉</header>
 
   <!-- Próximos sorteos -->
   <section>
-    <h2>📅 Próximos Sorteos</h2>
+    <h2><span class="icon-pulse">📅</span> Próximos Sorteos</h2>
     <ul>
       <li>15 de Octubre - Premio: Smartwatch</li>
       <li>30 de Octubre - Premio: Cena doble</li>
     </ul>
-    <p>⏳ Tiempo restante: <span id="contador"></span></p>
-    <a href="https://wa.me/51937059682" class="btn" onclick="participar()">Participar</a>
+    <p><span class="icon-blink">⏳</span> Tiempo restante: <span id="contador"></span></p>
+    <button class="btn"><span class="icon-bounce">🎟</span> Participar</button>
   </section>
 
   <!-- Ranking de ganadores -->
   <section>
-    <h2>🏆 Ranking de Ganadores</h2>
+    <h2><span class="icon-bounce">🏆</span> Ranking de Ganadores</h2>
     <ul>
       <li>1. Samir - 3 premios</li>
       <li>2. Heiner - 2 premios</li>
@@ -105,16 +159,13 @@ header {
 
   <!-- Premios destacados -->
   <section>
-    <h2>🎁 Premios Destacados</h2>
+    <h2><span class="icon-pulse">🎁</span> Premios Destacados</h2>
     <ul>
       <li>📱 Smartphone</li>
       <li>🎧 Audífonos Gamer</li>
       <li>💳 Tarjeta de regalo</li>
     </ul>
   </section>
-
-  <!-- Confeti -->
-  
 
   <script>
     // Contador regresivo
@@ -128,20 +179,14 @@ header {
       const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
       const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
 
-      document.getElementById("contador").innerHTML = dias + "d " + horas + "h " + minutos + "m " + segundos + "s";
+      document.getElementById("contador").innerHTML =
+        dias + "d " + horas + "h " + minutos + "m " + segundos + "s";
 
       if (distancia < 0) {
         clearInterval(x);
         document.getElementById("contador").innerHTML = "¡Sorteo en curso!";
       }
     }, 1000);
-
-    // Botón participar
-   
-
-    // Animación confeti
-    
-      
   </script>
 </body>
 </html>
