@@ -37,7 +37,7 @@ header {
       padding: 20px;
       margin: 15px auto;
       max-width: 800px;
-      background: white;
+       background: linear-gradient(270deg, #0a192f, #0f3057, #005f73, #028090);
       border-radius: 12px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
@@ -114,7 +114,7 @@ header {
   </section>
 
   <!-- Confeti -->
-  <canvas id="confeti"></canvas>
+  
 
   <script>
     // Contador regresivo
@@ -137,54 +137,11 @@ header {
     }, 1000);
 
     // Botón participar
-    function participar() {
-      alert("✅ Te has inscrito en el sorteo!");
-      lanzarConfeti();
-    }
+   
 
     // Animación confeti
-    const canvas = document.getElementById("confeti");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    let confetis = [];
-
-    function Confeti() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height - canvas.height;
-      this.color = "hsl(" + Math.random() * 360 + ",100%,50%)";
-      this.size = Math.random() * 8 + 4;
-      this.speed = Math.random() * 3 + 2;
-      this.fall = function() {
-        this.y += this.speed;
-        if (this.y > canvas.height) {
-          this.y = -10;
-          this.x = Math.random() * canvas.width;
-        }
-      };
-      this.draw = function() {
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.size, this.size);
-      };
-    }
-
-    function lanzarConfeti() {
-      confetis = [];
-      for (let i = 0; i < 150; i++) {
-        confetis.push(new Confeti());
-      }
-      animate();
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      confetis.forEach(c => {
-        c.fall();
-        c.draw();
-      });
-      requestAnimationFrame(animate);
-    }
+    
+      
   </script>
 </body>
 </html>
