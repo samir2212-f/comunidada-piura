@@ -4,61 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cumpleaños Comunidad</title>
-  <!-- Firebase SDK v9 -->
-  <script type="module">
-    // Importar módulos de Firebase v9
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-    // Configuración de Firebase (ya es la tuya ✅)
-    const firebaseConfig = {
-      apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
-      authDomain: "comunidadpiura-fed53.firebaseapp.com",
-      projectId: "comunidadpiura-fed53",
-      storageBucket: "comunidadpiura-fed53.appspot.com",
-      messagingSenderId: "113288016871",
-      appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
-      measurementId: "G-68EYEMSET9"
-    };
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
-    // Inicializar Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // Guardar cumpleaños
-    window.guardarCumple = async function () {
-      const nombre = document.getElementById("nombre").value;
-      const cumple = document.getElementById("cumple").value;
-
-      if (nombre && cumple) {
-        await setDoc(doc(db, "cumpleanios", "usuario"), {
-          nombre: nombre,
-          cumple: cumple
-        });
-        alert("🎉 Cumpleaños guardado!");
-        location.reload();
-      }
-    }
-
-    // Verificar cumpleaños
-    async function verificarCumple() {
-      const docRef = doc(db, "cumpleanios", "usuario");
-      const snap = await getDoc(docRef);
-
-      if (snap.exists()) {
-        const data = snap.data();
-        const hoy = new Date().toISOString().slice(5, 10); // MM-DD
-        const cumpleHoy = data.cumple.slice(5, 10);
-
-        if (hoy === cumpleHoy) {
-          document.getElementById("mensaje").innerText = "🎉 ¡Feliz cumpleaños " + data.nombre + "!";
-          document.getElementById("formulario").style.display = "none";
-        }
-      }
-    }
-
-    verificarCumple();
-  </script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -94,5 +45,63 @@
 
   <!-- Mensaje -->
   <h2 id="mensaje"></h2>
+
+  <script>
+    // Configuración de Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
+      authDomain: "comunidadpiura-fed53.firebaseapp.com",
+      projectId: "comunidadpiura-fed53",
+      storageBucket: "comunidadpiura-fed53.appspot.com",
+      messagingSenderId: "113288016871",
+      appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
+      measurementId: "G-68EYEMSET9"
+    };
+
+    // Inicializar Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.getAuth(app);
+    const db = firebase.getFirestore(app);
+
+    // Autenticación anónima para cumplir las reglas
+    firebase.signInAnonymously(auth).catch((error) => {
+      console.error("Error en login anónimo:", error);
+    });
+
+    // Guardar cumpleaños
+    async function guardarCumple() {
+      const nombre = document.getElementById("nombre").value;
+      const cumple = document.getElementById("cumple").value;
+
+      if (nombre && cumple) {
+        const docRef = firebase.doc(db, "cumpleanios", nombre);
+        await firebase.setDoc(docRef, {
+          nombre: nombre,
+          cumple: cumple
+        });
+        alert("🎉 Cumpleaños guardado!");
+        location.reload();
+      }
+    }
+
+    // Verificar cumpleaños de HOY
+    async function verificarCumple() {
+      const hoy = new Date().toISOString().slice(5, 10); // MM-DD
+      const q = firebase.query(firebase.collection(db, "cumpleanios"));
+      const querySnapshot = await firebase.getDocs(q);
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const cumpleHoy = data.cumple.slice(5, 10);
+        if (hoy === cumpleHoy) {
+          document.getElementById("mensaje").innerText = 
+            "🎉 ¡Feliz cumpleaños " + data.nombre + "!";
+          document.getElementById("formulario").style.display = "none";
+        }
+      });
+    }
+
+    verificarCumple();
+  </script>
 </body>
 </html>
