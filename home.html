@@ -426,12 +426,13 @@ body.light-mode .footer-section a { color: #065f46; }
 <header class="header">
   <img src="ComunidadPiura-removebg-preview.png" class="logo" />
   <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-  <nav id="main-nav">
-    <a href="sorteos.html">Sorteos</a>
-    <a href="cumple.html">Cumpleaños</a>
-    <a href="fotos.html">Fotos</a>
-    <a href="index.html">Cerrar sesión</a>
-  </nav>
+<!-- En tu nav -->
+<nav id="main-nav">
+  <a href="sorteos.html">Sorteos</a>
+  <a href="cumple.html">Cumpleaños</a>
+  <a href="fotos.html">Fotos</a>
+  <a href="#" onclick="logout()">Cerrar sesión</a>
+</nav>
 </header>
 
   <!-- Contenido principal -->
@@ -507,8 +508,7 @@ function toggleMenu() {
   const nav = document.getElementById("main-nav");
   nav.style.display = (nav.style.display === "flex") ? "none" : "flex";
 }
-</script>
-  <script type="module">
+<script type="module">
   // Importar Firebase
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -516,34 +516,37 @@ function toggleMenu() {
   // Configuración de tu proyecto
   const firebaseConfig = {
     apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
-   authDomain: "comunidadpiura-fed53.firebaseapp.com",
-   projectId: "comunidadpiura-fed53",
-   storageBucket: "comunidadpiura-fed53.firebasestorage.app",
-   messagingSenderId: "113288016871",
-   appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
-   measurementId: "G-68EYEMSET9"
+    authDomain: "comunidadpiura-fed53.firebaseapp.com",
+    projectId: "comunidadpiura-fed53",
+    storageBucket: "comunidadpiura-fed53.firebasestorage.app",
+    messagingSenderId: "113288016871",
+    appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
+    measurementId: "G-68EYEMSET9"
   };
 
   // Inicializar Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  // Chequear si hay sesión
+  // Proteger Home: solo entra logueado
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log("Usuario logueado:", user.email);
-    } else {
-      // Si no hay usuario → mandar al login
+    if (!user) {
+      // Si no está logueado, redirige al login
       window.location.href = "login.html";
+    } else {
+      console.log("Usuario logueado:", user.email);
     }
   });
 
-  // Cerrar sesión
-  function logout() {
+  // Función de logout
+  window.logout = function() {
     signOut(auth).then(() => {
+      console.log("Sesión cerrada");
       window.location.href = "login.html";
+    }).catch((error) => {
+      console.error("Error al cerrar sesión:", error);
     });
   }
-  </script>
+</script>
 </body>
 </html>
