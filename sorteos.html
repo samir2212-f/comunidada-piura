@@ -5,26 +5,171 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sorteos</title>
   <style>
-    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f4f4f4; }
-    header { background:#0096c7; color:white; padding:15px; text-align:center; }
-    .contenedor { max-width:800px; margin:20px auto; padding:20px; background:white; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
-    h2 { color:#0096c7; }
-    ul { list-style:none; padding:0; }
-    li { padding:10px; margin:10px 0; background:#e0f7ff; border-left:5px solid #0096c7; border-radius:6px; }
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f7fc;
+      text-align: center;
+    }
+    header {
+      background: #4CAF50;
+      color: white;
+      padding: 1rem;
+      font-size: 1.5rem;
+    }
+    section {
+      padding: 20px;
+      margin: 15px auto;
+      max-width: 800px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #333;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #4CAF50;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #45a049;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin: 8px 0;
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 6px;
+    }
+    #contador {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #e91e63;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Sorteos de la Comunidad</h1>
-  </header>
+  <header>🎉 Sorteos de la Comunidad 🎉</header>
 
-  <div class="contenedor">
-    <h2>Últimos sorteos</h2>
+  <!-- Próximos sorteos -->
+  <section>
+    <h2>📅 Próximos Sorteos</h2>
     <ul>
-      <li>🎁 Sorteo de camisetas - Ganador: Samir</li>
-      <li>🎁 Sorteo de entradas - Ganador: Carla</li>
-      <li>🎁 Sorteo de cena - Ganador: Luis</li>
+      <li>15 de Octubre - Premio: Smartwatch</li>
+      <li>30 de Octubre - Premio: Cena doble</li>
     </ul>
-  </div>
+    <p>⏳ Tiempo restante: <span id="contador"></span></p>
+    <a href="#" class="btn" onclick="participar()">Participar</a>
+  </section>
+
+  <!-- Ranking de ganadores -->
+  <section>
+    <h2>🏆 Ranking de Ganadores</h2>
+    <ul>
+      <li>1. Samir - 3 premios</li>
+      <li>2. Heiner - 2 premios</li>
+      <li>3. Ana - 1 premio</li>
+    </ul>
+  </section>
+
+  <!-- Premios destacados -->
+  <section>
+    <h2>🎁 Premios Destacados</h2>
+    <ul>
+      <li>📱 Smartphone</li>
+      <li>🎧 Audífonos Gamer</li>
+      <li>💳 Tarjeta de regalo</li>
+    </ul>
+  </section>
+
+  <!-- Confeti -->
+  <canvas id="confeti"></canvas>
+
+  <script>
+    // Contador regresivo
+    const fechaSorteo = new Date("Oct 15, 2025 20:00:00").getTime();
+    const x = setInterval(() => {
+      const ahora = new Date().getTime();
+      const distancia = fechaSorteo - ahora;
+
+      const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+      document.getElementById("contador").innerHTML = dias + "d " + horas + "h " + minutos + "m " + segundos + "s";
+
+      if (distancia < 0) {
+        clearInterval(x);
+        document.getElementById("contador").innerHTML = "¡Sorteo en curso!";
+      }
+    }, 1000);
+
+    // Botón participar
+    function participar() {
+      alert("✅ Te has inscrito en el sorteo!");
+      lanzarConfeti();
+    }
+
+    // Animación confeti
+    const canvas = document.getElementById("confeti");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let confetis = [];
+
+    function Confeti() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height - canvas.height;
+      this.color = "hsl(" + Math.random() * 360 + ",100%,50%)";
+      this.size = Math.random() * 8 + 4;
+      this.speed = Math.random() * 3 + 2;
+      this.fall = function() {
+        this.y += this.speed;
+        if (this.y > canvas.height) {
+          this.y = -10;
+          this.x = Math.random() * canvas.width;
+        }
+      };
+      this.draw = function() {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.size, this.size);
+      };
+    }
+
+    function lanzarConfeti() {
+      confetis = [];
+      for (let i = 0; i < 150; i++) {
+        confetis.push(new Confeti());
+      }
+      animate();
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confetis.forEach(c => {
+        c.fall();
+        c.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+  </script>
 </body>
 </html>
