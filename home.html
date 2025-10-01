@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Comunidad Piura - Principal</title>
   <link rel="icon" type="image/png" href="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcReMJly0vwqQtfircDFDpZwXu18Sd3bSMIOsRRLQyJ0irbFg3KC">
-  
   <style>
+    /* … tu CSS completo como ya lo tienes … */
+    <style>
 /* ================= Full CSS integrado (tu código + mejoras) ================= */
 
 /* Reset */
@@ -419,21 +420,23 @@ body.light-mode .footer-section a { color: #065f46; }
   to { opacity: 1; transform: translateY(0); }
 }
   </style>
+  </style>
 </head>
-<body>
+
+<!-- 🔒 body oculto por defecto -->
+<body style="display:none;">
 
   <!-- Header -->
-<header class="header">
-  <img src="ComunidadPiura-removebg-preview.png" class="logo" />
-  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-<!-- En tu nav -->
-<nav id="main-nav">
-  <a href="sorteos.html">Sorteos</a>
-  <a href="cumple.html">Cumpleaños</a>
-  <a href="fotos.html">Fotos</a>
-  <a href="#" onclick="logout()">Cerrar sesión</a>
-</nav>
-</header>
+  <header class="header">
+    <img src="ComunidadPiura-removebg-preview.png" class="logo" />
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <nav id="main-nav">
+      <a href="sorteos.html">Sorteos</a>
+      <a href="cumple.html">Cumpleaños</a>
+      <a href="fotos.html">Fotos</a>
+      <a href="#" onclick="logout()">Cerrar sesión</a>
+    </nav>
+  </header>
 
   <!-- Contenido principal -->
   <section class="content">
@@ -450,7 +453,7 @@ body.light-mode .footer-section a { color: #065f46; }
     </p>
   </section>
 
-  <!-- Carrusel antes del footer -->
+  <!-- Carrusel -->
   <section class="carousel">
     <div class="carousel-track" id="carousel-track">
       <img src="imagen1.jpg" alt="Imagen 1">
@@ -460,93 +463,88 @@ body.light-mode .footer-section a { color: #065f46; }
       <img src="imagen5.jpg" alt="Imagen 5">
       <img src="imagen6.jpg" alt="Imagen 6">
       <img src="imagen7.jpg" alt="Imagen 7">
-      
     </div>
   </section>
 
   <!-- Footer -->
-  
-    <div class="footer-container">
-      <div class="footer-section contacto">
-        <h4>Contáctanos</h4>
-        <p>✈️ Escríbenos a <a href="https://t.me/nohaysinsuerte" target="_blank">@nohaysinsuerte</a></p>
-        <p>✉️ Correo: <a href="mailto:soporte@nohaysinsuerte.com">soporte@nohaysinsuerte.com</a></p>
-        <p>Horario: L-V de 9 a 6pm | Sáb. de 9am a 2pm</p>
-      </div>
-
-      <div class="footer-section legal">
-        <h4>Información legal</h4>
-        <ul>
-          <li><a href="#">Términos y condiciones</a></li>
-          <li><a href="#">Políticas de privacidad</a></li>
-          <li><a href="#">Política de cookies</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-section redes">
-        <img class="logo" src="ComunidadPiura-removebg-preview.png" alt="Logo Comunidad Piura" />
-        <div class="social-icons">
-          <a href="#"> 🅾 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 </a>
-          <a href="#">【ꚠ】tik tok</a>
-          <a href="#">ⓕfacebook</a>
-          <a href="#">✆𝑾𝒉𝒂𝒕𝒔𝑨pp</a>
-        </div>
-        <p>© 2025 Todos los derechos reservados</p>
-      </div>
+  <div class="footer-container">
+    <div class="footer-section contacto">
+      <h4>Contáctanos</h4>
+      <p>✈️ Escríbenos a <a href="https://t.me/nohaysinsuerte" target="_blank">@nohaysinsuerte</a></p>
+      <p>✉️ Correo: <a href="mailto:soporte@nohaysinsuerte.com">soporte@nohaysinsuerte.com</a></p>
+      <p>Horario: L-V de 9 a 6pm | Sáb. de 9am a 2pm</p>
     </div>
-  
+    <div class="footer-section legal">
+      <h4>Información legal</h4>
+      <ul>
+        <li><a href="#">Términos y condiciones</a></li>
+        <li><a href="#">Políticas de privacidad</a></li>
+        <li><a href="#">Política de cookies</a></li>
+      </ul>
+    </div>
+    <div class="footer-section redes">
+      <img class="logo" src="ComunidadPiura-removebg-preview.png" alt="Logo Comunidad Piura" />
+      <div class="social-icons">
+        <a href="#"> 🅾 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 </a>
+        <a href="#">【ꚠ】tik tok</a>
+        <a href="#">ⓕfacebook</a>
+        <a href="#">✆𝑾𝒉𝒂𝒕𝒔𝑨pp</a>
+      </div>
+      <p>© 2025 Todos los derechos reservados</p>
+    </div>
+  </div>
 
   <script>
-    
-
     // Carrusel infinito
     const track = document.getElementById("carousel-track");
-    track.innerHTML += track.innerHTML; // duplicamos imágenes para efecto infinito
+    track.innerHTML += track.innerHTML; 
   </script>
-<script>
-  // ✅ Botón hamburguesa
-  function toggleMenu() {
-    const nav = document.getElementById("main-nav");
-    nav.style.display = (nav.style.display === "flex") ? "none" : "flex";
-  }
-</script>
-
-<!-- Script de Firebase separado y bien cerrado -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
-    authDomain: "comunidadpiura-fed53.firebaseapp.com",
-    projectId: "comunidadpiura-fed53",
-    storageBucket: "comunidadpiura-fed53.appspot.com",  // 👈 corrige el .app → .appspot.com
-    messagingSenderId: "113288016871",
-    appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
-    measurementId: "G-68EYEMSET9"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  // ✅ Comprobar si hay usuario logueado
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      // Si no hay sesión, mandar al login
-      window.location.href = "index.html";
-    } else {
-      console.log("Usuario activo:", user.email);
+  <script>
+    // Menú hamburguesa
+    function toggleMenu() {
+      const nav = document.getElementById("main-nav");
+      nav.style.display = (nav.style.display === "flex") ? "none" : "flex";
     }
-  });
+  </script>
 
-  // ✅ Función de cerrar sesión
-  window.logout = function() {
-    signOut(auth).then(() => {
-      window.location.href = "index.html";
-    }).catch((error) => {
-      console.error("Error al cerrar sesión:", error);
+  <!-- Firebase Auth -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
+      authDomain: "comunidadpiura-fed53.firebaseapp.com",
+      projectId: "comunidadpiura-fed53",
+      storageBucket: "comunidadpiura-fed53.appspot.com",
+      messagingSenderId: "113288016871",
+      appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
+      measurementId: "G-68EYEMSET9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // 🔒 Bloqueo de acceso
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        // Si no hay sesión, mandar al login
+        window.location.href = "index.html";
+      } else {
+        console.log("Usuario activo:", user.email);
+        // Mostrar el body solo si hay sesión
+        document.body.style.display = "block";
+      }
     });
-  };
-</script>
+
+    // 🚪 Cerrar sesión
+    window.logout = function() {
+      signOut(auth).then(() => {
+        window.location.href = "index.html";
+      }).catch((error) => {
+        console.error("Error al cerrar sesión:", error);
+      });
+    };
+  </script>
 </body>
-</html>
+        </html>
