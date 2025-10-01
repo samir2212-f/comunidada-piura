@@ -530,16 +530,26 @@ body.light-mode .footer-section a { color: #065f46; }
   const auth = getAuth(app);
 
   // 🚨 Cada vez que alguien abra el home, cerrar sesión y mandar al login
-  signOut(auth).finally(() => {
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+const auth = getAuth(app);
+
+// 🚀 Comprobar si el usuario está autenticado
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    // Si no hay sesión activa, mandamos al login
+    window.location.href = "index.html";
+  } else {
+    console.log("Usuario activo:", user.email);
+  }
+});
+
+// ✅ Para el botón "Cerrar sesión" del menú
+window.logout = function() {
+  signOut(auth).then(() => {
     window.location.href = "index.html";
   });
-
-  // ✅ Para el botón "Cerrar sesión" del menú
-  window.logout = function() {
-    signOut(auth).then(() => {
-      window.location.href = "index.html";
-    });
-  }
+};
 </script>
 </body>
 </html>
