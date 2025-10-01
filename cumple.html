@@ -1,75 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cumpleaños Comunidad</title>
 
-  <!-- Firebase SDK v9+ (modular) -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc, collection, getDocs, query } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-
-    // Configuración Firebase de tu proyecto
-    const firebaseConfig = {
-      apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
-      authDomain: "comunidadpiura-fed53.firebaseapp.com",
-      projectId: "comunidadpiura-fed53",
-      storageBucket: "comunidadpiura-fed53.appspot.com",
-      messagingSenderId: "113288016871",
-      appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
-      measurementId: "G-68EYEMSET9"
-    };
-
-    // Inicializar Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    // Autenticación anónima (necesaria por tus reglas)
-    signInAnonymously(auth).catch((error) => {
-      console.error("Error en login anónimo:", error);
-    });
-
-    // Guardar cumpleaños
-    window.guardarCumple = async function () {
-      const nombre = document.getElementById("nombre").value;
-      const cumple = document.getElementById("cumple").value;
-
-      if (nombre && cumple) {
-        try {
-          await setDoc(doc(db, "cumpleanios", nombre), {
-            nombre: nombre,
-            cumple: cumple
-          });
-          alert("🎉 Cumpleaños guardado!");
-          location.reload();
-        } catch (e) {
-          console.error("Error al guardar:", e);
-        }
-      }
-    };
-
-    // Verificar cumpleaños de HOY
-    async function verificarCumple() {
-      const hoy = new Date().toISOString().slice(5, 10); // MM-DD
-      const q = query(collection(db, "cumpleanios"));
-      const querySnapshot = await getDocs(q);
-
-      querySnapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        const cumpleHoy = data.cumple.slice(5, 10);
-        if (hoy === cumpleHoy) {
-          document.getElementById("mensaje").innerText =
-            "🎉 ¡Feliz cumpleaños " + data.nombre + "!";
-          document.getElementById("formulario").style.display = "none";
-        }
-      });
-    }
-
-    verificarCumple();
-  </script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
   <style>
     body {
@@ -106,5 +45,65 @@
 
   <!-- Mensaje -->
   <h2 id="mensaje"></h2>
+
+  <script type="module">
+    // Configuración de Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
+      authDomain: "comunidadpiura-fed53.firebaseapp.com",
+      projectId: "comunidadpiura-fed53",
+      storageBucket: "comunidadpiura-fed53.appspot.com",
+      messagingSenderId: "113288016871",
+      appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
+      measurementId: "G-68EYEMSET9"
+    };
+
+    // Inicializar Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Autenticación anónima
+    signInAnonymously(auth).catch((error) => {
+      console.error("Error en login anónimo:", error);
+    });
+
+    // Guardar cumpleaños con ID automático
+    async function guardarCumple() {
+      const nombre = document.getElementById("nombre").value;
+      const cumple = document.getElementById("cumple").value;
+
+      if (nombre && cumple) {
+        await addDoc(collection(db, "cumpleanios"), {
+          nombre: nombre,
+          cumple: cumple
+        });
+        alert("🎉 Cumpleaños guardado!");
+        location.reload();
+      }
+    }
+
+    // Verificar cumpleaños de HOY
+    async function verificarCumple() {
+      const hoy = new Date().toISOString().slice(5, 10); // MM-DD
+      const querySnapshot = await getDocs(collection(db, "cumpleanios"));
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const cumpleHoy = data.cumple.slice(5, 10);
+        if (hoy === cumpleHoy) {
+          document.getElementById("mensaje").innerText =
+            "🎉 ¡Feliz cumpleaños " + data.nombre + "!";
+          document.getElementById("formulario").style.display = "none";
+        }
+      });
+    }
+
+    verificarCumple();
+  </script>
 </body>
 </html>
