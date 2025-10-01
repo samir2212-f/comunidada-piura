@@ -7,6 +7,8 @@
   <link rel="icon" type="image/png" href="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcReMJly0vwqQtfircDFDpZwXu18Sd3bSMIOsRRLQyJ0irbFg3KC">
   
   <style>
+/* ================= Full CSS integrado (tu código + mejoras) ================= */
+
 /* Reset */
 * {
   box-sizing: border-box;
@@ -21,25 +23,33 @@ body {
   color: #d1d5db; /* gris claro seguro */
   overflow-x: hidden;
   line-height: 1.6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
 
-/* Header */
-header {
+/* ===== Preserve both .header and header selectors so nothing se rompe ===== */
+header,
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
-  border-bottom: 2px solid #0a0f0f;
+  border-bottom: 2px solid #0a0f0f; /* sintaxis corregida */
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 2000;
   backdrop-filter: blur(6px);
-  background-image: url("imagen.png");
+  background-image: url("imagen.png"); /* tu imagen detrás */
   background-size: cover;
   background-position: center;
   height: 100px;
+  /* Para que el header no tape todo cuando haya transparencia */
+  background-repeat: no-repeat;
 }
+
+/* Antes había .header::before en tu código: lo dejamos también */
+header::before,
 .header::before {
   content: "";
   position: absolute;
@@ -47,26 +57,44 @@ header {
   background: rgba(0,0,0,0.3);
   z-index: 1;
 }
+
+/* Logo */
+header .logo,
 .header .logo {
   position: relative;
   z-index: 2;
   width: 120px;
   margin: 20px;
 }
-.header nav {
+
+/* Nav (aplica si usas <nav> dentro del header o .header nav) */
+header nav,
+.header nav,
+nav {
   position: relative;
   z-index: 2;
+  display: flex;
+  align-items: center;
 }
-nav a {
+
+/* Links del nav (mantuvimos tu estilo original, mejorado) */
+nav a,
+header nav a,
+.header nav a {
   margin-left: 30px;
   text-decoration: none;
   color: #22d3ee; /* verde agua */
   font-weight: 600;
   font-size: 16px;
-  transition: all 0.3s ease;
+  transition: all 0.28s cubic-bezier(.2,.9,.2,1);
   position: relative;
+  letter-spacing: .2px;
+  display: inline-block;
+  padding: 6px 2px;
 }
-nav a::after {
+nav a::after,
+header nav a::after,
+.header nav a::after {
   content: "";
   position: absolute;
   width: 0%;
@@ -74,16 +102,30 @@ nav a::after {
   background: #22d3ee;
   left: 0;
   bottom: -5px;
-  transition: width 0.3s;
+  transition: width 0.28s ease;
 }
-nav a:hover {
+nav a:hover,
+header nav a:hover,
+.header nav a:hover {
   color: #a3e635; /* verde lima */
 }
-nav a:hover::after {
+nav a:hover::after,
+header nav a:hover::after,
+.header nav a:hover::after {
   width: 100%;
+  background: #a3e635;
 }
 
-/* Banner */
+/* Opcional: nav semi-transparente sobre la imagen (no quita la imagen) */
+nav {
+  background: rgba(6, 10, 10, 0.18);
+  padding: 8px 18px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* ===== Banner / Hero (tu bloque .banner original, mejorado) ===== */
 .banner {
   position: relative;
   height: 100vh;
@@ -93,15 +135,17 @@ nav a:hover::after {
   justify-content: center;
   align-items: center;
   text-align: center;
+  padding-top: 100px; /* para compensar header fijo */
 }
 .banner::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7));
+  background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.7));
   z-index: 1;
 }
-.banner h1, .banner p {
+.banner h1,
+.banner p {
   position: relative;
   z-index: 2;
 }
@@ -110,6 +154,7 @@ nav a:hover::after {
   color: #fff;
   text-shadow: 0 0 15px #22d3ee; /* resplandor verde agua */
   margin-bottom: 20px;
+  letter-spacing: 0.3px;
 }
 .banner p {
   font-size: 20px;
@@ -119,13 +164,14 @@ nav a:hover::after {
   color: #d1d5db; /* gris claro seguro */
 }
 
-/* Carrusel */
+/* ===== Carrusel (tal cual lo tenías + sombra mejorada) ===== */
 .carousel {
   width: 100%;
   overflow: hidden;
   margin: 60px 0;
   border-top: 2px solid #1e293b; /* gris azulado oscuro */
   border-bottom: 2px solid #1e293b;
+  padding: 20px 0;
 }
 .carousel-track {
   display: flex;
@@ -138,14 +184,15 @@ nav a:hover::after {
   object-fit: cover;
   border-radius: 12px;
   flex-shrink: 0;
-  box-shadow: 0 0 10px rgba(34,211,238,0.3); /* sombra verde agua */
+  box-shadow: 0 8px 24px rgba(2,6,23,0.6), 0 0 10px rgba(34,211,238,0.18); /* sombra más rica */
+  border: 1px solid rgba(34,211,238,0.05);
 }
 @keyframes scroll {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
 
-/* Contenido principal */
+/* ===== Contenido principal (tus reglas originales) ===== */
 .content {
   max-width: 1000px;
   margin: 80px auto;
@@ -165,7 +212,21 @@ nav a:hover::after {
   text-align: justify;
 }
 
-/* Footer */
+/* ===== Tarjetas (añadidas: no rompen nada si no las usas) ===== */
+.card {
+  background: rgba(15,23,42,0.6);
+  border: 1px solid rgba(30,41,59,0.6);
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(2,6,23,0.6);
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(2,6,23,0.75), 0 0 20px rgba(34,211,238,0.12);
+}
+
+/* ===== Footer (tu footer) ===== */
 footer {
   background: linear-gradient(to right, #0f172a, #064e3b); /* azul oscuro → verde profundo */
   color: white;
@@ -213,7 +274,80 @@ footer h4 {
 .social-icons a:hover {
   transform: scale(1.2);
   color: #a3e635; /* verde lima */
-    }
+}
+
+/* ===== Footer gradient animation (opcional, añade movimiento suave) ===== */
+footer {
+  background-size: 400% 400%;
+  animation: footerGradient 18s ease infinite;
+}
+@keyframes footerGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== Tipografía alternativa para títulos y mejoras generales ===== */
+h1, h2, h3, h4 {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  margin-bottom: 12px;
+}
+
+/* ===== Light mode (se activa añadiendo .light-mode al <body>) ===== */
+body.light-mode {
+  background: linear-gradient(to bottom, #ffffff, #f0fdfa 60%, #ccfbf1 100%);
+  color: #111827;
+}
+body.light-mode header,
+body.light-mode .header {
+  border-bottom: 2px solid rgba(4, 116, 87, 0.08);
+}
+body.light-mode header::before,
+body.light-mode .header::before {
+  background: rgba(255,255,255,0.65);
+}
+body.light-mode nav a {
+  color: #047857;
+}
+body.light-mode nav a:hover { color: #22d3ee; }
+body.light-mode .banner h1 { color: #064e3b; text-shadow: 0 0 8px rgba(34,211,238,0.2); }
+body.light-mode .banner p { color: #374151; }
+body.light-mode .content p { color: #374151; }
+body.light-mode footer {
+  background: linear-gradient(to right, #ecfdf5, #ccfbf1);
+  color: #064e3b;
+  border-top: 2px solid #047857;
+}
+body.light-mode footer h4 { color: #047857; text-shadow: none; }
+body.light-mode .footer-section a { color: #065f46; }
+
+/* ===== Botón flotante para cambiar modo (añade en HTML: <button id="modo-btn" class="mode-toggle">🌙</button>) ===== */
+.mode-toggle,
+#modo-btn {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 3000;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  border: 1px solid rgba(34,211,238,0.08);
+  color: #22d3ee;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* ===== Pequeñas helpers ===== */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 18px; }
+.center { text-align: center; }
+
+/* ================= end ================= */
   </style>
 </head>
 <body>
