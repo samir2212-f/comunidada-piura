@@ -350,19 +350,59 @@ body.light-mode .footer-section a { color: #065f46; }
 .center { text-align: center; }
 
 /* ================= end ================= */
+    /* Menú normal en escritorio */
+nav {
+  display: flex;
+  align-items: center;
+}
+
+/* Ajuste para móviles */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column; /* en columna */
+    align-items: flex-start;
+    position: absolute;
+    top: 100px; /* justo debajo del header */
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.85);
+    padding: 10px 20px;
+    display: none; /* oculto por defecto */
+  }
+  nav a {
+    margin: 10px 0;
+    font-size: 18px;
+  }
+  /* Botón hamburguesa */
+  .menu-toggle {
+    display: block;
+    font-size: 28px;
+    color: #22d3ee;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 3000;
+  }
+}
+
+/* En escritorio ocultamos el botón */
+.menu-toggle {
+  display: none;
+}
   </style>
 </head>
 <body>
 
   <!-- Header -->
   <header class="header">
-    <img src="ComunidadPiura-removebg-preview.png" class="logo" />
-    <nav>
-      <a href="sorteos.html">Sorteos</a>
-      <a href="cumple.html">Cumpleaños</a>
-      <a href="fotos.html">Fotos</a>
-      <a href="#" onclick="logout()">Cerrar sesión</a>
-    </nav>
+  <img src="ComunidadPiura-removebg-preview.png" class="logo" />
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  <nav id="main-nav">
+    <a href="sorteos.html">Sorteos</a>
+    <a href="cumple.html">Cumpleaños</a>
+    <a href="fotos.html">Fotos</a>
+    <a href="#" onclick="logout()">Cerrar sesión</a>
+  </nav>
   </header>
 
   <!-- Contenido principal -->
@@ -434,6 +474,12 @@ body.light-mode .footer-section a { color: #065f46; }
     // Carrusel infinito
     const track = document.getElementById("carousel-track");
     track.innerHTML += track.innerHTML; // duplicamos imágenes para efecto infinito
+  </script>
+  <script>
+function toggleMenu() {
+  const nav = document.getElementById("main-nav");
+  nav.style.display = (nav.style.display === "flex" || nav.style.display === "") ? "none" : "flex";
+}
   </script>
 </body>
 </html>
