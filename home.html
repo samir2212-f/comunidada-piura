@@ -531,13 +531,13 @@ body.light-mode .footer-section a { color: #065f46; }
 
   // 🚨 Cada vez que alguien abra el home, cerrar sesión y mandar al login
   signOut(auth).finally(() => {
-    window.location.href = "login.html";
+    window.location.href = "index.html";
   });
 
   // ✅ Para el botón "Cerrar sesión" del menú
   window.logout = function() {
     signOut(auth).then(() => {
-      window.location.href = "login.html";
+      window.location.href = "index.html";
     });
   }
 </script>
