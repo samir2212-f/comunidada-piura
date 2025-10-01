@@ -504,10 +504,14 @@ body.light-mode .footer-section a { color: #065f46; }
     track.innerHTML += track.innerHTML; // duplicamos imágenes para efecto infinito
   </script>
 <script>
-function toggleMenu() {
-  const nav = document.getElementById("main-nav");
-  nav.style.display = (nav.style.display === "flex") ? "none" : "flex";
-}
+  // ✅ Botón hamburguesa
+  function toggleMenu() {
+    const nav = document.getElementById("main-nav");
+    nav.style.display = (nav.style.display === "flex") ? "none" : "flex";
+  }
+</script>
+
+<!-- Script de Firebase separado y bien cerrado -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -525,10 +529,17 @@ function toggleMenu() {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  // 🚨 Cada vez que abran el home, forzar logout y mandar al login
+  // 🚨 Cada vez que alguien abra el home, cerrar sesión y mandar al login
   signOut(auth).finally(() => {
     window.location.href = "login.html";
   });
+
+  // ✅ Para el botón "Cerrar sesión" del menú
+  window.logout = function() {
+    signOut(auth).then(() => {
+      window.location.href = "login.html";
+    });
+  }
 </script>
 </body>
 </html>
