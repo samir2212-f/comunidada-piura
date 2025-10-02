@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cumpleaños Comunidad</title>
   <script type="module">
-    // Importar módulos de Firebase v9
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-    // Configuración
+    // Configuración Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
       authDomain: "comunidadpiura-fed53.firebaseapp.com",
@@ -21,7 +20,6 @@
       measurementId: "G-68EYEMSET9"
     };
 
-    // Inicializar Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
@@ -31,25 +29,51 @@
       console.log("✅ Usuario anónimo autenticado");
     }).catch((err) => console.error(err));
 
+    // Esperar que el usuario esté autenticado
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log("UID del usuario:", uid);
+
+        // Revisar si ya guardó su cumpleaños
+        const q = query(collection(db, "cumpleanios"), where("uid", "==", uid));
+        const snapshot = await getDocs(q);
+
+        if (!snapshot.empty) {
+          // Ya tiene cumpleaños guardado
+          document.getElementById("formulario").style.display = "none";
+          document.getElementById("mensaje").innerText = "✅ Ya registraste tu cumpleaños. No se puede cambiar.";
+        }
+      }
+    });
+
     // Guardar cumpleaños
     window.guardarCumple = async function () {
+      const user = auth.currentUser;
       const nombre = document.getElementById("nombre").value.trim();
       const cumple = document.getElementById("cumple").value;
 
-      if (nombre && cumple) {
-        try {
-          await addDoc(collection(db, "cumpleanios"), {
-            nombre: nombre,
-            cumple: cumple
-          });
-          alert("🎉 Cumpleaños guardado correctamente!");
-          location.reload();
-        } catch (e) {
-          console.error("Error al guardar:", e);
-          alert("❌ Error al guardar cumpleaños");
-        }
-      } else {
+      if (!nombre || !cumple) {
         alert("⚠️ Ingresa nombre y fecha");
+        return;
+      }
+
+      // Confirmación antes de guardar
+      if (!confirm("⚠️ Una vez guardada tu fecha de cumpleaños ya no se podrá cambiar.\n\n¿Deseas continuar?")) {
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "cumpleanios"), {
+          uid: user.uid,   // ID único del usuario
+          nombre: nombre,
+          cumple: cumple
+        });
+        alert("🎉 Cumpleaños guardado correctamente!");
+        location.reload();
+      } catch (e) {
+        console.error("Error al guardar:", e);
+        alert("❌ Error al guardar cumpleaños");
       }
     }
 
@@ -64,7 +88,6 @@
         if (data.cumple.slice(5, 10) === hoy) {
           document.getElementById("mensaje").innerText =
             "🎉 ¡Feliz cumpleaños " + data.nombre + "! 🎂";
-          document.getElementById("formulario").style.display = "none";
           encontrado = true;
         }
       });
