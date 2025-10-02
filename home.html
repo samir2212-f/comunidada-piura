@@ -616,63 +616,39 @@ body.light-mode .footer-section a { color: #065f46; }
   }
 }
 /* Menú hamburguesa minimalista en celular */
-#main-nav {
-  display: none; /* oculto por defecto */
-  flex-direction: column;
-  position: absolute;
-  top: 60px;  /* justo debajo del header */
-  right: 10px;
-  background: rgba(40, 40, 40, 0.95);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  padding: 10px;
-  z-index: 2000;
-  animation: fadeIn 0.3s ease;
-}
-
-#main-nav a {
+/* Botón hamburguesa */
+.menu-toggle {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
   color: white;
-  padding: 10px 20px;
-  font-size: 15px;
-  text-decoration: none;
-  border-radius: 8px;
-  text-align: center;
+  z-index: 1100;
+  position: relative;
 }
 
-#main-nav a:hover {
-  background: #444;
-}
-
-/* Mostrar cuando está activo */
-#main-nav.active {
-  display: flex;
-}
-
-/* Animación suave */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-/* Fondo del menú */
+/* Menú fullscreen oculto por defecto */
 #mobile-menu {
   display: none;
   position: fixed;
   top: 0; left: 0;
   width: 100%;
   height: 100%;
-  background: #2b0a3d; /* púrpura oscuro elegante */
-  z-index: 1000;
+  background: linear-gradient(-45deg, #002244, #003322, #002244, #003322);
+  background-size: 400% 400%;
+  animation: gradientMove 10s ease infinite;
+  z-index: 1200;
   flex-direction: column;
-  animation: fadeIn 0.3s ease forwards;
 }
 
-/* Animación */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* Animación del fondo */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-/* Header con logo + cerrar */
+/* Encabezado del menú */
 .menu-header {
   display: flex;
   justify-content: space-between;
@@ -688,11 +664,11 @@ body.light-mode .footer-section a { color: #065f46; }
   font-size: 28px;
   background: none;
   border: none;
-  color: white;
+  color: #ffffff;
   cursor: pointer;
 }
 
-/* Links */
+/* Links del menú */
 .menu-content {
   display: flex;
   flex-direction: column;
@@ -704,21 +680,23 @@ body.light-mode .footer-section a { color: #065f46; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.08);
   padding: 15px 20px;
   border-radius: 12px;
   text-decoration: none;
   font-size: 18px;
-  color: white;
-  transition: background 0.3s ease;
+  color: #e0f7ff;
+  transition: all 0.3s ease;
 }
 
 .menu-content a:hover {
-  background: #7a4ef8; /* morado claro al hover */
+  background: #006644;
+  color: #ffffff;
 }
 
 .menu-content a span {
   font-size: 22px;
+  color: #a8ffe0;
 }
 
   </style>
