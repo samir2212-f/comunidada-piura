@@ -211,5 +211,72 @@
 
   <h2 id="mensaje"></h2>
   <div id="listaCumples"></div>
+  //segurodad
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+  import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+  // Configuración Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
+    authDomain: "comunidadpiura-fed53.firebaseapp.com",
+    projectId: "comunidadpiura-fed53",
+    storageBucket: "comunidadpiura-fed53.appspot.com",
+    messagingSenderId: "113288016871",
+    appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
+    measurementId: "G-68EYEMSET9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // Redirigir si no hay usuario logueado
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      // 🚨 Si no está logueado lo mandamos al login
+      window.location.href = "index.html";
+      return;
+    }
+
+    // Si está logueado, ya puedes mostrar los cumples
+    document.getElementById("app").style.display = "block";
+
+    // Verificar si ya registró su cumple
+    const q = query(collection(db, "cumpleanios"), where("uid", "==", user.uid));
+    const snapshot = await getDocs(q);
+
+    if (!snapshot.empty) {
+      const data = snapshot.docs[0].data();
+      document.getElementById("formulario").style.display = "none";
+
+      let msg = `✅ Ya registraste tu cumpleaños.<br>
+      🎂 Nombre: <b>${data.nombre}</b><br>
+      📅 Fecha: <b>${data.cumple}</b><br>`;
+
+      const hoy = new Date().toISOString().slice(5, 10);
+      if (data.cumple.slice(5, 10) === hoy) {
+        msg += "🎉 ¡Hoy es tu cumpleaños! 🎂";
+        lanzarConfeti();
+      } else {
+        const faltan = diasFaltantes(data.cumple);
+        msg += `⏳ Faltan <b>${faltan}</b> días para tu cumple 🎂`;
+      }
+      document.getElementById("mensaje").innerHTML = msg;
+    }
+
+    verificarCumple();
+    listarCumples();
+  });
+
+  // Cerrar sesión
+  window.salir = async function () {
+    await signOut(auth);
+    window.location.href = "index.html"; // volver al login
+  }
+
+  // 🎉 confeti y demás funciones (guardarCumple, listarCumples, verificarCumple, etc.) van igual que en tu código anterior
+  </script>
 </body>
 </html>
