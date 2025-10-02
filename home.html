@@ -658,18 +658,21 @@ body.light-mode .footer-section a { color: #065f46; }
 
     /*loguica del perfil de java*/
     // Mostrar/Ocultar menú de perfil
-function togglePerfilMenu() {
-  const menu = document.getElementById("perfil-menu");
-  menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
-}
+<script>
+  // 🔹 Exponer funciones al window para que funcionen con onclick en HTML
+  window.togglePerfilMenu = function() {
+    const menu = document.getElementById("perfil-menu");
+    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+  };
 
-// Cambiar nombre (ejemplo simple)
-function cambiarNombre() {
-  const nuevoNombre = prompt("Escribe tu nuevo nombre:");
-  if (nuevoNombre) {
-    document.getElementById("perfil-nombre").innerText = nuevoNombre;
-  }
-}
+  window.cambiarNombre = function() {
+    const nuevoNombre = prompt("Escribe tu nuevo nombre:");
+    if (nuevoNombre) {
+      document.getElementById("perfil-nombre").innerText = nuevoNombre;
+    }
+  };
+</script>
+
 
 // Cuando el usuario esté autenticado en Firebase
 onAuthStateChanged(auth, (user) => {
