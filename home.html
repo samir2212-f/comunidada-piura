@@ -713,14 +713,15 @@ body.light-mode .footer-section a { color: #065f46; }
   <!-- Header -->
 <header class="header">
   <img src="ComunidadPiura-removebg-preview.png" class="logo" />
- <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-
-<nav id="main-nav">
-  <a href="sorteos.html">Sorteos</a>
-  <a href="cumple.html">Cumpleaños</a>
-  <a href="eventos.html">Eventos</a>
-  <a href="#" onclick="toggleMenu()">Cerrar ✖</a>
-</nav>
+<!-- Menú pantalla completa -->
+<div id="mobile-menu">
+  <div class="menu-content">
+    <a href="sorteos.html">Sorteos</a>
+    <a href="cumple.html">Cumpleaños</a>
+    <a href="eventos.html">Eventos</a>
+    <button onclick="closeMenu()">✖ Cerrar</button>
+  </div>
+</div>
 
 
   <!-- 🔹 Perfil -->
