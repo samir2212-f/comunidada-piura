@@ -653,69 +653,83 @@ body.light-mode .footer-section a { color: #065f46; }
   from { opacity: 0; transform: translateY(-10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-/* ===== MENÚ FULL SCREEN MEJORADO ===== */
+/* ===== MENÚ FULLSCREEN CON ESTILO GAMER NEÓN ===== */
 #mobile-menu {
   display: none;
   position: fixed;
   top: 0; left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
-  background-size: 400% 400%;
-  animation: gradientBG 10s ease infinite;
+  background: linear-gradient(270deg, #ff00cc, #3333ff, #00ffcc, #ffcc00, #ff0066);
+  background-size: 1000% 1000%;
+  animation: moverFondo 18s ease infinite;
   z-index: 99999;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  backdrop-filter: blur(8px); /* Difuminado futurista */
+  animation: fadeIn 0.6s ease forwards;
 }
 
-@keyframes gradientBG {
-  0% {background-position: 0% 50%;}
-  50% {background-position: 100% 50%;}
-  100% {background-position: 0% 50%;}
+/* Animación de fondo */
+@keyframes moverFondo {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(1.1); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 #mobile-menu .menu-content {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 35px;
   text-align: center;
 }
 
+/* LINKS NEÓN */
 #mobile-menu .menu-content a {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: bold;
-  color: #00e5ff;
+  color: #fff;
   text-decoration: none;
-  letter-spacing: 2px;
   text-transform: uppercase;
-  transition: all 0.3s ease;
-  text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff, 0 0 30px #00e5ff;
+  letter-spacing: 3px;
+  transition: all 0.4s ease;
+  text-shadow: 0 0 10px #00fff2, 0 0 20px #00fff2, 0 0 40px #00fff2;
 }
 
 #mobile-menu .menu-content a:hover {
-  color: #39ff14;
-  text-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14, 0 0 40px #39ff14;
-  transform: scale(1.1);
+  color: #ff00ff;
+  text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 80px #ff00ff;
+  transform: scale(1.2) rotate(-2deg);
 }
 
+/* BOTÓN CERRAR */
 #mobile-menu .menu-content button {
-  margin-top: 40px;
-  background: none;
-  border: 2px solid #f43f5e;
-  padding: 10px 20px;
-  border-radius: 8px;
+  margin-top: 50px;
+  background: rgba(255, 0, 80, 0.2);
+  border: 2px solid #ff0050;
+  padding: 15px 20px;
+  border-radius: 50%;
   font-size: 22px;
-  color: #f43f5e;
+  color: #fff;
   cursor: pointer;
   transition: all 0.3s ease;
-  text-shadow: 0 0 10px #f43f5e, 0 0 20px #f43f5e;
+  text-shadow: 0 0 10px #ff0050, 0 0 20px #ff0050;
+  box-shadow: 0 0 15px #ff0050 inset, 0 0 25px #ff0050;
 }
 
 #mobile-menu .menu-content button:hover {
-  background: #f43f5e;
+  background: #ff0050;
   color: #fff;
-  box-shadow: 0 0 20px #f43f5e, 0 0 40px #f43f5e;
+  box-shadow: 0 0 20px #ff0050, 0 0 40px #ff0050, 0 0 80px #ff0050;
+  transform: rotate(90deg);
 }
 
 
