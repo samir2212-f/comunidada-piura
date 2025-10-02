@@ -653,6 +653,36 @@ body.light-mode .footer-section a { color: #065f46; }
   from { opacity: 0; transform: translateY(-10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+/* ====== MENÚ DE PANTALLA COMPLETA ====== */
+#main-nav {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: #111; /* fondo oscuro tipo app */
+  z-index: 2000;
+  transition: opacity 0.3s ease;
+}
+
+#main-nav a {
+  color: white;
+  font-size: 22px;
+  text-decoration: none;
+  margin: 15px 0;
+}
+
+#main-nav a:hover {
+  color: #ffcc00;
+}
+
+/* Activo */
+#main-nav.active {
+  display: flex;
+}
 
   </style>
   
@@ -665,12 +695,15 @@ body.light-mode .footer-section a { color: #065f46; }
   <!-- Header -->
 <header class="header">
   <img src="ComunidadPiura-removebg-preview.png" class="logo" />
-  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-  <nav id="main-nav">
-    <a href="sorteos.html">Sorteos</a>
-    <a href="cumple.html">Cumpleaños</a>
-    <a href="eventos.html">Eventos</a>
-  </nav>
+ <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+<nav id="main-nav">
+  <a href="sorteos.html">Sorteos</a>
+  <a href="cumple.html">Cumpleaños</a>
+  <a href="eventos.html">Eventos</a>
+  <a href="#" onclick="toggleMenu()">Cerrar ✖</a>
+</nav>
+
 
   <!-- 🔹 Perfil -->
   <div class="perfil" onclick="togglePerfilMenu()">
@@ -743,10 +776,11 @@ body.light-mode .footer-section a { color: #065f46; }
 <!-- 📌 Menú hamburguesa (responsive) -->
 <script>
   // Abre o cierra el menú principal cuando el usuario hace clic en el botón hamburguesa
-  function toggleMenu() {
+ function toggleMenu() {
   const nav = document.getElementById("main-nav");
   nav.classList.toggle("active");
 }
+
 
 </script>
 
