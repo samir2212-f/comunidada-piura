@@ -653,46 +653,71 @@ body.light-mode .footer-section a { color: #065f46; }
   from { opacity: 0; transform: translateY(-10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-/* ===== MENÚ FULL SCREEN ===== */
+/* ===== MENÚ FULL SCREEN MEJORADO ===== */
 #mobile-menu {
   display: none;
-  position: fixed;   /* pegado a la ventana, no a un div */
-  top: 0;
-  left: 0;
-  width: 100vw;      /* 100% del viewport */
-  height: 100vh;     /* 100% del viewport */
-  background: rgba(15,23,42,0.98);
-  z-index: 99999;    /* siempre adelante */
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+  background-size: 400% 400%;
+  animation: gradientBG 10s ease infinite;
+  z-index: 99999;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+@keyframes gradientBG {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
 #mobile-menu .menu-content {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 30px;
   text-align: center;
 }
 
 #mobile-menu .menu-content a {
-  font-size: 26px;
-  color: #22d3ee;
+  font-size: 28px;
+  font-weight: bold;
+  color: #00e5ff;
   text-decoration: none;
-  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff, 0 0 30px #00e5ff;
 }
+
 #mobile-menu .menu-content a:hover {
-  color: #a3e635;
+  color: #39ff14;
+  text-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14, 0 0 40px #39ff14;
+  transform: scale(1.1);
 }
 
 #mobile-menu .menu-content button {
-  margin-top: 30px;
+  margin-top: 40px;
   background: none;
-  border: none;
-  font-size: 24px;
-  color: #f87171;
+  border: 2px solid #f43f5e;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 22px;
+  color: #f43f5e;
   cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 10px #f43f5e, 0 0 20px #f43f5e;
 }
+
+#mobile-menu .menu-content button:hover {
+  background: #f43f5e;
+  color: #fff;
+  box-shadow: 0 0 20px #f43f5e, 0 0 40px #f43f5e;
+}
+
 
   </style>
   
