@@ -476,6 +476,73 @@ body.light-mode .footer-section a { color: #065f46; }
 .perfil-menu a:hover {
   color: #a3e635;
 }
+/*modal*/
+      /* ===== Modal cambiar nombre ===== */
+.modal {
+  display: none; 
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 5000;
+}
+
+.modal-content {
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+  width: 300px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  border: 1px solid #22d3ee;
+}
+
+.modal-content h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #22d3ee;
+}
+
+.modal-content input {
+  width: 90%;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  margin: 10px 0 20px;
+  text-align: center;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-buttons button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.modal-buttons button:first-child {
+  background: #f39c12;
+  color: white;
+}
+.modal-buttons button:first-child:hover {
+  background: #e67e22;
+}
+
+.modal-buttons button:last-child {
+  background: #555;
+  color: white;
+}
+.modal-buttons button:last-child:hover {
+  background: #333;
+}
 
   </style>
   
@@ -627,22 +694,36 @@ body.light-mode .footer-section a { color: #065f46; }
   };
 
   // ✨ Cambiar nombre y guardarlo en Firebase Auth
-  window.cambiarNombre = async function () {
-    const nuevoNombre = prompt("Escribe tu nuevo nombre:");
-    if (nuevoNombre) {
-      const user = auth.currentUser;
-      if (user) {
-        try {
-          await updateProfile(user, { displayName: nuevoNombre });
-          document.getElementById("perfil-nombre").innerText = nuevoNombre;
-          alert("Nombre actualizado en Firebase ✅");
-        } catch (error) {
-          console.error("Error al actualizar nombre:", error);
-          alert("Hubo un error al guardar tu nombre.");
-        }
+  // 🔹 Abrir modal
+window.cambiarNombre = function () {
+  document.getElementById("modalNombre").style.display = "flex";
+};
+
+// 🔹 Cerrar modal
+window.cerrarModal = function () {
+  document.getElementById("modalNombre").style.display = "none";
+};
+
+// 🔹 Guardar nombre en Firebase
+window.guardarNombre = async function () {
+  const nuevoNombre = document.getElementById("nuevoNombre").value.trim();
+  if (nuevoNombre) {
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        await updateProfile(user, { displayName: nuevoNombre });
+        document.getElementById("perfil-nombre").innerText = nuevoNombre;
+        cerrarModal();
+      } catch (error) {
+        console.error("Error al actualizar nombre:", error);
+        alert("Hubo un error al guardar tu nombre.");
       }
     }
-  };
+  } else {
+    alert("Por favor escribe un nombre válido.");
+  }
+};
+
 
   // 🎂 Mostrar cumpleaños de HOY desde Firestore
   async function mostrarCumpleHome() {
@@ -679,6 +760,17 @@ body.light-mode .footer-section a { color: #065f46; }
     }
   });
 </script>
+<!-- Modal personalizado para cambiar nombre -->
+<div id="modalNombre" class="modal">
+  <div class="modal-content">
+    <h2>Escribe tu nuevo nombre:</h2>
+    <input type="text" id="nuevoNombre" placeholder="Tu nombre aquí">
+    <div class="modal-buttons">
+      <button onclick="guardarNombre()">Aceptar</button>
+      <button onclick="cerrarModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
 
 </body>
         </html>
