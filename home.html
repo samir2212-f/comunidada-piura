@@ -419,6 +419,64 @@ body.light-mode .footer-section a { color: #065f46; }
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+      /* estilo del perfil*/
+      /* Perfil */
+.perfil {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 20px;
+  z-index: 2001;
+}
+
+.perfil-img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid #22d3ee;
+  margin-right: 10px;
+}
+
+.perfil span {
+  color: #22d3ee;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Menú desplegable */
+.perfil-menu {
+  position: absolute;
+  top: 55px;
+  right: 0;
+  background: rgba(15,23,42,0.95);
+  border: 1px solid rgba(34,211,238,0.2);
+  border-radius: 10px;
+  padding: 12px;
+  display: none;
+  flex-direction: column;
+  min-width: 200px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}
+
+.perfil-menu p {
+  margin: 0 0 10px;
+  color: #a3e635;
+  font-size: 14px;
+}
+
+.perfil-menu a {
+  color: #22d3ee;
+  text-decoration: none;
+  display: block;
+  padding: 6px 0;
+  transition: color 0.3s;
+}
+
+.perfil-menu a:hover {
+  color: #a3e635;
+}
+
   </style>
   
 </head>
@@ -427,16 +485,27 @@ body.light-mode .footer-section a { color: #065f46; }
 <body style="display:none;">
 
   <!-- Header -->
-  <header class="header">
-    <img src="ComunidadPiura-removebg-preview.png" class="logo" />
-    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-    <nav id="main-nav">
-      <a href="sorteos.html">Sorteos</a>
-      <a href="cumple.html">Cumpleaños</a>
-      <a href="eventos.html">eventos</a>
-      <a href="#" onclick="logout()">Cerrar sesión</a>
-    </nav>
-  </header>
+  <!-- Header -->
+<header class="header">
+  <img src="ComunidadPiura-removebg-preview.png" class="logo" />
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  <nav id="main-nav">
+    <a href="sorteos.html">Sorteos</a>
+    <a href="cumple.html">Cumpleaños</a>
+    <a href="eventos.html">Eventos</a>
+  </nav>
+
+  <!-- 🔹 Perfil -->
+  <div class="perfil" onclick="togglePerfilMenu()">
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Perfil" class="perfil-img">
+    <span id="perfil-nombre">Usuario</span>
+    <div class="perfil-menu" id="perfil-menu">
+      <p id="perfil-email">correo@ejemplo.com</p>
+      <a href="#" onclick="cambiarNombre()">✏️ Cambiar nombre</a>
+      <a href="#" onclick="logout()">🚪 Cerrar sesión</a>
+    </div>
+  </div>
+</header>
 
   <!-- Contenido principal -->
   <section class="content">
@@ -586,6 +655,30 @@ body.light-mode .footer-section a { color: #065f46; }
   }
 
   mostrarCumpleHome();
+
+    /*loguica del perfil de java*/
+    // Mostrar/Ocultar menú de perfil
+function togglePerfilMenu() {
+  const menu = document.getElementById("perfil-menu");
+  menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+}
+
+// Cambiar nombre (ejemplo simple)
+function cambiarNombre() {
+  const nuevoNombre = prompt("Escribe tu nuevo nombre:");
+  if (nuevoNombre) {
+    document.getElementById("perfil-nombre").innerText = nuevoNombre;
+  }
+}
+
+// Cuando el usuario esté autenticado en Firebase
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    document.getElementById("perfil-nombre").innerText = user.displayName || "Sin nombre";
+    document.getElementById("perfil-email").innerText = user.email || "Anónimo";
+  }
+});
+
 </script>
 </body>
         </html>
