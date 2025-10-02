@@ -544,6 +544,77 @@ body.light-mode .footer-section a { color: #065f46; }
   background: #333;
 }
       /*adactar a celular*/
+/* ================== RESPONSIVE MOBILE ================== */
+@media (max-width: 768px) {
+  /* Header */
+  header, .header {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 12px 20px;
+  }
+
+  header .logo {
+    width: 90px;
+    margin: 10px auto;
+  }
+
+  /* Centrar logo y botón hamburguesa */
+  .menu-toggle {
+    margin-left: auto;
+    margin-right: 10px;
+  }
+
+  /* Perfil en móvil */
+  .perfil {
+    margin: 10px auto;
+    justify-content: center;
+  }
+
+  .perfil span {
+    font-size: 14px;
+  }
+
+  /* Banner */
+  .banner h1 {
+    font-size: 30px;
+  }
+  .banner p {
+    font-size: 16px;
+    padding: 0 12px;
+  }
+
+  /* Carrusel */
+  .carousel img {
+    width: 140px;
+    height: 140px;
+  }
+
+  /* Contenido */
+  .content {
+    margin: 50px auto;
+    padding: 0 12px;
+  }
+  .content h2 {
+    font-size: 24px;
+  }
+  .content p {
+    font-size: 16px;
+  }
+
+  /* Footer */
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-section {
+    margin: 10px 0;
+  }
+  .footer-section.redes .social-icons a {
+    display: block;
+    margin: 8px 0;
+    font-size: 18px;
+  }
+}
 
   </style>
   
