@@ -6,7 +6,7 @@
   <title>Comunidad Piura - Principal</title>
   <link rel="icon" type="image/png" href="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcReMJly0vwqQtfircDFDpZwXu18Sd3bSMIOsRRLQyJ0irbFg3KC">
   
-    /* … tu CSS completo como ya lo tienes … */
+   
     <style>
 /* ================= Full CSS integrado (tu código + mejoras) ================= */
 
@@ -725,49 +725,44 @@ body.light-mode .footer-section a { color: #065f46; }
   
 </head>
 
-<!-- 🔒 body oculto por defecto -->
 <body style="display:none;">
-
-  <!-- Header -->
-  <!-- Pantalla de navegación móvil -->
-<!-- Botón hamburguesa -->
-
-
-  <!-- Header -->
-<header class="header">
-  <img src="ComunidadPiura-removebg-preview.png" class="logo" />
-<!-- Botón hamburguesa -->
-<!-- Botón para abrir -->
+  <header class="header">
+    <img src="ComunidadPiura-removebg-preview.png" class="logo" />
 <button class="menu-toggle" onclick="openMenu()">☰</button>
-
-<!-- Menú fullscreen -->
-<div id="mobile-menu">
-  <div class="menu-header">
-    <img src="logo.png" alt="Logo" class="menu-logo">
-    <button class="close-btn" onclick="closeMenu()">✖</button>
-  </div>
-  <nav class="menu-content">
-    <a href="#">Inicio          <span>›</span></a>
-    <a href="#">Premios         <span>›</span></a>
-    <a href="#">Ganadores       <span>›</span></a>
-    <a href="#">Beneficios      <span>›</span></a>
-  </nav>
-</div>
+    <!-- Nav para escritorio -->
+    <nav id="main-nav">
+      <a href="#">Inicio</a>
+      <a href="#">Premios</a>
+      <a href="#">Ganadores</a>
+      <a href="#">Beneficios</a>
+    </nav>
 
 
-
-
-  <!-- 🔹 Perfil -->
-  <div class="perfil" onclick="togglePerfilMenu()">
-    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Perfil" class="perfil-img">
-    <span id="perfil-nombre">Usuario</span>
-    <div class="perfil-menu" id="perfil-menu">
-      <p id="perfil-email">correo@ejemplo.com</p>
-      <button onclick="cambiarNombre()">Cambiar nombre</button>
-      <a href="#" onclick="logout()">🚪 Cerrar sesión</a>
+<!-- Menú fullscreen móvil -->
+    <div id="mobile-menu">
+      <div class="menu-header">
+        <img src="logo.png" alt="Logo" class="menu-logo">
+        <button class="close-btn" onclick="closeMenu()">✖</button>
+      </div>
+      <nav class="menu-content">
+        <a href="#">Inicio          <span>›</span></a>
+        <a href="#">Premios         <span>›</span></a>
+        <a href="#">Ganadores       <span>›</span></a>
+        <a href="#">Beneficios      <span>›</span></a>
+      </nav>
     </div>
-  </div>
-</header>
+
+     <!-- Perfil -->
+    <div class="perfil" onclick="togglePerfilMenu()">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Perfil" class="perfil-img">
+      <span id="perfil-nombre">Usuario</span>
+      <div class="perfil-menu" id="perfil-menu">
+        <p id="perfil-email">correo@ejemplo.com</p>
+        <button onclick="cambiarNombre()">Cambiar nombre</button>
+        <a href="#" onclick="logout()">🚪 Cerrar sesión</a>
+      </div>
+    </div>
+  </header>
 
   <!-- Contenido principal -->
   <section class="content">
@@ -826,7 +821,7 @@ body.light-mode .footer-section a { color: #065f46; }
 </script>
 
 <!-- 📌 Menú hamburguesa (responsive) -->
-<script>
+
 <script>
   function openMenu() {
     document.getElementById("mobile-menu").style.display = "flex";
@@ -836,7 +831,7 @@ body.light-mode .footer-section a { color: #065f46; }
   }
 </script>
 
-</script>
+
 
 
 <!-- 📌 Firebase Auth + Firestore -->
@@ -971,6 +966,14 @@ window.guardarNombre = async function () {
     </div>
   </div>
 </div>
+  <script>
+    function openMenu() {
+      document.getElementById("mobile-menu").style.display = "flex";
+    }
+    function closeMenu() {
+      document.getElementById("mobile-menu").style.display = "none";
+    }
+  </script>
 
 </body>
         </html>
