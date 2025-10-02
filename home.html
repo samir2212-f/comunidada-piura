@@ -615,38 +615,44 @@ body.light-mode .footer-section a { color: #065f46; }
     font-size: 18px;
   }
 }
-      /* Menú hamburguesa en móvil */
+/* Menú hamburguesa minimalista en celular */
 #main-nav {
   display: none; /* oculto por defecto */
   flex-direction: column;
-  align-items: center;
-  background: #2a2a2a;
   position: absolute;
-  top: 70px; /* debajo del header */
-  left: 0;
-  width: 100%;
-  padding: 15px 0;
-  z-index: 1000;
+  top: 60px;  /* justo debajo del header */
+  right: 10px;
+  background: rgba(40, 40, 40, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  padding: 10px;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease;
 }
 
 #main-nav a {
-  display: block;
-  padding: 12px;
-  font-size: 16px;
   color: white;
+  padding: 10px 20px;
+  font-size: 15px;
+  text-decoration: none;
+  border-radius: 8px;
   text-align: center;
-  width: 100%;
 }
 
 #main-nav a:hover {
   background: #444;
 }
 
-/* Cuando está visible (se activa con JS toggleMenu) */
+/* Mostrar cuando está activo */
 #main-nav.active {
-  display: flex !important;
+  display: flex;
 }
 
+/* Animación suave */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
   </style>
   
