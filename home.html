@@ -653,59 +653,48 @@ body.light-mode .footer-section a { color: #065f46; }
   from { opacity: 0; transform: translateY(-10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-/* ====== MENÚ DE PANTALLA COMPLETA ====== */
-//* ====== MENÚ PANTALLA COMPLETA ====== */
+/* ===== MENÚ DE PANTALLA COMPLETA ===== */
 #mobile-menu {
   display: none;
-  position: fixed;
-  top: 0; left: 0;
+  position: fixed; /* <-- clave: se pega a la ventana, no al div */
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background: white;
-  z-index: 9999; /* 👈 siempre encima de todo */
-  flex-direction: column;
-}
-
-/* Header del menú */
-#mobile-menu .menu-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  border-bottom: 1px solid #ddd;
-}
-
-#mobile-menu .logo-menu {
-  height: 40px;
-}
-
-#mobile-menu .close-btn {
-  font-size: 24px;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-/* Contenido */
-#mobile-menu .menu-content {
-  flex: 1;
-  display: flex;
+  background: rgba(15,23,42,0.98); /* fondo oscuro */
+  z-index: 99999; /* <-- muy alto, queda encima de todo */
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#mobile-menu .menu-content {
+  display: flex;
+  flex-direction: column;
   gap: 25px;
+  text-align: center;
 }
 
 #mobile-menu .menu-content a {
-  font-size: 22px;
-  color: #222;
+  font-size: 26px;
+  color: #22d3ee;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+#mobile-menu .menu-content a:hover {
+  color: #a3e635;
 }
 
-#mobile-menu .menu-content a:hover {
-  color: #ff6600;
+#mobile-menu .menu-content button {
+  margin-top: 30px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #f87171;
+  cursor: pointer;
 }
+
 
 
 
@@ -718,6 +707,10 @@ body.light-mode .footer-section a { color: #065f46; }
 
   <!-- Header -->
   <!-- Pantalla de navegación móvil -->
+<!-- Botón hamburguesa -->
+<button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+<!-- Menú pantalla completa -->
 <div id="mobile-menu">
   <div class="menu-content">
     <a href="sorteos.html">Sorteos</a>
@@ -815,7 +808,6 @@ body.light-mode .footer-section a { color: #065f46; }
 function toggleMenu() {
   document.getElementById("mobile-menu").style.display = "flex";
 }
-
 function closeMenu() {
   document.getElementById("mobile-menu").style.display = "none";
 }
