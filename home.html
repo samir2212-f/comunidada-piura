@@ -501,7 +501,7 @@ body.light-mode .footer-section a { color: #065f46; }
     <span id="perfil-nombre">Usuario</span>
     <div class="perfil-menu" id="perfil-menu">
       <p id="perfil-email">correo@ejemplo.com</p>
-      <a href="#" onclick="cambiarNombre()">✏️ Cambiar nombre</a>
+      <button onclick="cambiarNombre()">Cambiar nombre</button>
       <a href="#" onclick="logout()">🚪 Cerrar sesión</a>
     </div>
   </div>
@@ -662,27 +662,39 @@ body.light-mode .footer-section a { color: #065f46; }
 
 
 // Cuando el usuario esté autenticado en Firebase
+ import { getAuth, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    document.getElementById("perfil-nombre").innerText = user.displayName || "Sin nombre";
+    document.getElementById("perfil-nombre").innerText = user.displayName || user.email.split("@")[0];
     document.getElementById("perfil-email").innerText = user.email || "Anónimo";
   }
 });
 
+
 </script>
   <script>
   // 🔹 Exponer funciones al window para que funcionen con onclick en HTML
-  window.togglePerfilMenu = function() {
-    const menu = document.getElementById("perfil-menu");
-    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
-  };
-
-  window.cambiarNombre = function() {
-    const nuevoNombre = prompt("Escribe tu nuevo nombre:");
-    if (nuevoNombre) {
-      document.getElementById("perfil-nombre").innerText = nuevoNombre;
+ // Cambiar nombre y guardarlo en Firebase Auth
+window.cambiarNombre = async function () {
+  const nuevoNombre = prompt("Escribe tu nuevo nombre:");
+  if (nuevoNombre) {
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        await updateProfile(user, {
+          displayName: nuevoNombre
+        });
+        document.getElementById("perfil-nombre").innerText = nuevoNombre;
+        alert("Nombre actualizado en Firebase ✅");
+      } catch (error) {
+        console.error("Error al actualizar nombre:", error);
+        alert("Hubo un error al guardar tu nombre.");
+      }
     }
-  };
+  }
+};
+
 </script>
 </body>
         </html>
