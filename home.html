@@ -654,35 +654,42 @@ body.light-mode .footer-section a { color: #065f46; }
   to   { opacity: 1; transform: translateY(0); }
 }
 /* ====== MENÚ DE PANTALLA COMPLETA ====== */
-#main-nav {
+/* Pantalla completa para el menú móvil */
+#mobile-menu {
   display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   position: fixed;
   top: 0; left: 0;
   width: 100%;
   height: 100%;
-  background: #111; /* fondo oscuro tipo app */
-  z-index: 2000;
-  transition: opacity 0.3s ease;
+  background: white;   /* 👈 fondo limpio, no oscuro */
+  z-index: 3000;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-#main-nav a {
-  color: white;
-  font-size: 22px;
-  text-decoration: none;
-  margin: 15px 0;
-}
-
-#main-nav a:hover {
-  color: #ffcc00;
-}
-
-/* Activo */
-#main-nav.active {
+#mobile-menu .menu-content {
   display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
 }
+
+#mobile-menu a, 
+#mobile-menu button {
+  font-size: 22px;
+  color: #222;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+#mobile-menu a:hover,
+#mobile-menu button:hover {
+  color: #ff6600;
+}
+
 
   </style>
   
@@ -692,6 +699,17 @@ body.light-mode .footer-section a { color: #065f46; }
 <body style="display:none;">
 
   <!-- Header -->
+  <!-- Pantalla de navegación móvil -->
+<div id="mobile-menu">
+  <div class="menu-content">
+    <a href="sorteos.html">Sorteos</a>
+    <a href="cumple.html">Cumpleaños</a>
+    <a href="eventos.html">Eventos</a>
+    <a href="fotos.html">Fotos</a>
+    <button onclick="closeMenu()">✖ Cerrar</button>
+  </div>
+</div>
+
   <!-- Header -->
 <header class="header">
   <img src="ComunidadPiura-removebg-preview.png" class="logo" />
@@ -779,6 +797,15 @@ body.light-mode .footer-section a { color: #065f46; }
  function toggleMenu() {
   const nav = document.getElementById("main-nav");
   nav.classList.toggle("active");
+
+   function toggleMenu() {
+  document.getElementById("mobile-menu").style.display = "flex";
+}
+
+function closeMenu() {
+  document.getElementById("mobile-menu").style.display = "none";
+}
+
 }
 
 
