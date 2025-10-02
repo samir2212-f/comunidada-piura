@@ -25,25 +25,56 @@
     const db = getFirestore(app);
 
     // Login anónimo
-    signInAnonymously(auth).then(() => {
-      console.log("✅ Usuario anónimo autenticado");
-    }).catch((err) => console.error(err));
+    signInAnonymously(auth).catch((err) => console.error(err));
+
+    // Función confeti
+    function lanzarConfeti() {
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+
+    // Días faltantes
+    function diasFaltantes(fecha) {
+      const hoy = new Date();
+      const cumple = new Date(fecha);
+      cumple.setFullYear(hoy.getFullYear());
+      if (cumple < hoy) cumple.setFullYear(hoy.getFullYear() + 1);
+      return Math.ceil((cumple - hoy) / (1000 * 60 * 60 * 24));
+    }
 
     // Esperar que el usuario esté autenticado
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const uid = user.uid;
-        console.log("UID del usuario:", uid);
 
         // Revisar si ya guardó su cumpleaños
         const q = query(collection(db, "cumpleanios"), where("uid", "==", uid));
         const snapshot = await getDocs(q);
 
         if (!snapshot.empty) {
-          // Ya tiene cumpleaños guardado
+          const data = snapshot.docs[0].data();
           document.getElementById("formulario").style.display = "none";
-          document.getElementById("mensaje").innerText = "✅ Ya registraste tu cumpleaños. No se puede cambiar.";
+
+          let msg = `✅ Ya registraste tu cumpleaños.<br>
+          🎂 Nombre: <b>${data.nombre}</b><br>
+          📅 Fecha: <b>${data.cumple}</b><br>`;
+
+          const hoy = new Date().toISOString().slice(5, 10);
+          if (data.cumple.slice(5, 10) === hoy) {
+            msg += "🎉 ¡Hoy es tu cumpleaños! 🎂";
+            lanzarConfeti();
+          } else {
+            const faltan = diasFaltantes(data.cumple);
+            msg += `⏳ Faltan <b>${faltan}</b> días para tu cumple 🎂`;
+          }
+
+          document.getElementById("mensaje").innerHTML = msg;
         }
+
+        listarCumples(); // Mostrar lista del mes
       }
     });
 
@@ -58,18 +89,18 @@
         return;
       }
 
-      // Confirmación antes de guardar
       if (!confirm("⚠️ Una vez guardada tu fecha de cumpleaños ya no se podrá cambiar.\n\n¿Deseas continuar?")) {
         return;
       }
 
       try {
         await addDoc(collection(db, "cumpleanios"), {
-          uid: user.uid,   // ID único del usuario
+          uid: user.uid,
           nombre: nombre,
           cumple: cumple
         });
         alert("🎉 Cumpleaños guardado correctamente!");
+        lanzarConfeti();
         location.reload();
       } catch (e) {
         console.error("Error al guardar:", e);
@@ -77,17 +108,18 @@
       }
     }
 
-    // Verificar cumpleaños de hoy
+    // Verificar cumpleaños de hoy en la comunidad
     async function verificarCumple() {
-      const hoy = new Date().toISOString().slice(5, 10); // MM-DD
+      const hoy = new Date().toISOString().slice(5, 10);
       const querySnapshot = await getDocs(collection(db, "cumpleanios"));
-
       let encontrado = false;
+
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         if (data.cumple.slice(5, 10) === hoy) {
           document.getElementById("mensaje").innerText =
             "🎉 ¡Feliz cumpleaños " + data.nombre + "! 🎂";
+          lanzarConfeti();
           encontrado = true;
         }
       });
@@ -97,7 +129,28 @@
       }
     }
     verificarCumple();
+
+    // Listar cumpleaños del mes
+    async function listarCumples() {
+      const querySnapshot = await getDocs(collection(db, "cumpleanios"));
+      let lista = "<h3>📅 Cumpleaños de este mes:</h3><ul>";
+      const mesActual = new Date().getMonth() + 1;
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const mes = parseInt(data.cumple.split("-")[1]);
+        if (mes === mesActual) {
+          lista += `<li>🎂 ${data.nombre} - ${data.cumple}</li>`;
+        }
+      });
+
+      lista += "</ul>";
+      document.getElementById("listaCumples").innerHTML = lista;
+    }
   </script>
+
+  <!-- Librería de confeti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
     body {
@@ -132,6 +185,19 @@
       background: linear-gradient(45deg, #ff0080, #7928ca);
       transform: scale(1.05);
     }
+    #listaCumples {
+      margin-top: 30px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin: 5px 0;
+    }
   </style>
 </head>
 <body>
@@ -144,5 +210,6 @@
   </div>
 
   <h2 id="mensaje"></h2>
+  <div id="listaCumples"></div>
 </body>
 </html>
