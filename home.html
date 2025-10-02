@@ -615,6 +615,38 @@ body.light-mode .footer-section a { color: #065f46; }
     font-size: 18px;
   }
 }
+      /* Menú hamburguesa en móvil */
+#main-nav {
+  display: none; /* oculto por defecto */
+  flex-direction: column;
+  align-items: center;
+  background: #2a2a2a;
+  position: absolute;
+  top: 70px; /* debajo del header */
+  left: 0;
+  width: 100%;
+  padding: 15px 0;
+  z-index: 1000;
+}
+
+#main-nav a {
+  display: block;
+  padding: 12px;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  width: 100%;
+}
+
+#main-nav a:hover {
+  background: #444;
+}
+
+/* Cuando está visible (se activa con JS toggleMenu) */
+#main-nav.active {
+  display: flex !important;
+}
+
 
   </style>
   
@@ -706,9 +738,10 @@ body.light-mode .footer-section a { color: #065f46; }
 <script>
   // Abre o cierra el menú principal cuando el usuario hace clic en el botón hamburguesa
   function toggleMenu() {
-    const nav = document.getElementById("main-nav");
-    nav.style.display = (nav.style.display === "flex") ? "none" : "flex";
-  }
+  const nav = document.getElementById("main-nav");
+  nav.classList.toggle("active");
+}
+
 </script>
 
 <!-- 📌 Firebase Auth + Firestore -->
