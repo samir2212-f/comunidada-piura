@@ -648,8 +648,27 @@ body.light-mode .footer-section a { color: #065f46; }
     animation: gradientMove 10s ease infinite;
     z-index: 1200;
   }
+
+/* --- Escritorio --- */
+#main-nav { display: flex; }
+#mobile-menu { display: none; }
+.menu-toggle { display: none; }
+
+/* --- Móvil --- */
+@media (max-width: 768px) {
+  #main-nav { display: none; }   /* ocultar nav normal */
+  .menu-toggle { display: flex; } /* mostrar hamburguesa */
+  #mobile-menu {
+    display: none; /* oculto por defecto */
+    flex-direction: column;
+    width: 100%; height: 100%;
+    position: fixed;
+    top: 0; left: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 1200;
+  }
 }
-}
+
 
   </style>
   
@@ -658,29 +677,31 @@ body.light-mode .footer-section a { color: #065f46; }
 <body style="display:none;">
   <header class="header">
     <img src="ComunidadPiura-removebg-preview.png" class="logo" />
-<button class="menu-toggle" onclick="openMenu()">☰</button>
-    <!-- Nav para escritorio -->
-    <nav id="main-nav">
-      <a href="#">Inicio</a>
-      <a href="#">Premios</a>
-      <a href="#">Ganadores</a>
-      <a href="#">Beneficios</a>
-    </nav>
+<!-- Botón hamburguesa (solo visible en móvil) -->
+<button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
+<!-- Nav para escritorio -->
+<nav id="main-nav">
+  <a href="#">Inicio</a>
+  <a href="#">Premios</a>
+  <a href="#">Ganadores</a>
+  <a href="#">Beneficios</a>
+</nav>
 
 <!-- Menú fullscreen móvil -->
-    <div id="mobile-menu">
-      <div class="menu-header">
-        <img src="logo.png" alt="Logo" class="menu-logo">
-        <button class="close-btn" onclick="closeMenu()">✖</button>
-      </div>
-      <nav class="menu-content">
-        <a href="#">Inicio          <span>›</span></a>
-        <a href="#">Premios         <span>›</span></a>
-        <a href="#">Ganadores       <span>›</span></a>
-        <a href="#">Beneficios      <span>›</span></a>
-      </nav>
-    </div>
+<div id="mobile-menu">
+  <div class="menu-header">
+    <img src="logo.png" alt="Logo" class="menu-logo">
+    <button class="close-btn" onclick="toggleMenu()">✖</button>
+  </div>
+  <nav class="menu-content">
+    <a href="#">Inicio <span>›</span></a>
+    <a href="#">Premios <span>›</span></a>
+    <a href="#">Ganadores <span>›</span></a>
+    <a href="#">Beneficios <span>›</span></a>
+  </nav>
+</div>
+
 
      <!-- Perfil -->
     <div class="perfil" onclick="togglePerfilMenu()">
@@ -904,6 +925,15 @@ window.guardarNombre = async function () {
       document.getElementById("mobile-menu").style.display = "none";
     }
   </script>
+  <script>
+function toggleMenu() {
+  const menu = document.getElementById("mobile-menu");
+  if (window.innerWidth <= 768) { // solo en móvil
+    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+  }
+}
+</script>
+
 
 </body>
         </html>
