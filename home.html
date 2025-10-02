@@ -658,7 +658,19 @@ body.light-mode .footer-section a { color: #065f46; }
 
     /*loguica del perfil de java*/
     // Mostrar/Ocultar menú de perfil
-<script>
+
+
+
+// Cuando el usuario esté autenticado en Firebase
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    document.getElementById("perfil-nombre").innerText = user.displayName || "Sin nombre";
+    document.getElementById("perfil-email").innerText = user.email || "Anónimo";
+  }
+});
+
+</script>
+  <script>
   // 🔹 Exponer funciones al window para que funcionen con onclick en HTML
   window.togglePerfilMenu = function() {
     const menu = document.getElementById("perfil-menu");
@@ -671,17 +683,6 @@ body.light-mode .footer-section a { color: #065f46; }
       document.getElementById("perfil-nombre").innerText = nuevoNombre;
     }
   };
-</script>
-
-
-// Cuando el usuario esté autenticado en Firebase
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    document.getElementById("perfil-nombre").innerText = user.displayName || "Sin nombre";
-    document.getElementById("perfil-email").innerText = user.email || "Anónimo";
-  }
-});
-
 </script>
 </body>
         </html>
