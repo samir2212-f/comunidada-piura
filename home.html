@@ -654,41 +654,59 @@ body.light-mode .footer-section a { color: #065f46; }
   to   { opacity: 1; transform: translateY(0); }
 }
 /* ====== MENÚ DE PANTALLA COMPLETA ====== */
-/* Pantalla completa para el menú móvil */
+//* ====== MENÚ PANTALLA COMPLETA ====== */
 #mobile-menu {
   display: none;
   position: fixed;
   top: 0; left: 0;
   width: 100%;
   height: 100%;
-  background: white;   /* 👈 fondo limpio, no oscuro */
-  z-index: 3000;
-  justify-content: center;
-  align-items: center;
+  background: white;
+  z-index: 9999; /* 👈 siempre encima de todo */
   flex-direction: column;
 }
 
-#mobile-menu .menu-content {
+/* Header del menú */
+#mobile-menu .menu-header {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  text-align: center;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #ddd;
 }
 
-#mobile-menu a, 
-#mobile-menu button {
-  font-size: 22px;
-  color: #222;
-  text-decoration: none;
-  border: none;
+#mobile-menu .logo-menu {
+  height: 40px;
+}
+
+#mobile-menu .close-btn {
+  font-size: 24px;
   background: none;
+  border: none;
   cursor: pointer;
 }
 
-#mobile-menu a:hover,
-#mobile-menu button:hover {
+/* Contenido */
+#mobile-menu .menu-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+}
+
+#mobile-menu .menu-content a {
+  font-size: 22px;
+  color: #222;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+#mobile-menu .menu-content a:hover {
   color: #ff6600;
 }
+
 
 
   </style>
@@ -794,11 +812,7 @@ body.light-mode .footer-section a { color: #065f46; }
 <!-- 📌 Menú hamburguesa (responsive) -->
 <script>
   // Abre o cierra el menú principal cuando el usuario hace clic en el botón hamburguesa
- function toggleMenu() {
-  const nav = document.getElementById("main-nav");
-  nav.classList.toggle("active");
-
-   function toggleMenu() {
+function toggleMenu() {
   document.getElementById("mobile-menu").style.display = "flex";
 }
 
@@ -806,7 +820,6 @@ function closeMenu() {
   document.getElementById("mobile-menu").style.display = "none";
 }
 
-}
 
 
 </script>
