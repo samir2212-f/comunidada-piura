@@ -653,22 +653,22 @@ body.light-mode .footer-section a { color: #065f46; }
   from { opacity: 0; transform: translateY(-10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-/* ===== MENÚ FULLSCREEN CON ESTILO GAMER NEÓN ===== */
+/* ===== MENÚ FULLSCREEN CON AZUL + VERDE OSCURO ===== */
 #mobile-menu {
   display: none;
   position: fixed;
   top: 0; left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(270deg, #ff00cc, #3333ff, #00ffcc, #ffcc00, #ff0066);
-  background-size: 1000% 1000%;
-  animation: moverFondo 18s ease infinite;
+  background: linear-gradient(270deg, #003366, #006633, #003366);
+  background-size: 400% 400%;
+  animation: moverFondo 12s ease infinite;
   z-index: 99999;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(8px); /* Difuminado futurista */
+  backdrop-filter: blur(6px); /* efecto futurista */
   animation: fadeIn 0.6s ease forwards;
 }
 
@@ -681,7 +681,7 @@ body.light-mode .footer-section a { color: #065f46; }
 
 /* Animación de entrada */
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(1.1); }
+  from { opacity: 0; transform: scale(1.05); }
   to { opacity: 1; transform: scale(1); }
 }
 
@@ -692,45 +692,46 @@ body.light-mode .footer-section a { color: #065f46; }
   text-align: center;
 }
 
-/* LINKS NEÓN */
+/* LINKS NEÓN AZUL */
 #mobile-menu .menu-content a {
-  font-size: 32px;
+  font-size: 30px;
   font-weight: bold;
-  color: #fff;
+  color: #00eaff;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 3px;
   transition: all 0.4s ease;
-  text-shadow: 0 0 10px #00fff2, 0 0 20px #00fff2, 0 0 40px #00fff2;
+  text-shadow: 0 0 10px #00eaff, 0 0 20px #00eaff, 0 0 40px #00eaff;
 }
 
 #mobile-menu .menu-content a:hover {
-  color: #ff00ff;
-  text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 80px #ff00ff;
-  transform: scale(1.2) rotate(-2deg);
+  color: #39ff14; /* verde neón */
+  text-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14, 0 0 40px #39ff14, 0 0 80px #39ff14;
+  transform: scale(1.2);
 }
 
-/* BOTÓN CERRAR */
+/* BOTÓN CERRAR FUTURISTA */
 #mobile-menu .menu-content button {
   margin-top: 50px;
-  background: rgba(255, 0, 80, 0.2);
-  border: 2px solid #ff0050;
+  background: rgba(0, 255, 100, 0.15);
+  border: 2px solid #00ff88;
   padding: 15px 20px;
   border-radius: 50%;
-  font-size: 22px;
-  color: #fff;
+  font-size: 20px;
+  color: #00ffcc;
   cursor: pointer;
   transition: all 0.3s ease;
-  text-shadow: 0 0 10px #ff0050, 0 0 20px #ff0050;
-  box-shadow: 0 0 15px #ff0050 inset, 0 0 25px #ff0050;
+  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+  box-shadow: 0 0 15px #00ff88 inset, 0 0 25px #00ff88;
 }
 
 #mobile-menu .menu-content button:hover {
-  background: #ff0050;
-  color: #fff;
-  box-shadow: 0 0 20px #ff0050, 0 0 40px #ff0050, 0 0 80px #ff0050;
+  background: #00ff88;
+  color: #003366;
+  box-shadow: 0 0 20px #00ff88, 0 0 40px #00ff88, 0 0 80px #00ff88;
   transform: rotate(90deg);
 }
+
 
 
   </style>
