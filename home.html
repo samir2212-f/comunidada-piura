@@ -556,27 +556,30 @@ body.light-mode .footer-section a { color: #065f46; }
     </div>
   </div>
 
-  <script>
-    // Carrusel infinito
-    const track = document.getElementById("carousel-track");
-    track.innerHTML += track.innerHTML; 
-  </script>
-  <script>
-    // Menú hamburguesa
-    function toggleMenu() {
-      const nav = document.getElementById("main-nav");
-      nav.style.display = (nav.style.display === "flex") ? "none" : "flex";
-    }
-  </script>
+  <!-- 📌 Carrusel infinito -->
+<script>
+  // Duplica el contenido del carrusel para que se vea como un bucle infinito
+  const track = document.getElementById("carousel-track");
+  track.innerHTML += track.innerHTML;
+</script>
 
-  <!-- Firebase Auth -->
-  <script type="module">
+<!-- 📌 Menú hamburguesa (responsive) -->
+<script>
+  // Abre o cierra el menú principal cuando el usuario hace clic en el botón hamburguesa
+  function toggleMenu() {
+    const nav = document.getElementById("main-nav");
+    nav.style.display = (nav.style.display === "flex") ? "none" : "flex";
+  }
+</script>
+
+<!-- 📌 Firebase Auth + Firestore -->
+<script type="module">
+  // 🔹 Importar SDK de Firebase (Auth y Firestore)
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
   import { 
     getAuth, 
     onAuthStateChanged, 
     signOut, 
-    signInAnonymously, 
     updateProfile 
   } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
   import { 
@@ -585,7 +588,7 @@ body.light-mode .footer-section a { color: #065f46; }
     getDocs 
   } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
-  // 🔹 Configuración
+  // 🔹 Configuración de Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
     authDomain: "comunidadpiura-fed53.firebaseapp.com",
@@ -596,15 +599,18 @@ body.light-mode .footer-section a { color: #065f46; }
     measurementId: "G-68EYEMSET9"
   };
 
+  // 🔹 Inicializar Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  // 🔒 Control de sesión
+  // 🔒 Verificar sesión del usuario
   onAuthStateChanged(auth, (user) => {
     if (!user) {
+      // Si no hay usuario, lo mando al login
       window.location.href = "index.html";
     } else {
+      // Si está logueado, muestro la página y datos básicos
       document.body.style.display = "block";
       document.getElementById("perfil-nombre").innerText = user.displayName || user.email?.split("@")[0] || "Anónimo";
       document.getElementById("perfil-email").innerText = user.email || "Anónimo";
@@ -638,7 +644,7 @@ body.light-mode .footer-section a { color: #065f46; }
     }
   };
 
-  // 🎂 Mostrar cumpleaños de HOY en Home
+  // 🎂 Mostrar cumpleaños de HOY desde Firestore
   async function mostrarCumpleHome() {
     const hoy = new Date().toISOString().slice(5, 10); // MM-DD
     const querySnapshot = await getDocs(collection(db, "cumpleanios"));
@@ -655,48 +661,24 @@ body.light-mode .footer-section a { color: #065f46; }
     document.getElementById("cumple-home").innerHTML = mensaje || "📅 No hay cumpleaños por hoy.";
   }
 
+  // Ejecutar función al cargar
   mostrarCumpleHome();
-</script>
 
-    /*loguica del perfil de java*/
-    // Mostrar/Ocultar menú de perfil
+  // 📂 Abrir y cerrar el menú de perfil
+  window.togglePerfilMenu = function () {
+    const menu = document.getElementById("perfil-menu");
+    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+  };
 
-
-
-// Cuando el usuario esté autenticado en Firebase
- import { getAuth, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
-
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    document.getElementById("perfil-nombre").innerText = user.displayName || user.email.split("@")[0];
-    document.getElementById("perfil-email").innerText = user.email || "Anónimo";
-  }
-});
-
-
-</script>
-  <script>
-  // 🔹 Exponer funciones al window para que funcionen con onclick en HTML
- // Cambiar nombre y guardarlo en Firebase Auth
-window.cambiarNombre = async function () {
-  const nuevoNombre = prompt("Escribe tu nuevo nombre:");
-  if (nuevoNombre) {
-    const user = auth.currentUser;
-    if (user) {
-      try {
-        await updateProfile(user, {
-          displayName: nuevoNombre
-        });
-        document.getElementById("perfil-nombre").innerText = nuevoNombre;
-        alert("Nombre actualizado en Firebase ✅");
-      } catch (error) {
-        console.error("Error al actualizar nombre:", error);
-        alert("Hubo un error al guardar tu nombre.");
-      }
+  // 🔒 Cerrar menú de perfil al hacer clic fuera
+  document.addEventListener("click", (e) => {
+    const perfil = document.querySelector(".perfil");
+    const menu = document.getElementById("perfil-menu");
+    if (menu && menu.style.display === "flex" && !perfil.contains(e.target)) {
+      menu.style.display = "none";
     }
-  }
-};
-
+  });
 </script>
+
 </body>
         </html>
