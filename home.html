@@ -653,86 +653,73 @@ body.light-mode .footer-section a { color: #065f46; }
   from { opacity: 0; transform: translateY(-10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-/* ===== MENÚ FULLSCREEN CON AZUL + VERDE OSCURO ===== */
+/* Fondo del menú */
 #mobile-menu {
   display: none;
   position: fixed;
   top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(270deg, #003366, #006633, #003366);
-  background-size: 400% 400%;
-  animation: moverFondo 12s ease infinite;
-  z-index: 99999;
-  display: flex;
+  width: 100%;
+  height: 100%;
+  background: #2b0a3d; /* púrpura oscuro elegante */
+  z-index: 1000;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(6px); /* efecto futurista */
-  animation: fadeIn 0.6s ease forwards;
+  animation: fadeIn 0.3s ease forwards;
 }
 
-/* Animación de fondo */
-@keyframes moverFondo {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Animación de entrada */
+/* Animación */
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(1.05); }
-  to { opacity: 1; transform: scale(1); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-#mobile-menu .menu-content {
+/* Header con logo + cerrar */
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.menu-logo {
+  height: 50px;
+}
+
+.close-btn {
+  font-size: 28px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* Links */
+.menu-content {
   display: flex;
   flex-direction: column;
-  gap: 35px;
-  text-align: center;
+  gap: 20px;
+  padding: 30px;
 }
 
-/* LINKS NEÓN AZUL */
-#mobile-menu .menu-content a {
-  font-size: 30px;
-  font-weight: bold;
-  color: #00eaff;
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  transition: all 0.4s ease;
-  text-shadow: 0 0 10px #00eaff, 0 0 20px #00eaff, 0 0 40px #00eaff;
-}
-
-#mobile-menu .menu-content a:hover {
-  color: #39ff14; /* verde neón */
-  text-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14, 0 0 40px #39ff14, 0 0 80px #39ff14;
-  transform: scale(1.2);
-}
-
-/* BOTÓN CERRAR FUTURISTA */
-#mobile-menu .menu-content button {
-  margin-top: 50px;
-  background: rgba(0, 255, 100, 0.15);
-  border: 2px solid #00ff88;
+.menu-content a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.1);
   padding: 15px 20px;
-  border-radius: 50%;
-  font-size: 20px;
-  color: #00ffcc;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
-  box-shadow: 0 0 15px #00ff88 inset, 0 0 25px #00ff88;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  transition: background 0.3s ease;
 }
 
-#mobile-menu .menu-content button:hover {
-  background: #00ff88;
-  color: #003366;
-  box-shadow: 0 0 20px #00ff88, 0 0 40px #00ff88, 0 0 80px #00ff88;
-  transform: rotate(90deg);
+.menu-content a:hover {
+  background: #7a4ef8; /* morado claro al hover */
 }
 
-
+.menu-content a span {
+  font-size: 22px;
+}
 
   </style>
   
@@ -750,18 +737,23 @@ body.light-mode .footer-section a { color: #065f46; }
 <header class="header">
   <img src="ComunidadPiura-removebg-preview.png" class="logo" />
 <!-- Botón hamburguesa -->
-<button class="menu-toggle" onclick="toggleMenu()">☰</button>
+<!-- Botón para abrir -->
+<button class="menu-toggle" onclick="openMenu()">☰</button>
 
-<!-- Menú pantalla completa -->
+<!-- Menú fullscreen -->
 <div id="mobile-menu">
-  <div class="menu-content">
-    <a href="sorteos.html">Sorteos</a>
-    <a href="cumple.html">Cumpleaños</a>
-    <a href="eventos.html">Eventos</a>
-    <a href="fotos.html">Fotos</a>
-    <button onclick="closeMenu()">✖ Cerrar</button>
+  <div class="menu-header">
+    <img src="logo.png" alt="Logo" class="menu-logo">
+    <button class="close-btn" onclick="closeMenu()">✖</button>
   </div>
+  <nav class="menu-content">
+    <a href="#">Inicio         > <span>›</span></a>
+    <a href="#">Premios        > <span>›</span></a>
+    <a href="#">Ganadores      > <span>›</span></a>
+    <a href="#">Beneficios     > <span>›</span></a>
+  </nav>
 </div>
+
 
 
 
@@ -835,12 +827,15 @@ body.light-mode .footer-section a { color: #065f46; }
 
 <!-- 📌 Menú hamburguesa (responsive) -->
 <script>
-function toggleMenu() {
-  document.getElementById("mobile-menu").style.display = "flex";
-}
-function closeMenu() {
-  document.getElementById("mobile-menu").style.display = "none";
-}
+<script>
+  function openMenu() {
+    document.getElementById("mobile-menu").style.display = "flex";
+  }
+  function closeMenu() {
+    document.getElementById("mobile-menu").style.display = "none";
+  }
+</script>
+
 </script>
 
 
