@@ -571,48 +571,21 @@ body.light-mode .footer-section a { color: #065f46; }
 
   <!-- Firebase Auth -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+  import { 
+    getAuth, 
+    onAuthStateChanged, 
+    signOut, 
+    signInAnonymously, 
+    updateProfile 
+  } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+  import { 
+    getFirestore, 
+    collection, 
+    getDocs 
+  } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
-      authDomain: "comunidadpiura-fed53.firebaseapp.com",
-      projectId: "comunidadpiura-fed53",
-      storageBucket: "comunidadpiura-fed53.appspot.com",
-      messagingSenderId: "113288016871",
-      appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
-      measurementId: "G-68EYEMSET9"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    // 🔒 Bloqueo de acceso
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        // Si no hay sesión, mandar al login
-        window.location.href = "index.html";
-      } else {
-        console.log("Usuario activo:", user.email);
-        // Mostrar el body solo si hay sesión
-        document.body.style.display = "block";
-      }
-    });
-
-    // 🚪 Cerrar sesión
-    window.logout = function() {
-      signOut(auth).then(() => {
-        window.location.href = "index.html";
-      }).catch((error) => {
-        console.error("Error al cerrar sesión:", error);
-      });
-    };
-  </script>
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-
+  // 🔹 Configuración
   const firebaseConfig = {
     apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
     authDomain: "comunidadpiura-fed53.firebaseapp.com",
@@ -627,12 +600,45 @@ body.light-mode .footer-section a { color: #065f46; }
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  // Login anónimo
-  signInAnonymously(auth).catch((error) => {
-    console.error("Error login anónimo:", error);
+  // 🔒 Control de sesión
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "index.html";
+    } else {
+      document.body.style.display = "block";
+      document.getElementById("perfil-nombre").innerText = user.displayName || user.email?.split("@")[0] || "Anónimo";
+      document.getElementById("perfil-email").innerText = user.email || "Anónimo";
+    }
   });
 
-  // Mostrar cumpleaños de HOY en Home
+  // 🚪 Cerrar sesión
+  window.logout = function () {
+    signOut(auth).then(() => {
+      window.location.href = "index.html";
+    }).catch((error) => {
+      console.error("Error al cerrar sesión:", error);
+    });
+  };
+
+  // ✨ Cambiar nombre y guardarlo en Firebase Auth
+  window.cambiarNombre = async function () {
+    const nuevoNombre = prompt("Escribe tu nuevo nombre:");
+    if (nuevoNombre) {
+      const user = auth.currentUser;
+      if (user) {
+        try {
+          await updateProfile(user, { displayName: nuevoNombre });
+          document.getElementById("perfil-nombre").innerText = nuevoNombre;
+          alert("Nombre actualizado en Firebase ✅");
+        } catch (error) {
+          console.error("Error al actualizar nombre:", error);
+          alert("Hubo un error al guardar tu nombre.");
+        }
+      }
+    }
+  };
+
+  // 🎂 Mostrar cumpleaños de HOY en Home
   async function mostrarCumpleHome() {
     const hoy = new Date().toISOString().slice(5, 10); // MM-DD
     const querySnapshot = await getDocs(collection(db, "cumpleanios"));
@@ -646,15 +652,11 @@ body.light-mode .footer-section a { color: #065f46; }
       }
     });
 
-    // Si no hubo cumpleaños
-    if (!mensaje) {
-      mensaje = "📅 No hay cumpleaños por hoy.";
-    }
-
-    document.getElementById("cumple-home").innerHTML = mensaje;
+    document.getElementById("cumple-home").innerHTML = mensaje || "📅 No hay cumpleaños por hoy.";
   }
 
   mostrarCumpleHome();
+</script>
 
     /*loguica del perfil de java*/
     // Mostrar/Ocultar menú de perfil
