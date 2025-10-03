@@ -655,27 +655,17 @@ body.light-mode .footer-section a { color: #065f46; }
 }
 /* ===== MENÚ FULL SCREEN ===== */
 #mobile-menu {
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  background: linear-gradient(to right, #0f172a, #064e3b); /* igual que footer */
+  background: linear-gradient(-45deg, #0f172a, #064e3b, #0f172a, #064e3b);
   background-size: 400% 400%;
-  animation: footerGradient 18s ease infinite; /* misma animación */
-  color: #d1d5db;
-  overflow-x: hidden;
-  line-height: 1.6;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  display: none;
-  position: fixed;   /* pegado a la ventana, no a un div */
-  top: 0;
-  left: 0;
-  width: 100vw;      /* 100% del viewport */
-  height: 100vh;     /* 100% del viewport */
-  background: rgba(15,23,42,0.98);
-  z-index: 99999;    /* siempre adelante */
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  animation: footerGradient 18s ease infinite;
 }
+@keyframes footerGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
 
 #mobile-menu .menu-content {
   display: flex;
@@ -732,6 +722,7 @@ body.light-mode .footer-section a { color: #065f46; }
     <a href="cumple.html">Cumpleaños</a>
     <a href="eventos.html">Eventos</a>
     <a href="fotos.html">Fotos</a>
+    <button id="modo-btn" class="mode-toggle">🌙</button>
     <button onclick="closeMenu()">✖ Cerrar</button>
   </div>
 </div>
