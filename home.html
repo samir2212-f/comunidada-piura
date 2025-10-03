@@ -653,16 +653,16 @@ body.light-mode .footer-section a { color: #065f46; }
   from { opacity: 0; transform: translateY(-10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-/* ===== MENÚ DE PANTALLA COMPLETA ===== */
+/* ===== MENÚ FULL SCREEN ===== */
 #mobile-menu {
   display: none;
-  position: fixed; /* <-- clave: se pega a la ventana, no al div */
+  position: fixed;   /* pegado a la ventana, no a un div */
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(15,23,42,0.98); /* fondo oscuro */
-  z-index: 99999; /* <-- muy alto, queda encima de todo */
+  width: 100vw;      /* 100% del viewport */
+  height: 100vh;     /* 100% del viewport */
+  background: rgba(15,23,42,0.98);
+  z-index: 99999;    /* siempre adelante */
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -680,7 +680,6 @@ body.light-mode .footer-section a { color: #065f46; }
   color: #22d3ee;
   text-decoration: none;
   font-weight: 600;
-  transition: color 0.3s;
 }
 #mobile-menu .menu-content a:hover {
   color: #a3e635;
@@ -798,6 +797,8 @@ body.light-mode .footer-section a { color: #065f46; }
 </script>
 
 <!-- 📌 Menú hamburguesa (responsive) -->
+
+ 
 <script>
   // Abre o cierra el menú principal cuando el usuario hace clic en el botón hamburguesa
 function toggleMenu() {
@@ -806,10 +807,12 @@ function toggleMenu() {
 function closeMenu() {
   document.getElementById("mobile-menu").style.display = "none";
 }
-
-
-
 </script>
+
+
+
+
+
 
 <!-- 📌 Firebase Auth + Firestore -->
 <script type="module">
