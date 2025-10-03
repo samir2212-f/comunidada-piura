@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+pero no me fumciona:<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -6,7 +6,7 @@
   <title>Comunidad Piura - Principal</title>
   <link rel="icon" type="image/png" href="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcReMJly0vwqQtfircDFDpZwXu18Sd3bSMIOsRRLQyJ0irbFg3KC">
   
-   
+    /* … tu CSS completo como ya lo tienes … */
     <style>
 /* ================= Full CSS integrado (tu código + mejoras) ================= */
 
@@ -616,105 +616,131 @@ body.light-mode .footer-section a { color: #065f46; }
   }
 }
 /* Menú hamburguesa minimalista en celular */
-/* Botón hamburguesa */
-.menu-toggle {
+#main-nav {
+  display: none; /* oculto por defecto */
+  flex-direction: column;
+  position: absolute;
+  top: 60px;  /* justo debajo del header */
+  right: 10px;
+  background: rgba(40, 40, 40, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  padding: 10px;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease;
+}
+
+#main-nav a {
+  color: white;
+  padding: 10px 20px;
+  font-size: 15px;
+  text-decoration: none;
+  border-radius: 8px;
+  text-align: center;
+}
+
+#main-nav a:hover {
+  background: #444;
+}
+
+/* Mostrar cuando está activo */
+#main-nav.active {
+  display: flex;
+}
+
+/* Animación suave */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* ===== MENÚ DE PANTALLA COMPLETA ===== */
+#mobile-menu {
+  display: none;
+  position: fixed; /* <-- clave: se pega a la ventana, no al div */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15,23,42,0.98); /* fondo oscuro */
+  z-index: 99999; /* <-- muy alto, queda encima de todo */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#mobile-menu .menu-content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  text-align: center;
+}
+
+#mobile-menu .menu-content a {
+  font-size: 26px;
+  color: #22d3ee;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+#mobile-menu .menu-content a:hover {
+  color: #a3e635;
+}
+
+#mobile-menu .menu-content button {
+  margin-top: 30px;
   background: none;
   border: none;
-  font-size: 28px;
+  font-size: 24px;
+  color: #f87171;
   cursor: pointer;
-  color: white;
-  z-index: 1100;
-  position: relative;
 }
 
-/* Menú fullscreen oculto por defecto */
-/* ===== Celular ===== */
-@media (max-width: 768px) {
-  #main-nav {
-    display: none !important; /* ocultar nav normal */
-  }
-  .menu-toggle {
-    display: flex !important; /* mostrar hamburguesa */
-  }
-  #mobile-menu {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0; left: 0;
-    display: none; /* se abre con JS */
-    flex-direction: column;
-    background: linear-gradient(-45deg, #002244, #003322, #002244, #003322);
-    background-size: 400% 400%;
-    animation: gradientMove 10s ease infinite;
-    z-index: 1200;
-  }
 
-/* --- Escritorio --- */
-#main-nav { display: flex; }
-#mobile-menu { display: none; }
-.menu-toggle { display: none; }
 
-/* --- Móvil --- */
-@media (max-width: 768px) {
-  #main-nav { display: none; }   /* ocultar nav normal */
-  .menu-toggle { display: flex; } /* mostrar hamburguesa */
-  #mobile-menu {
-    display: none; /* oculto por defecto */
-    flex-direction: column;
-    width: 100%; height: 100%;
-    position: fixed;
-    top: 0; left: 0;
-    background: rgba(0,0,0,0.9);
-    z-index: 1200;
-  }
-}
+
 
 
   </style>
   
 </head>
 
+<!-- 🔒 body oculto por defecto -->
 <body style="display:none;">
-  <header class="header">
-    <img src="ComunidadPiura-removebg-preview.png" class="logo" />
-<!-- Botón hamburguesa (solo visible en móvil) -->
+
+  <!-- Header -->
+  <!-- Pantalla de navegación móvil -->
+<!-- Botón hamburguesa -->
+
+
+  <!-- Header -->
+<header class="header">
+  <img src="ComunidadPiura-removebg-preview.png" class="logo" />
 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
-<!-- Nav para escritorio -->
-<nav id="main-nav">
-  <a href="#">Inicio</a>
-  <a href="#">Premios</a>
-  <a href="#">Ganadores</a>
-  <a href="#">Beneficios</a>
-</nav>
-
-<!-- Menú fullscreen móvil -->
+<!-- Menú pantalla completa -->
 <div id="mobile-menu">
-  <div class="menu-header">
-    <img src="logo.png" alt="Logo" class="menu-logo">
-    <button class="close-btn" onclick="toggleMenu()">✖</button>
+  <div class="menu-content">
+    <a href="sorteos.html">Sorteos</a>
+    <a href="cumple.html">Cumpleaños</a>
+    <a href="eventos.html">Eventos</a>
+    <a href="fotos.html">Fotos</a>
+    <button onclick="closeMenu()">✖ Cerrar</button>
   </div>
-  <nav class="menu-content">
-    <a href="#">Inicio <span>›</span></a>
-    <a href="#">Premios <span>›</span></a>
-    <a href="#">Ganadores <span>›</span></a>
-    <a href="#">Beneficios <span>›</span></a>
-  </nav>
 </div>
 
 
-     <!-- Perfil -->
-    <div class="perfil" onclick="togglePerfilMenu()">
-      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Perfil" class="perfil-img">
-      <span id="perfil-nombre">Usuario</span>
-      <div class="perfil-menu" id="perfil-menu">
-        <p id="perfil-email">correo@ejemplo.com</p>
-        <button onclick="cambiarNombre()">Cambiar nombre</button>
-        <a href="#" onclick="logout()">🚪 Cerrar sesión</a>
-      </div>
+  <!-- 🔹 Perfil -->
+  <div class="perfil" onclick="togglePerfilMenu()">
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Perfil" class="perfil-img">
+    <span id="perfil-nombre">Usuario</span>
+    <div class="perfil-menu" id="perfil-menu">
+      <p id="perfil-email">correo@ejemplo.com</p>
+      <button onclick="cambiarNombre()">Cambiar nombre</button>
+      <a href="#" onclick="logout()">🚪 Cerrar sesión</a>
     </div>
-  </header>
-<br>
+  </div>
+</header>
+
   <!-- Contenido principal -->
   <section class="content">
     <br>
@@ -772,18 +798,18 @@ body.light-mode .footer-section a { color: #065f46; }
 </script>
 
 <!-- 📌 Menú hamburguesa (responsive) -->
-
 <script>
-  function openMenu() {
-    document.getElementById("mobile-menu").style.display = "flex";
-  }
-  function closeMenu() {
-    document.getElementById("mobile-menu").style.display = "none";
-  }
+  // Abre o cierra el menú principal cuando el usuario hace clic en el botón hamburguesa
+function toggleMenu() {
+  document.getElementById("mobile-menu").style.display = "flex";
+}
+function closeMenu() {
+  document.getElementById("mobile-menu").style.display = "none";
+}
+
+
+
 </script>
-
-
-
 
 <!-- 📌 Firebase Auth + Firestore -->
 <script type="module">
@@ -917,23 +943,6 @@ window.guardarNombre = async function () {
     </div>
   </div>
 </div>
-  <script>
-    function openMenu() {
-      document.getElementById("mobile-menu").style.display = "flex";
-    }
-    function closeMenu() {
-      document.getElementById("mobile-menu").style.display = "none";
-    }
-  </script>
-  <script>
-function toggleMenu() {
-  const menu = document.getElementById("mobile-menu");
-  if (window.innerWidth <= 768) { // solo en móvil
-    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
-  }
-}
-</script>
-
 
 </body>
         </html>
