@@ -138,7 +138,62 @@
       .login-container { padding: 20px; }
       .logo { width: 70px; }
     }
+    <!-- ✨ Mensaje moderno -->
+<div id="successMessage" class="success-popup">
+  <div class="success-content">
+    <span class="checkmark">✔</span>
+    <p>Datos guardados correctamente</p>
+  </div>
+</div>
+
+<style>
+/* ✅ Animación del mensaje bonito */
+.success-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  animation: fadeIn 0.3s ease;
+}
+
+.success-content {
+  background: linear-gradient(135deg, #111, #1f1f1f);
+  border: 2px solid #22c55e;
+  border-radius: 15px;
+  padding: 30px 40px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 0 25px rgba(34,197,94,0.4);
+  animation: pop 0.5s ease;
+}
+
+.success-content .checkmark {
+  display: inline-block;
+  font-size: 40px;
+  color: #22c55e;
+  margin-bottom: 10px;
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+}
+</style>
+
   </style>
+  
 </head>
 <body>
 
@@ -270,7 +325,7 @@
           fechaRegistro: new Date().toISOString()
         });
 
-        alert("Cuenta creada correctamente.");
+        showSuccess();
         window.location.href = "home.html";
       } catch (error) {
         document.getElementById("errorRegister").style.display = "block";
@@ -329,6 +384,15 @@
           .catch(err => alert(err.message));
       }
     }
+    // ✨ Mostrar mensaje bonito de éxito
+window.showSuccess = function() {
+  const msg = document.getElementById("successMessage");
+  msg.style.display = "flex";
+  setTimeout(() => {
+    msg.style.display = "none";
+  }, 2000); // se oculta en 2 segundos
+}
+
   </script>
 </body>
 </html>
