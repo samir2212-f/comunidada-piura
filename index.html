@@ -326,8 +326,12 @@
           fechaRegistro: new Date().toISOString()
         });
 
-        showSuccess();
-        window.location.href = "home.html";
+       showSuccess();
+
+// Esperar 2 segundos antes de redirigir
+setTimeout(() => {
+  window.location.href = "home.html";
+}, 2000);
       } catch (error) {
         document.getElementById("errorRegister").style.display = "block";
         document.getElementById("errorRegister").innerText = error.message;
