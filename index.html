@@ -252,152 +252,175 @@
 
   <!-- Firebase -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { 
-      getAuth, 
-      signInWithEmailAndPassword, 
-      createUserWithEmailAndPassword, 
-      sendPasswordResetEmail, 
-      setPersistence, 
-      browserSessionPersistence 
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import {
-      getFirestore,
-      doc,
-      setDoc
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { 
+    initializeApp 
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { 
+    getAuth, 
+    signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword, 
+    sendPasswordResetEmail, 
+    sendEmailVerification,
+    setPersistence, 
+    browserSessionPersistence 
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import {
+    getFirestore,
+    doc,
+    setDoc
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
-      authDomain: "comunidadpiura-fed53.firebaseapp.com",
-      projectId: "comunidadpiura-fed53",
-      storageBucket: "comunidadpiura-fed53.firebasestorage.app",
-      messagingSenderId: "113288016871",
-      appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
-      measurementId: "G-68EYEMSET9"
-    };
+  // 🔧 CONFIG FIREBASE
+  const firebaseConfig = {
+    apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
+    authDomain: "comunidadpiura-fed53.firebaseapp.com",
+    projectId: "comunidadpiura-fed53",
+    storageBucket: "comunidadpiura-fed53.firebasestorage.app",
+    messagingSenderId: "113288016871",
+    appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
+    measurementId: "G-68EYEMSET9"
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-    // Login
-    document.getElementById("loginForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const email = document.getElementById("loginEmail").value;
-      const password = document.getElementById("loginPassword").value;
+  // 🔒 LOGIN (solo si el correo está verificado)
+  document.getElementById("loginForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
 
-      setPersistence(auth, browserSessionPersistence)
-        .then(() => signInWithEmailAndPassword(auth, email, password))
-        .then(() => window.location.href = "home.html")
-        .catch(err => {
+    setPersistence(auth, browserSessionPersistence)
+      .then(() => signInWithEmailAndPassword(auth, email, password))
+      .then(({ user }) => {
+        if (user.emailVerified) {
+          window.location.href = "home.html"; // ✅ entra solo si está verificado
+        } else {
+          auth.signOut();
           document.getElementById("error").style.display = "block";
-          document.getElementById("error").innerText = err.message;
-        });
-    });
+          document.getElementById("error").innerText = 
+            "⚠️ Verifica tu correo antes de iniciar sesión. Revisa también 'Correo no deseado'.";
+        }
+      })
+      .catch(err => {
+        document.getElementById("error").style.display = "block";
+        document.getElementById("error").innerText = err.message;
+      });
+  });
 
-    // Registro con datos en Firestore
-    document.getElementById("registerForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
+  // 🧾 REGISTRO CON VERIFICACIÓN DE CORREO
+  document.getElementById("registerForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      const nombre = document.getElementById("nombre").value;
-      const apellidos = document.getElementById("apellidos").value;
-      const email = document.getElementById("registerEmail").value;
-      const password = document.getElementById("registerPassword").value;
-      const celular = document.getElementById("celular").value;
-      const departamento = document.getElementById("departamento").value;
-      const provincia = document.getElementById("provincia").value;
-      const distrito = document.getElementById("distrito").value;
-      const genero = document.getElementById("genero").value;
+    const nombre = document.getElementById("nombre").value;
+    const apellidos = document.getElementById("apellidos").value;
+    const email = document.getElementById("registerEmail").value;
+    const password = document.getElementById("registerPassword").value;
+    const celular = document.getElementById("celular").value;
+    const departamento = document.getElementById("departamento").value;
+    const provincia = document.getElementById("provincia").value;
+    const distrito = document.getElementById("distrito").value;
+    const genero = document.getElementById("genero").value;
 
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-        await setDoc(doc(db, "usuarios", user.uid), {
-          nombre,
-          apellidos,
-          email,
-          celular,
-          departamento,
-          provincia,
-          distrito,
-          genero,
-          fechaRegistro: new Date().toISOString()
-        });
+      // 📩 Enviar correo de verificación
+      await sendEmailVerification(user);
 
-       showSuccess();
+      // 📄 Guardar datos en Firestore
+      await setDoc(doc(db, "usuarios", user.uid), {
+        nombre,
+        apellidos,
+        email,
+        celular,
+        departamento,
+        provincia,
+        distrito,
+        genero,
+        fechaRegistro: new Date().toISOString(),
+        verificado: false
+      });
 
-// Esperar 2 segundos antes de redirigir
-setTimeout(() => {
-  window.location.href = "home.html";
-}, 2000);
-      } catch (error) {
-        document.getElementById("errorRegister").style.display = "block";
-        document.getElementById("errorRegister").innerText = error.message;
-      }
-    });
+      showSuccess();
 
-    // Mostrar y ocultar pantallas
-    window.showRegister = function() {
-      document.getElementById("loginBox").style.display = "none";
-      document.getElementById("registerBox").style.display = "block";
-    }
+      // 🔔 Mostrar mensaje al usuario
+      alert("Se ha enviado un código de verificación a tu correo.\nVerifica en 'No deseados' si no lo ves.");
 
-    window.showLogin = function() {
-      document.getElementById("registerBox").style.display = "none";
-      document.getElementById("loginBox").style.display = "block";
-    }
-
-    // Loader
-    window.onload = function() {
+      // ❌ Cerrar sesión hasta que confirme
       setTimeout(() => {
-        const loader = document.getElementById('loader');
-        loader.style.opacity = "0";
-        setTimeout(() => {
-          loader.style.display = 'none';
-          document.getElementById('loginBox').style.display = 'block';
-        }, 1000);
-      }, 2000);
-    }
+        auth.signOut();
+        showLogin();
+      }, 3000);
 
-    // Mostrar/ocultar contraseña
-    window.togglePassword = function(id) {
-      const input = document.getElementById(id);
-      input.type = input.type === "password" ? "text" : "password";
+    } catch (error) {
+      document.getElementById("errorRegister").style.display = "block";
+      document.getElementById("errorRegister").innerText = error.message;
     }
+  });
 
-    // Barra de fuerza de contraseña
-    window.checkStrength = function(password) {
-      const bar = document.getElementById("strengthBar");
-      let strength = 0;
-      if (password.length > 5) strength++;
-      if (/[A-Z]/.test(password)) strength++;
-      if (/[0-9]/.test(password)) strength++;
-      if (/[^A-Za-z0-9]/.test(password)) strength++;
-      const colors = ["#ef4444","#f97316","#facc15","#22c55e"];
-      bar.style.background = colors[strength-1] || "#222";
-      bar.style.width = (strength*25) + "%";
+  // 🔄 RECUPERAR CONTRASEÑA
+  window.resetPassword = function() {
+    const email = prompt("Ingresa tu correo para recuperar tu contraseña:");
+    if (email) {
+      sendPasswordResetEmail(auth, email)
+        .then(() => alert("📧 Se ha enviado un enlace de recuperación a tu correo."))
+        .catch(err => alert(err.message));
     }
+  };
 
-    // Recuperar contraseña
-    window.resetPassword = function() {
-      const email = prompt("Ingresa tu correo para recuperar tu contraseña:");
-      if (email) {
-        sendPasswordResetEmail(auth, email)
-          .then(() => alert("Se ha enviado un enlace de recuperación a tu correo."))
-          .catch(err => alert(err.message));
-      }
-    }
-    // ✨ Mostrar mensaje bonito de éxito
-window.showSuccess = function() {
-  const msg = document.getElementById("successMessage");
-  msg.style.display = "flex";
-  setTimeout(() => {
-    msg.style.display = "none";
-  }, 2000); // se oculta en 2 segundos
-}
+  // 🧭 MOSTRAR/OCULTAR SECCIONES
+  window.showRegister = function() {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("registerBox").style.display = "block";
+  };
 
-  </script>
+  window.showLogin = function() {
+    document.getElementById("registerBox").style.display = "none";
+    document.getElementById("loginBox").style.display = "block";
+  };
+
+  // 👁️ MOSTRAR/OCULTAR CONTRASEÑA
+  window.togglePassword = function(id) {
+    const input = document.getElementById(id);
+    input.type = input.type === "password" ? "text" : "password";
+  };
+
+  // 💪 BARRA DE FUERZA
+  window.checkStrength = function(password) {
+    const bar = document.getElementById("strengthBar");
+    let strength = 0;
+    if (password.length > 5) strength++;
+    if (/[A-Z]/.test(password)) strength++;
+    if (/[0-9]/.test(password)) strength++;
+    if (/[^A-Za-z0-9]/.test(password)) strength++;
+    const colors = ["#ef4444","#f97316","#facc15","#22c55e"];
+    bar.style.background = colors[strength-1] || "#222";
+    bar.style.width = (strength*25) + "%";
+  };
+
+  // ⏳ LOADER
+  window.onload = function() {
+    setTimeout(() => {
+      const loader = document.getElementById('loader');
+      loader.style.opacity = "0";
+      setTimeout(() => {
+        loader.style.display = 'none';
+        document.getElementById('loginBox').style.display = 'block';
+      }, 1000);
+    }, 2000);
+  };
+
+  // ✅ MENSAJE BONITO DE ÉXITO
+  window.showSuccess = function() {
+    const msg = document.getElementById("successMessage");
+    msg.style.display = "flex";
+    setTimeout(() => {
+      msg.style.display = "none";
+    }, 2000);
+  };
+</script>
 </body>
 </html>
