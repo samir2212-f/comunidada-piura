@@ -82,7 +82,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
-  emailjs.init("TU_USER_ID_DE_EMAILJS"); // ⚠️ reemplaza con tu ID real
+ emailjs.init("nrnL4vF01_n5QF2pq"); // ✅ tu Public Key REAL, ya está bien así
+
 </script>
 
 <body>
@@ -167,8 +168,15 @@
     document.getElementById("registerForm").addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const nombre = nombre.value, apellidos = apellidos.value, email = registerEmail.value, password = registerPassword.value,
-            celular = celular.value, departamento = departamento.value, provincia = provincia.value, distrito = distrito.value, genero = genero.value;
+      const nombre = document.getElementById("nombre").value;
+const apellidos = document.getElementById("apellidos").value;
+const email = document.getElementById("registerEmail").value;
+const password = document.getElementById("registerPassword").value;
+const celular = document.getElementById("celular").value;
+const departamento = document.getElementById("departamento").value;
+const provincia = document.getElementById("provincia").value;
+const distrito = document.getElementById("distrito").value;
+const genero = document.getElementById("genero").value;
 
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
