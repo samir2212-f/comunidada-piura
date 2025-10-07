@@ -180,7 +180,7 @@
           codigoVerificacion: codigo, verificado: false, fechaRegistro: new Date().toISOString()
         });
 
-        emailjs.send("TU_SERVICE_ID", "TU_TEMPLATE_ID", {
+        emailjs.send("service_9g3xeus", "template_mm6ha7n", {
           to_email: email, to_name: nombre, message: `Tu código de verificación es: ${codigo}`
         }).then(() => alert("✅ Código enviado a tu correo (revisa No deseados)"));
 
