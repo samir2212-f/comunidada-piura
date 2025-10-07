@@ -7,203 +7,96 @@
   <link rel="icon" type="image/png" href="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcReMJly0vwqQtfircDFDpZwXu18Sd3bSMIOsRRLQyJ0irbFg3KC">
   <style>
     * {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       box-sizing: border-box;
       font-family: "Segoe UI", Tahoma, sans-serif;
     }
-
     body {
       min-height: 100vh;
       background: linear-gradient(135deg, #000000, #1c1c1c);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      display: flex; justify-content: center; align-items: center;
       padding: 20px;
     }
-
-    /* Loader */
     #loader {
-      position: fixed;
-      top: 0; left: 0;
+      position: fixed; top: 0; left: 0;
       width: 100%; height: 100%;
       background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 9999;
-      transition: opacity 1s ease;
+      display: flex; justify-content: center; align-items: center; flex-direction: column;
+      z-index: 9999; transition: opacity 1s ease;
     }
-
     #loader img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
+      width: 100px; height: 100px; border-radius: 50%;
       animation: spin 3s linear infinite;
     }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    /* Caja principal */
+    @keyframes spin { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
     .login-container {
-      display: none;
-      background: rgba(20, 20, 20, 0.95);
-      padding: 30px;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+      display: none; background: rgba(20, 20, 20, 0.95);
+      padding: 30px; border-radius: 12px; width: 100%; max-width: 400px;
+      text-align: center; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
       animation: fadeIn 0.8s ease-in-out;
     }
-
-    .login-container h1 {
-      color: #fff;
-      font-size: 20px;
-      margin-bottom: 15px;
-    }
-
-    .logo {
-      width: 90px;
-      margin-bottom: 15px;
-      border-radius: 50%;
-    }
-
+    .login-container h1 { color: #fff; font-size: 20px; margin-bottom: 15px; }
+    .logo { width: 90px; margin-bottom: 15px; border-radius: 50%; }
     input, select {
-      width: 100%;
-      padding: 12px;
-      margin: 6px 0;
-      border: 1px solid #444;
-      border-radius: 8px;
-      background: #222;
-      color: #fff;
-      font-size: 14px;
-      outline: none;
+      width: 100%; padding: 12px; margin: 6px 0;
+      border: 1px solid #444; border-radius: 8px;
+      background: #222; color: #fff; font-size: 14px; outline: none;
       transition: border 0.3s;
     }
-
-    input:focus, select:focus {
-      border: 1px solid #e50914;
-    }
-
+    input:focus, select:focus { border: 1px solid #e50914; }
     .btn {
-      width: 100%;
-      padding: 14px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
+      width: 100%; padding: 14px; margin: 10px 0;
+      border: none; border-radius: 8px; font-size: 15px;
+      font-weight: bold; cursor: pointer; transition: 0.3s;
     }
-
-    .btn-login {
-      background: #fff;
-      color: #000;
-    }
+    .btn-login { background: #fff; color: #000; }
     .btn-login:hover { background: #ddd; }
-
-    .btn-register {
-      background: #e50914;
-      color: #fff;
-    }
+    .btn-register { background: #e50914; color: #fff; }
     .btn-register:hover { background: #b00610; }
+    .toggle { font-size: 14px; color: #e50914; cursor: pointer; margin-top: 8px; display: block; }
+    #error, #errorRegister { color: red; font-size: 13px; margin-top: 8px; display: none; }
+    @keyframes fadeIn { from {opacity: 0; transform: translateY(-20px);} to {opacity: 1; transform: translateY(0);} }
+    @media (max-width: 480px) { .login-container { padding: 20px; } .logo { width: 70px; } }
 
-    .toggle {
-      font-size: 14px;
-      color: #e50914;
-      cursor: pointer;
-      margin-top: 8px;
-      display: block;
+    .success-popup {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); display: none;
+      justify-content: center; align-items: center;
+      z-index: 99999; animation: fadeIn 0.3s ease;
     }
-
-    #error, #errorRegister {
-      color: red;
-      font-size: 13px;
-      margin-top: 8px;
-      display: none;
+    .success-content {
+      background: linear-gradient(135deg, #111, #1f1f1f);
+      border: 2px solid #22c55e; border-radius: 15px;
+      padding: 30px 40px; text-align: center; color: white;
+      box-shadow: 0 0 25px rgba(34,197,94,0.4); animation: pop 0.5s ease;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .success-content .checkmark {
+      display: inline-block; font-size: 40px; color: #22c55e;
+      margin-bottom: 10px; animation: pulse 1.2s infinite;
     }
-
-    @media (max-width: 480px) {
-      .login-container { padding: 20px; }
-      .logo { width: 70px; }
-    }
-
-
-
-/* ✅ Animación del mensaje bonito */
-.success-popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 99999;
-  animation: fadeIn 0.3s ease;
-}
-
-.success-content {
-  background: linear-gradient(135deg, #111, #1f1f1f);
-  border: 2px solid #22c55e;
-  border-radius: 15px;
-  padding: 30px 40px;
-  text-align: center;
-  color: white;
-  box-shadow: 0 0 25px rgba(34,197,94,0.4);
-  animation: pop 0.5s ease;
-}
-
-.success-content .checkmark {
-  display: inline-block;
-  font-size: 40px;
-  color: #22c55e;
-  margin-bottom: 10px;
-  animation: pulse 1.2s infinite;
-}
-
-@keyframes pop {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.2); opacity: 0.8; }
-}
-
-
+    @keyframes pop { from {transform: scale(0.8); opacity: 0;} to {transform: scale(1); opacity: 1;} }
+    @keyframes pulse { 0%,100% {transform: scale(1);} 50% {transform: scale(1.2);} }
   </style>
-  
 </head>
-<body>
-      <!-- ✨ Mensaje moderno -->
-<div id="successMessage" class="success-popup">
-  <div class="success-content">
-    <span class="checkmark">✔</span>
-    <p>Datos guardados correctamente</p>
-  </div>
-</div>
 
-  <!-- Loader -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+  emailjs.init("TU_USER_ID_DE_EMAILJS"); // ⚠️ reemplaza con tu ID real
+</script>
+
+<body>
+  <div id="successMessage" class="success-popup">
+    <div class="success-content">
+      <span class="checkmark">✔</span>
+      <p>Datos guardados correctamente</p>
+    </div>
+  </div>
+
   <div id="loader">
     <img src="ComunidadPiura-removebg-preview.png" alt="Logo">
   </div>
 
-  <!-- Caja Login -->
   <div id="loginBox" class="login-container">
     <h1>Bienvenido a la</h1>
     <img src="ComunidadPiura-removebg-preview.png" class="logo">
@@ -218,14 +111,15 @@
       <p id="error"></p>
       <button type="submit" class="btn btn-login">Ingresar</button>
     </form>
-
     <div class="toggle" onclick="showRegister()">¿No tienes cuenta? Regístrate</div>
     <div class="toggle" onclick="resetPassword()">¿Olvidaste tu contraseña?</div>
   </div>
 
-  <!-- Caja Registro -->
   <div id="registerBox" class="login-container">
     <h1>Crear Cuenta</h1>
+    <input type="text" id="codigoVerificacion" placeholder="Código de verificación" style="display:none;">
+    <button type="button" id="btnVerificarCodigo" class="btn btn-login" style="display:none;">Verificar Código</button>
+
     <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcReMJly0vwqQtfircDFDpZwXu18Sd3bSMIOsRRLQyJ0irbFg3KC" class="logo">
 
     <form id="registerForm">
@@ -246,181 +140,118 @@
       <p id="errorRegister"></p>
       <button type="submit" class="btn btn-register">Crear Cuenta</button>
     </form>
-
     <div class="toggle" onclick="showLogin()">¿Ya tienes cuenta? Inicia sesión</div>
   </div>
 
-  <!-- Firebase -->
+  <!-- 🔥 FIREBASE + VERIFICACIÓN CON CÓDIGO -->
   <script type="module">
-  import { 
-    initializeApp 
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { 
-    getAuth, 
-    signInWithEmailAndPassword, 
-    createUserWithEmailAndPassword, 
-    sendPasswordResetEmail, 
-    sendEmailVerification,
-    setPersistence, 
-    browserSessionPersistence 
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import {
-    getFirestore,
-    doc,
-    setDoc
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, setDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  // 🔧 CONFIG FIREBASE
-  const firebaseConfig = {
-    apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
-    authDomain: "comunidadpiura-fed53.firebaseapp.com",
-    projectId: "comunidadpiura-fed53",
-    storageBucket: "comunidadpiura-fed53.firebasestorage.app",
-    messagingSenderId: "113288016871",
-    appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
-    measurementId: "G-68EYEMSET9"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyD33P7MvrIGbNo1lRSbZBXb4hZoQ_dkjVg",
+      authDomain: "comunidadpiura-fed53.firebaseapp.com",
+      projectId: "comunidadpiura-fed53",
+      storageBucket: "comunidadpiura-fed53.firebasestorage.app",
+      messagingSenderId: "113288016871",
+      appId: "1:113288016871:web:f94f6c6490bcdbca0bc342",
+      measurementId: "G-68EYEMSET9"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-  // 🔒 LOGIN (solo si el correo está verificado)
-  document.getElementById("loginForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const email = document.getElementById("loginEmail").value;
-    const password = document.getElementById("loginPassword").value;
+    // ✅ REGISTRO CON CÓDIGO
+    document.getElementById("registerForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    setPersistence(auth, browserSessionPersistence)
-      .then(() => signInWithEmailAndPassword(auth, email, password))
-      .then(({ user }) => {
-        if (user.emailVerified) {
-          window.location.href = "home.html"; // ✅ entra solo si está verificado
+      const nombre = nombre.value, apellidos = apellidos.value, email = registerEmail.value, password = registerPassword.value,
+            celular = celular.value, departamento = departamento.value, provincia = provincia.value, distrito = distrito.value, genero = genero.value;
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        const codigo = Math.floor(100000 + Math.random() * 900000).toString();
+        await setDoc(doc(db, "usuarios", user.uid), {
+          nombre, apellidos, email, celular, departamento, provincia, distrito, genero,
+          codigoVerificacion: codigo, verificado: false, fechaRegistro: new Date().toISOString()
+        });
+
+        emailjs.send("TU_SERVICE_ID", "TU_TEMPLATE_ID", {
+          to_email: email, to_name: nombre, message: `Tu código de verificación es: ${codigo}`
+        }).then(() => alert("✅ Código enviado a tu correo (revisa No deseados)"));
+
+        document.getElementById("codigoVerificacion").style.display = "block";
+        document.getElementById("btnVerificarCodigo").style.display = "block";
+        document.querySelector(".btn-register").disabled = true;
+        window.currentUID = user.uid;
+      } catch (error) {
+        errorRegister.style.display = "block";
+        errorRegister.innerText = error.message;
+      }
+    });
+
+    // 🔍 VERIFICAR CÓDIGO
+    document.getElementById("btnVerificarCodigo").addEventListener("click", async () => {
+      const codigoIngresado = codigoVerificacion.value.trim();
+      if (!window.currentUID) return alert("Primero crea la cuenta.");
+
+      const userDoc = doc(db, "usuarios", window.currentUID);
+      const snapshot = await getDoc(userDoc);
+
+      if (snapshot.exists() && snapshot.data().codigoVerificacion === codigoIngresado) {
+        await updateDoc(userDoc, { verificado: true });
+        showSuccess();
+        alert("🎉 Verificación exitosa. ¡Bienvenido!");
+        window.location.href = "home.html";
+      } else alert("❌ Código incorrecto.");
+    });
+
+    // 🔐 LOGIN (solo si verificado)
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = loginEmail.value, password = loginPassword.value;
+      try {
+        await setPersistence(auth, browserSessionPersistence);
+        const { user } = await signInWithEmailAndPassword(auth, email, password);
+        const snapshot = await getDoc(doc(db, "usuarios", user.uid));
+        if (snapshot.exists() && snapshot.data().verificado === true) {
+          window.location.href = "home.html";
         } else {
-          auth.signOut();
-          document.getElementById("error").style.display = "block";
-          document.getElementById("error").innerText = 
-            "⚠️ Verifica tu correo antes de iniciar sesión. Revisa también 'Correo no deseado'.";
+          auth.signOut(); error.style.display = "block";
+          error.innerText = "⚠️ Debes verificar tu cuenta con el código.";
         }
-      })
-      .catch(err => {
-        document.getElementById("error").style.display = "block";
-        document.getElementById("error").innerText = err.message;
-      });
-  });
+      } catch (err) {
+        error.style.display = "block"; error.innerText = err.message;
+      }
+    });
 
-  // 🧾 REGISTRO CON VERIFICACIÓN DE CORREO
-  document.getElementById("registerForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const nombre = document.getElementById("nombre").value;
-    const apellidos = document.getElementById("apellidos").value;
-    const email = document.getElementById("registerEmail").value;
-    const password = document.getElementById("registerPassword").value;
-    const celular = document.getElementById("celular").value;
-    const departamento = document.getElementById("departamento").value;
-    const provincia = document.getElementById("provincia").value;
-    const distrito = document.getElementById("distrito").value;
-    const genero = document.getElementById("genero").value;
-
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      // 📩 Enviar correo de verificación
-      await sendEmailVerification(user);
-
-      // 📄 Guardar datos en Firestore
-      await setDoc(doc(db, "usuarios", user.uid), {
-        nombre,
-        apellidos,
-        email,
-        celular,
-        departamento,
-        provincia,
-        distrito,
-        genero,
-        fechaRegistro: new Date().toISOString(),
-        verificado: false
-      });
-
-      showSuccess();
-
-      // 🔔 Mostrar mensaje al usuario
-      alert("Se ha enviado un código de verificación a tu correo.\nVerifica en 'No deseados' si no lo ves.");
-
-      // ❌ Cerrar sesión hasta que confirme
+    // ✅ FUNCIONES UI
+    window.showRegister = () => { loginBox.style.display = "none"; registerBox.style.display = "block"; }
+    window.showLogin = () => { registerBox.style.display = "none"; loginBox.style.display = "block"; }
+    window.togglePassword = (id) => {
+      const input = document.getElementById(id);
+      input.type = input.type === "password" ? "text" : "password";
+    };
+    window.checkStrength = (p) => {
+      const bar = strengthBar; let s = 0;
+      if (p.length > 5) s++; if (/[A-Z]/.test(p)) s++; if (/[0-9]/.test(p)) s++; if (/[^A-Za-z0-9]/.test(p)) s++;
+      const c = ["#ef4444","#f97316","#facc15","#22c55e"];
+      bar.style.background = c[s-1] || "#222"; bar.style.width = (s*25)+"%";
+    };
+    window.onload = () => {
       setTimeout(() => {
-        auth.signOut();
-        showLogin();
-      }, 3000);
-
-    } catch (error) {
-      document.getElementById("errorRegister").style.display = "block";
-      document.getElementById("errorRegister").innerText = error.message;
-    }
-  });
-
-  // 🔄 RECUPERAR CONTRASEÑA
-  window.resetPassword = function() {
-    const email = prompt("Ingresa tu correo para recuperar tu contraseña:");
-    if (email) {
-      sendPasswordResetEmail(auth, email)
-        .then(() => alert("📧 Se ha enviado un enlace de recuperación a tu correo."))
-        .catch(err => alert(err.message));
-    }
-  };
-
-  // 🧭 MOSTRAR/OCULTAR SECCIONES
-  window.showRegister = function() {
-    document.getElementById("loginBox").style.display = "none";
-    document.getElementById("registerBox").style.display = "block";
-  };
-
-  window.showLogin = function() {
-    document.getElementById("registerBox").style.display = "none";
-    document.getElementById("loginBox").style.display = "block";
-  };
-
-  // 👁️ MOSTRAR/OCULTAR CONTRASEÑA
-  window.togglePassword = function(id) {
-    const input = document.getElementById(id);
-    input.type = input.type === "password" ? "text" : "password";
-  };
-
-  // 💪 BARRA DE FUERZA
-  window.checkStrength = function(password) {
-    const bar = document.getElementById("strengthBar");
-    let strength = 0;
-    if (password.length > 5) strength++;
-    if (/[A-Z]/.test(password)) strength++;
-    if (/[0-9]/.test(password)) strength++;
-    if (/[^A-Za-z0-9]/.test(password)) strength++;
-    const colors = ["#ef4444","#f97316","#facc15","#22c55e"];
-    bar.style.background = colors[strength-1] || "#222";
-    bar.style.width = (strength*25) + "%";
-  };
-
-  // ⏳ LOADER
-  window.onload = function() {
-    setTimeout(() => {
-      const loader = document.getElementById('loader');
-      loader.style.opacity = "0";
-      setTimeout(() => {
-        loader.style.display = 'none';
-        document.getElementById('loginBox').style.display = 'block';
-      }, 1000);
-    }, 2000);
-  };
-
-  // ✅ MENSAJE BONITO DE ÉXITO
-  window.showSuccess = function() {
-    const msg = document.getElementById("successMessage");
-    msg.style.display = "flex";
-    setTimeout(() => {
-      msg.style.display = "none";
-    }, 2000);
-  };
-</script>
+        loader.style.opacity = "0";
+        setTimeout(() => { loader.style.display = 'none'; loginBox.style.display = 'block'; }, 1000);
+      }, 2000);
+    };
+    window.showSuccess = () => {
+      const msg = successMessage;
+      msg.style.display = "flex"; setTimeout(() => msg.style.display = "none", 2000);
+    };
+  </script>
 </body>
 </html>
